@@ -6,7 +6,7 @@ Summary: Fedora Core release file
 Name: fedora-release
 Version: 3.90
 Release: 1
-Copyright: GFDL
+License: GFDL
 Group: System Environment/Base
 Source: fedora-release-3.90.tar.gz
 Obsoletes: rawhide-release
