@@ -4,11 +4,11 @@
 %define real_release_name %{?release_name}%{!?release_name:%{builtin_release_name}}
 Summary: Fedora Core release file
 Name: fedora-release
-Version: 3
-Release: rawhide
+Version: 3.90
+Release: 1
 Copyright: GFDL
 Group: System Environment/Base
-Source: fedora-release-3-i386.tar.gz
+Source: fedora-release-3.90.tar.gz
 Obsoletes: rawhide-release
 Obsoletes: redhat-release
 Obsoletes: indexhtml
@@ -16,12 +16,13 @@ Provides: redhat-release
 Provides: indexhtml
 BuildRoot: %{_tmppath}/fedora-release-root
 BuildArchitectures: noarch
+ExclusiveArch: i386 x86_64 ppc
 
 %description
 Fedora Core release file
 
 %prep
-%setup -q -n fedora-release-3-i386
+%setup -q -n fedora-release-%{version}
 
 %build
 python -c "import py_compile; py_compile.compile('eula.py')"
@@ -42,12 +43,7 @@ cp -f eula.py $RPM_BUILD_ROOT/usr/share/firstboot/modules/eula.py
 mkdir -p -m 755 $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML
 cp -ap img css \
   $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML
-for file in indexhtml-*.html ; do
-  newname=`echo $file | sed 's|indexhtml-\(.*\)-\(.*\).html|index-\2.html|g'`
-  install -m 644 $file $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML/$newname || :
-done
-mv -f $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML/index-en.html \
-  $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML/index.html || :
+install -m 644 index.html $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML/index.html
 
 mkdir -p -m 755 $RPM_BUILD_ROOT/etc/sysconfig/rhn
 mkdir -p -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
