@@ -16,7 +16,6 @@ Provides: redhat-release
 Provides: indexhtml
 BuildRoot: %{_tmppath}/fedora-release-root
 BuildArchitectures: noarch
-ExclusiveArch: i386 x86_64 ppc
 
 %description
 Fedora Core release file
