@@ -1,14 +1,16 @@
+%define release_version 3.91
+%define release_name Pre-FC4
 %define builtin_release_version Rawhide
 %define builtin_release_name Rawhide
 %define real_release_version %{?release_version}%{!?release_version:%{builtin_release_version}}
 %define real_release_name %{?release_name}%{!?release_name:%{builtin_release_name}}
 Summary: Fedora Core release file
 Name: fedora-release
-Version: 3.90
-Release: 2
+Version: %{real_release_version}
+Release: 1
 License: GFDL
 Group: System Environment/Base
-Source: fedora-release-3.90.tar.gz
+Source: fedora-release-%{real_release_version}.tar.gz
 Obsoletes: rawhide-release
 Obsoletes: redhat-release
 Obsoletes: indexhtml
@@ -16,6 +18,7 @@ Provides: redhat-release
 Provides: indexhtml
 BuildRoot: %{_tmppath}/fedora-release-root
 BuildArchitectures: noarch
+ExclusiveArch: i386 x86_64 ppc
 
 %description
 Fedora Core release file
