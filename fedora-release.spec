@@ -1,4 +1,4 @@
-%define release_version 3.91
+%define release_version 3.92
 %define release_name Pre-FC4
 %define builtin_release_version Rawhide
 %define builtin_release_name Rawhide
