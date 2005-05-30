@@ -1,5 +1,5 @@
-%define release_version 3.92
-%define release_name Pre-FC4
+%define release_version 4
+%define release_name Rawhide
 %define builtin_release_version Rawhide
 %define builtin_release_name Rawhide
 %define real_release_version %{?release_version}%{!?release_version:%{builtin_release_version}}
@@ -11,6 +11,7 @@ Release: 1
 License: GFDL
 Group: System Environment/Base
 Source: fedora-release-%{real_release_version}.tar.gz
+Source1: fedora-release-notes-%{real_release_version}.tar.gz
 Obsoletes: rawhide-release
 Obsoletes: redhat-release
 Obsoletes: indexhtml
@@ -18,15 +19,23 @@ Provides: redhat-release
 Provides: indexhtml
 BuildRoot: %{_tmppath}/fedora-release-root
 ExclusiveArch: i386 x86_64 ppc
+BuildRequires: xmlto
 
 %description
 Fedora Core release file
 
 %prep
-%setup -q -n fedora-release-%{version}
+%setup -q -n fedora-release-%{version} -a 1
 
 %build
 python -c "import py_compile; py_compile.compile('eula.py')"
+make -C release-notes/FC4
+MAINDIR=`pwd`
+pushd release-notes/FC4
+cp RELEASE-NOTES-en.txt $MAINDIR
+cp -af README-en/* $MAINDIR
+cp -af RELEASE-NOTES-en/* $MAINDIR
+popd
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -41,10 +50,15 @@ mkdir -p $RPM_BUILD_ROOT/usr/share/eula $RPM_BUILD_ROOT/usr/share/firstboot/modu
 cp -f eula.txt $RPM_BUILD_ROOT/usr/share/eula/eula.en_US
 cp -f eula.py $RPM_BUILD_ROOT/usr/share/firstboot/modules/eula.py
 
+mkdir -p -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
+for file in RPM-GPG-KEY* ; do
+	install -m 644 $file $RPM_BUILD_ROOT/etc/pki/rpm-gpg
+done
+
 mkdir -p -m 755 $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML
-cp -ap img css \
+cp -ap figs *.css *.html stylesheet-images \
   $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML
-install -m 644 index.html $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML/index.html
+install -m 644 RELEASE-NOTES-en.html $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML/index.html
 
 mkdir -p -m 755 $RPM_BUILD_ROOT/etc/sysconfig/rhn
 mkdir -p -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
@@ -84,3 +98,4 @@ fi
 /usr/share/firstboot/modules/eula.py
 /usr/share/eula/eula.en_US
 %{_defaultdocdir}/HTML
+/etc/pki/rpm-gpg/*
