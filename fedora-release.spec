@@ -18,7 +18,7 @@ Obsoletes: indexhtml
 Provides: redhat-release
 Provides: indexhtml
 BuildRoot: %{_tmppath}/fedora-release-root
-ExclusiveArch: i386 x86_64 ppc
+BuildArchitectures: noarch
 BuildRequires: xmlto
 
 %description
@@ -36,6 +36,7 @@ cp RELEASE-NOTES-en.txt $MAINDIR
 cp -af README-en/* $MAINDIR
 cp -af RELEASE-NOTES-en/* $MAINDIR
 popd
+rm -f */*.eps
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -91,7 +92,7 @@ fi
 %dir /etc/yum.repos.d
 %config(noreplace) /etc/sysconfig/rhn/sources
 %config(noreplace) /etc/yum.repos.d/*
-%doc R*
+%doc R* stylesheet-images figs *.css
 %doc eula.txt GPL autorun-template
 %config %attr(0644,root,root) /etc/issue
 %config %attr(0644,root,root) /etc/issue.net
