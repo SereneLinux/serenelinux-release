@@ -32,7 +32,8 @@ python -c "import py_compile; py_compile.compile('eula.py')"
 make -C release-notes/FC4
 MAINDIR=`pwd`
 pushd release-notes/FC4
-cp RELEASE-NOTES-en.txt $MAINDIR
+cp RELEASE-NOTES-en.txt $MAINDIR/RELEASE-NOTES
+cp README-en.txt $MAINDIR/README
 cp -af README-en/* $MAINDIR
 cp -af RELEASE-NOTES-en/* $MAINDIR
 popd
