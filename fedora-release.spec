@@ -1,5 +1,5 @@
 %define release_version 4
-%define release_name Rawhide
+%define release_name Stentz
 %define builtin_release_version Rawhide
 %define builtin_release_name Rawhide
 %define real_release_version %{?release_version}%{!?release_version:%{builtin_release_version}}
@@ -7,7 +7,7 @@
 Summary: Fedora Core release file
 Name: fedora-release
 Version: %{real_release_version}
-Release: 0
+Release: 1
 License: GFDL
 Group: System Environment/Base
 Source: fedora-release-%{real_release_version}.tar.gz
@@ -38,6 +38,7 @@ cp -af README-en/* $MAINDIR
 cp -af RELEASE-NOTES-en/* $MAINDIR
 popd
 rm -f */*.eps
+make index.html
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -58,7 +59,7 @@ for file in RPM-GPG-KEY* ; do
 done
 
 mkdir -p -m 755 $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML
-cp -ap figs *.css *.html stylesheet-images \
+cp -ap figs *.css *.html img css stylesheet-images \
   $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML
 install -m 644 RELEASE-NOTES-en.html $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML/index.html
 
