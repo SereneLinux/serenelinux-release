@@ -97,7 +97,7 @@ fi
 %doc eula.txt GPL autorun-template
 %config %attr(0644,root,root) /etc/issue
 %config %attr(0644,root,root) /etc/issue.net
-/usr/share/firstboot/modules/eula.py
+/usr/share/firstboot/modules/eula.py*
 /usr/share/eula/eula.en_US
 %{_defaultdocdir}/HTML
 /etc/pki/rpm-gpg/*
