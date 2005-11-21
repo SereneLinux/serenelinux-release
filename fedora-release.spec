@@ -1,4 +1,5 @@
-%define release_version 4
+%define release_version 4.90
+%define release_name Pre-FC5
 %define builtin_release_version Rawhide
 %define builtin_release_name Rawhide
 %define real_release_version %{?release_version}%{!?release_version:%{builtin_release_version}}
@@ -6,7 +7,7 @@
 Summary: Fedora Core release file
 Name: fedora-release
 Version: %{real_release_version}
-Release: 99.rawhide
+Release: 1
 License: GFDL
 Group: System Environment/Base
 Source: fedora-release-%{real_release_version}.tar.gz
@@ -19,6 +20,7 @@ Provides: indexhtml
 BuildRoot: %{_tmppath}/fedora-release-root
 BuildArchitectures: noarch
 BuildRequires: xmlto
+BuildRequires: elinks
 
 %description
 Fedora Core release file
@@ -27,14 +29,15 @@ Fedora Core release file
 %setup -q -n fedora-release-%{version} -a 1
 
 %build
-python -c "import py_compile; py_compile.compile('eula.py')"
-make -C release-notes/FC4
 MAINDIR=`pwd`
-pushd release-notes/FC4
+pushd release-notes
+links -dump RELEASE-NOTES-en.html > RELEASE-NOTES-en.txt
+links -dump README-en.html > README-en.txt
 cp RELEASE-NOTES-en.txt $MAINDIR/RELEASE-NOTES
 cp README-en.txt $MAINDIR/README
-cp -af README-en/* $MAINDIR
-cp -af RELEASE-NOTES-en/* $MAINDIR
+cp -af README-* $MAINDIR
+cp -af RELEASE-NOTES-* $MAINDIR
+cp -r figs *.css stylesheet-images ../
 popd
 rm -f */*.eps
 make index.html
@@ -60,7 +63,7 @@ done
 mkdir -p -m 755 $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML
 cp -ap figs *.css *.html img css stylesheet-images \
   $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML
-install -m 644 RELEASE-NOTES-en.html $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML/index.html
+install -m 644 index.html $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML/index.html
 
 mkdir -p -m 755 $RPM_BUILD_ROOT/etc/sysconfig/rhn
 mkdir -p -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
