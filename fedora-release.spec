@@ -7,7 +7,7 @@
 Summary: Fedora Core release file
 Name: fedora-release
 Version: %{real_release_version}
-Release: 2
+Release: 2.1
 License: GFDL
 Group: System Environment/Base
 Source: fedora-release-%{real_release_version}.tar.gz
