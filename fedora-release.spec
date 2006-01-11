@@ -1,4 +1,4 @@
-%define release_version 4.90
+%define release_version 4.91
 %define release_name Pre-FC5
 %define builtin_release_version Rawhide
 %define builtin_release_name Rawhide
@@ -7,7 +7,7 @@
 Summary: Fedora Core release file
 Name: fedora-release
 Version: %{real_release_version}
-Release: 3
+Release: 1
 License: GFDL
 Group: System Environment/Base
 Source: fedora-release-%{real_release_version}.tar.gz
@@ -37,7 +37,7 @@ cp RELEASE-NOTES-en.txt $MAINDIR/RELEASE-NOTES
 cp README-en.txt $MAINDIR/README
 cp -af README-* $MAINDIR
 cp -af RELEASE-NOTES-* $MAINDIR
-cp -r figs *.css stylesheet-images ../
+cp -r *.css stylesheet-images ../
 popd
 rm -f */*.eps
 make index.html
@@ -61,7 +61,7 @@ for file in RPM-GPG-KEY* ; do
 done
 
 mkdir -p -m 755 $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML
-cp -ap figs *.css *.html img css stylesheet-images \
+cp -ap *.css *.html img css stylesheet-images \
   $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML
 install -m 644 index.html $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML/index.html
 
@@ -96,7 +96,7 @@ fi
 %dir /etc/yum.repos.d
 %config(noreplace) /etc/sysconfig/rhn/sources
 %config(noreplace) /etc/yum.repos.d/*
-%doc R* stylesheet-images figs *.css
+%doc R* stylesheet-images *.css
 %doc eula.txt GPL autorun-template
 %config %attr(0644,root,root) /etc/issue
 %config %attr(0644,root,root) /etc/issue.net
