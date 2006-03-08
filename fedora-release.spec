@@ -1,5 +1,5 @@
-%define release_version 4.92
-%define release_name Pre-FC5
+%define release_version 5
+%define release_name Bordeaux
 %define builtin_release_version Rawhide
 %define builtin_release_name Rawhide
 %define real_release_version %{?release_version}%{!?release_version:%{builtin_release_version}}
@@ -20,6 +20,7 @@ Provides: indexhtml
 BuildRoot: %{_tmppath}/fedora-release-root
 BuildArchitectures: noarch
 BuildRequires: xmlto
+BuildRequires: desktop-file-utils
 
 %description
 Fedora Core release file
@@ -35,6 +36,7 @@ cp README-en.txt $MAINDIR/README
 cp -af README-* $MAINDIR
 cp -af RELEASE-NOTES-* $MAINDIR
 cp -r *.css figs stylesheet-images ../
+cp -r about ../
 popd
 rm -f */*.eps
 make index.html
@@ -69,6 +71,12 @@ for file in fedora*repo ; do
   install -m 644 $file $RPM_BUILD_ROOT/etc/yum.repos.d
 done
 
+# about fedora stuff
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/omf/fedora-release
+install -m 644 release-notes/about-fedora.omf $RPM_BUILD_ROOT%{_datadir}/omf/fedora-release
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications 
+install -m 644 release-notes/about-fedora.desktop $RPM_BUILD_ROOT%{_datadir}/applications/about-fedora.desktop
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -85,6 +93,16 @@ if [ -f /etc/issue.net.rpmnew ] ; then
    mv -f /etc/issue.net.rpmnew /etc/issue.net
 fi
 
+%post
+[ -x /usr/bin/scrollkeeper-update ] && /usr/bin/scrollkeeper-update
+[ -x /usr/bin/update-desktop-database ] && /usr/bin/update-desktop-database
+exit 0
+
+%postun
+[ -x /usr/bin/scrollkeeper-update ] && /usr/bin/scrollkeeper-update
+[ -x /usr/bin/update-desktop-database ] && /usr/bin/update-desktop-database
+exit 0
+
 %files
 %defattr(-,root,root)
 %attr(0644,root,root) /etc/fedora-release
@@ -95,9 +113,13 @@ fi
 %config(noreplace) /etc/yum.repos.d/*
 %doc R* stylesheet-images figs *.css
 %doc eula.txt GPL autorun-template
+%doc about
 %config %attr(0644,root,root) /etc/issue
 %config %attr(0644,root,root) /etc/issue.net
 /usr/share/firstboot/modules/eula.py*
 /usr/share/eula/eula.en_US
 %{_defaultdocdir}/HTML
+%dir /etc/pki/rpm-gpg
 /etc/pki/rpm-gpg/*
+%{_datadir}/omf/fedora-release
+%{_datadir}/applications/*.desktop
