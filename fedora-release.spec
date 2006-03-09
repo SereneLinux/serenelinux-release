@@ -7,7 +7,7 @@
 Summary: Fedora Core release file
 Name: fedora-release
 Version: %{real_release_version}
-Release: 2
+Release: 3
 License: GFDL
 Group: System Environment/Base
 Source: fedora-release-%{real_release_version}.tar.gz
@@ -112,7 +112,7 @@ exit 0
 %config(noreplace) /etc/sysconfig/rhn/sources
 %config(noreplace) /etc/yum.repos.d/*
 %doc R* stylesheet-images figs *.css
-%doc eula.txt GPL autorun-template
+%doc eula.txt GPL 
 %doc about
 %config %attr(0644,root,root) /etc/issue
 %config %attr(0644,root,root) /etc/issue.net
