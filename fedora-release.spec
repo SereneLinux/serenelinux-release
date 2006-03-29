@@ -1,4 +1,4 @@
-%define release_version 5
+%define release_version 5.89
 %define release_name Rawhide
 %define builtin_release_version Rawhide
 %define builtin_release_name Rawhide
