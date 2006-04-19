@@ -21,6 +21,7 @@ BuildRoot: %{_tmppath}/fedora-release-root
 BuildArchitectures: noarch
 BuildRequires: xmlto
 BuildRequires: desktop-file-utils
+BuildRequires: lynx
 
 %description
 Fedora Core release file
@@ -127,4 +128,5 @@ exit 0
 * Wed Apr 19 2006 Jesse Keating <jkeating@redhat.com> - 5.89-rawhide.1
 - Look, a changelog!
 - Removed duplicate html/css content from doc dir.
+- Add lynx as a buildreq
 
