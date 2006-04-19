@@ -7,7 +7,7 @@
 Summary: Fedora Core release file
 Name: fedora-release
 Version: %{real_release_version}
-Release: rawhide
+Release: rawhide.1
 License: GFDL
 Group: System Environment/Base
 Source: fedora-release-%{real_release_version}.tar.gz
@@ -111,7 +111,6 @@ exit 0
 %dir /etc/yum.repos.d
 %config(noreplace) /etc/sysconfig/rhn/sources
 %config(noreplace) /etc/yum.repos.d/*
-%doc R* stylesheet-images figs *.css
 %doc eula.txt GPL 
 %doc about
 %config %attr(0644,root,root) /etc/issue
@@ -123,3 +122,9 @@ exit 0
 /etc/pki/rpm-gpg/*
 %{_datadir}/omf/fedora-release
 %{_datadir}/applications/*.desktop
+
+%changelog
+* Wed Apr 19 2006 Jesse Keating <jkeating@redhat.com> - 5.89-rawhide.1
+- Look, a changelog!
+- Removed duplicate html/css content from doc dir.
+
