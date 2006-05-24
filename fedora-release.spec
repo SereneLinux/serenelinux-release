@@ -7,7 +7,7 @@
 Summary: Fedora Core release file
 Name: fedora-release
 Version: %{real_release_version}
-Release: rawhide.1
+Release: rawhide.2
 License: GFDL
 Group: System Environment/Base
 Source: fedora-release-%{real_release_version}.tar.gz
@@ -21,7 +21,6 @@ BuildRoot: %{_tmppath}/fedora-release-root
 BuildArchitectures: noarch
 BuildRequires: xmlto
 BuildRequires: desktop-file-utils
-BuildRequires: lynx
 
 %description
 Fedora Core release file
@@ -125,6 +124,10 @@ exit 0
 %{_datadir}/applications/*.desktop
 
 %changelog
+* Wed May 24 2006 Jesse Keating <jkeating@redhat.com> - 5.89-rawhide.2
+- Update to get new devel repo file
+- merge minor changes from external cvs .spec file
+
 * Wed Apr 19 2006 Jesse Keating <jkeating@redhat.com> - 5.89-rawhide.1
 - Look, a changelog!
 - Removed duplicate html/css content from doc dir.
