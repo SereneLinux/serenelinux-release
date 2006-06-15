@@ -1,5 +1,5 @@
-%define release_version 5.89
-%define release_name Rawhide
+%define release_version 5.90
+%define release_name Test
 %define builtin_release_version Rawhide
 %define builtin_release_name Rawhide
 %define real_release_version %{?release_version}%{!?release_version:%{builtin_release_version}}
@@ -7,7 +7,7 @@
 Summary: Fedora Core release file
 Name: fedora-release
 Version: %{real_release_version}
-Release: rawhide.2
+Release: 1
 License: GFDL
 Group: System Environment/Base
 Source: fedora-release-%{real_release_version}.tar.gz
@@ -124,6 +124,9 @@ exit 0
 %{_datadir}/applications/*.desktop
 
 %changelog
+* Thu Jun 15 2006 Jesse Keating <jkeating@redhat.com> - 5.90-1
+- Update for 5.90
+
 * Wed May 24 2006 Jesse Keating <jkeating@redhat.com> - 5.89-rawhide.2
 - Update to get new devel repo file
 - merge minor changes from external cvs .spec file
