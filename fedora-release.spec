@@ -7,7 +7,7 @@
 Summary: Fedora Core release file
 Name: fedora-release
 Version: %{real_release_version}
-Release: 2
+Release: 3
 License: GFDL
 Group: System Environment/Base
 Source: fedora-release-%{real_release_version}.tar.gz
@@ -120,7 +120,7 @@ exit 0
 %{_datadir}/applications/*.desktop
 
 %changelog
-* Mon Jun 19 2006 Jesse Keating <jkeating@redhat.com> - 5.90-2
+* Mon Jun 19 2006 Jesse Keating <jkeating@redhat.com> - 5.90-3
 - Cleanups
 
 * Thu Jun 15 2006 Jesse Keating <jkeating@redhat.com> - 5.90-1
