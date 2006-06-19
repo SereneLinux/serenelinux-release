@@ -7,7 +7,7 @@
 Summary: Fedora Core release file
 Name: fedora-release
 Version: %{real_release_version}
-Release: 1
+Release: 2
 License: GFDL
 Group: System Environment/Base
 Source: fedora-release-%{real_release_version}.tar.gz
@@ -64,9 +64,7 @@ cp -ap figs *.css *.html img css stylesheet-images \
   $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML
 install -m 644 index.html $RPM_BUILD_ROOT/%{_defaultdocdir}/HTML/index.html
 
-mkdir -p -m 755 $RPM_BUILD_ROOT/etc/sysconfig/rhn
 mkdir -p -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
-install -m 644 sources $RPM_BUILD_ROOT/etc/sysconfig/rhn/sources
 for file in fedora*repo ; do
   install -m 644 $file $RPM_BUILD_ROOT/etc/yum.repos.d
 done
@@ -107,9 +105,7 @@ exit 0
 %defattr(-,root,root)
 %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
-%dir /etc/sysconfig/rhn
 %dir /etc/yum.repos.d
-%config(noreplace) /etc/sysconfig/rhn/sources
 %config(noreplace) /etc/yum.repos.d/*
 %doc eula.txt GPL 
 %doc about
@@ -124,6 +120,9 @@ exit 0
 %{_datadir}/applications/*.desktop
 
 %changelog
+* Mon Jun 19 2006 Jesse Keating <jkeating@redhat.com> - 5.90-2
+- Cleanups
+
 * Thu Jun 15 2006 Jesse Keating <jkeating@redhat.com> - 5.90-1
 - Update for 5.90
 
