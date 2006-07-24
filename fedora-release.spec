@@ -4,14 +4,14 @@
 Summary:	Fedora Core release files
 Name:		fedora-release
 Version:	5.91
-Release:	3
+Release:	4
 License:	GFDL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
 Source:		fedora-release-%{version}.tar.gz
-Obsoletes:	rawhide-release
 Obsoletes:	redhat-release
 Provides:	redhat-release
+Requires:	fedora-release-notes = %{version}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
@@ -56,17 +56,19 @@ rm -rf $RPM_BUILD_ROOT
 %dir /etc/yum.repos.d
 %config(noreplace) /etc/yum.repos.d/*
 %doc eula.txt GPL 
-%config %attr(0644,root,root) /etc/issue
-%config %attr(0644,root,root) /etc/issue.net
+%config(noreplace) %attr(0644,root,root) /etc/issue
+%config(noreplace) %attr(0644,root,root) /etc/issue.net
 /usr/share/firstboot/modules/eula.py*
 /usr/share/eula/eula.en_US
 %dir /etc/pki/rpm-gpg
 /etc/pki/rpm-gpg/*
 
 %changelog
-* Sun Jul 23 2006 Jesse Keating <jkeating@redhat.com> - 5.91-1
+* Sun Jul 23 2006 Jesse Keating <jkeating@redhat.com> - 5.91-4
 - Bump for FC6 Test2
 - Remove release-notes content, now standalone package
+- Don't replace issue and issue.net if the end user has modified it
+- Require fedora-release-notes
 - Cleanups
 
 * Mon Jun 19 2006 Jesse Keating <jkeating@redhat.com> - 5.90-3
