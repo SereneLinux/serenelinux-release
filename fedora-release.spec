@@ -3,15 +3,15 @@
 
 Summary:	Fedora Core release files
 Name:		fedora-release
-Version:	5.91
-Release:	4
+Version:	5.91.1
+Release:	1
 License:	GFDL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
 Source:		fedora-release-%{version}.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
-Requires:	fedora-release-notes = %{version}
+Requires:	fedora-release-notes >= %{release_version}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
@@ -26,7 +26,7 @@ Fedora Core release files
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/etc
-echo "Fedora Core release %{version} (%{release_name})" > $RPM_BUILD_ROOT/etc/fedora-release
+echo "Fedora Core release %{release_version} (%{release_name})" > $RPM_BUILD_ROOT/etc/fedora-release
 cp $RPM_BUILD_ROOT/etc/fedora-release $RPM_BUILD_ROOT/etc/issue
 echo "Kernel \r on an \m" >> $RPM_BUILD_ROOT/etc/issue
 cp $RPM_BUILD_ROOT/etc/issue $RPM_BUILD_ROOT/etc/issue.net
@@ -64,6 +64,10 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Thu Jul 27 2006 Jesse Keating <jkeating@redhat.com> - 5.91.1-1
+- Convert deprecated gtk calls. (#200242)
+- Fix some of the versioning
+
 * Sun Jul 23 2006 Jesse Keating <jkeating@redhat.com> - 5.91-4
 - Bump for FC6 Test2
 - Remove release-notes content, now standalone package
