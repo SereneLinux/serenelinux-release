@@ -1,9 +1,9 @@
-%define release_name FC6 Test2
-%define release_version 5.91
+%define release_name FC6 Test3
+%define release_version 5.92
 
 Summary:	Fedora Core release files
 Name:		fedora-release
-Version:	5.91.1
+Version:	5.92
 Release:	1
 License:	GFDL
 Group:		System Environment/Base
@@ -64,6 +64,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Tue Sep  5 2006 Jesse Keating <jkeating@redhat.com> - 5.92-1
+- Bump for FC6 Test3
+
 * Thu Jul 27 2006 Jesse Keating <jkeating@redhat.com> - 5.91.1-1
 - Convert deprecated gtk calls. (#200242)
 - Fix some of the versioning
