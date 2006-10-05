@@ -4,7 +4,7 @@
 Summary:	Fedora Core release files
 Name:		fedora-release
 Version:	6
-Release:	1
+Release:	2
 License:	GFDL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -64,6 +64,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Thu Oct  5 2006 Jesse Keating <jkeating@redhat.com> - 6-2
+- replace old mirror files with new mirrorlist cgi system
+
 * Thu Oct  5 2006 Jesse Keating <jkeating@redhat.com> - 6-1
 - Rebuild for Fedora Core 6 release
 
