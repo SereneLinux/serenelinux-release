@@ -1,10 +1,10 @@
-%define release_name Zod
+%define release_name Goethe
 %define release_version 6
 
 Summary:	Fedora Core release files
 Name:		fedora-release
-Version:	6
-Release:	2
+Version:	6.1
+Release:	1
 License:	GFDL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -64,7 +64,7 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
-* Thu Oct  5 2006 Jesse Keating <jkeating@redhat.com> - 6-2
+* Thu Oct  5 2006 Jesse Keating <jkeating@redhat.com> - 6.1-1
 - replace old mirror files with new mirrorlist cgi system
 
 * Thu Oct  5 2006 Jesse Keating <jkeating@redhat.com> - 6-1
