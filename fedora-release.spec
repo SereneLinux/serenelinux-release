@@ -1,9 +1,8 @@
-%define release_name Goethe
-%define release_version 6
+%define release_name Rawhide
 
 Summary:	Fedora Core release files
 Name:		fedora-release
-Version:	6.1
+Version:	6.89
 Release:	1
 License:	GFDL
 Group:		System Environment/Base
@@ -11,7 +10,7 @@ URL:		http://fedoraproject.org
 Source:		fedora-release-%{version}.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
-Requires:	fedora-release-notes >= %{release_version}
+Requires:	fedora-release-notes >= %{version}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
@@ -26,7 +25,7 @@ Fedora Core release files
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/etc
-echo "Fedora Core release %{release_version} (%{release_name})" > $RPM_BUILD_ROOT/etc/fedora-release
+echo "Fedora Core release %{version} (%{release_name})" > $RPM_BUILD_ROOT/etc/fedora-release
 cp $RPM_BUILD_ROOT/etc/fedora-release $RPM_BUILD_ROOT/etc/issue
 echo "Kernel \r on an \m" >> $RPM_BUILD_ROOT/etc/issue
 cp $RPM_BUILD_ROOT/etc/issue $RPM_BUILD_ROOT/etc/issue.net
@@ -64,7 +63,13 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
-* Thu Oct  5 2006 Jesse Keating <jkeating@redhat.com> - 6.1-1
+* Sun Oct 15 2006 Jesse Keating <jkeating@redhat.com> - 6.89-1
+- Rebuild for rawhide
+
+* Thu Oct 12 2006 Jesse Keating <jkeating@redhat.com> - 6-3
+- version has to stay the same, safe to use.
+
+* Thu Oct  5 2006 Jesse Keating <jkeating@redhat.com> - 6-2
 - replace old mirror files with new mirrorlist cgi system
 
 * Thu Oct  5 2006 Jesse Keating <jkeating@redhat.com> - 6-1
