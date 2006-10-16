@@ -2,8 +2,8 @@
 
 Summary:	Fedora Core release files
 Name:		fedora-release
-Version:	6.89
-Release:	1
+Version:	6
+Release:	89
 License:	GFDL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -63,6 +63,10 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon Oct 16 2006 Jesse Keating <jkeating@redhat.com> - 6-89
+- Keep version 6, bump release.  Saves from having to rebuild
+  release notes all the time
+
 * Sun Oct 15 2006 Jesse Keating <jkeating@redhat.com> - 6.89-1
 - Rebuild for rawhide
 
