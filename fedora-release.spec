@@ -2,15 +2,15 @@
 
 Summary:	Fedora Core release files
 Name:		fedora-release
-Version:	6
-Release:	89
+Version:	6.90
+Release:	1
 License:	GFDL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
-Source:		fedora-release-%{version}.tar.gz
+Source:		fedora-release-6.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
-Requires:	fedora-release-notes >= %{version}
+Requires:	fedora-release-notes >= 6
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
@@ -18,7 +18,7 @@ BuildArch:	noarch
 Fedora Core release files
 
 %prep
-%setup -q -n fedora-release-%{version}
+%setup -q -n fedora-release-6
 
 %build
 
@@ -63,6 +63,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Wed Jan 24 2007 Jeremy Katz <katzj@redhat.com> - 6.90-1
+- Bump to 6.90.  Keep working with older release notes
+
 * Mon Oct 16 2006 Jesse Keating <jkeating@redhat.com> - 6-89
 - Keep version 6, bump release.  Saves from having to rebuild
   release notes all the time
