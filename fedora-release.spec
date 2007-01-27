@@ -1,9 +1,9 @@
 %define release_name Rawhide
 
-Summary:	Fedora Core release files
+Summary:	Fedora release files
 Name:		fedora-release
 Version:	6.90
-Release:	1
+Release:	2
 License:	GFDL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -15,7 +15,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
 %description
-Fedora Core release files
+Fedora release files
 
 %prep
 %setup -q -n fedora-release-6
@@ -25,7 +25,7 @@ Fedora Core release files
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/etc
-echo "Fedora Core release %{version} (%{release_name})" > $RPM_BUILD_ROOT/etc/fedora-release
+echo "Fedora release %{version} (%{release_name})" > $RPM_BUILD_ROOT/etc/fedora-release
 cp $RPM_BUILD_ROOT/etc/fedora-release $RPM_BUILD_ROOT/etc/issue
 echo "Kernel \r on an \m" >> $RPM_BUILD_ROOT/etc/issue
 cp $RPM_BUILD_ROOT/etc/issue $RPM_BUILD_ROOT/etc/issue.net
@@ -63,6 +63,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Fri Jan 26 2007 Jesse Keating <jkeating@redhat.com> - 6.90-2
+- Core?  What Core?
+
 * Wed Jan 24 2007 Jeremy Katz <katzj@redhat.com> - 6.90-1
 - Bump to 6.90.  Keep working with older release notes
 
