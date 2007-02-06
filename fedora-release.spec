@@ -7,7 +7,7 @@ Release:	3
 License:	GFDL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
-Source:		fedora-release-6.tar.gz
+Source:		%{name}-%{version}.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Requires:	fedora-release-notes >= 6
