@@ -3,7 +3,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	6.90
-Release:	2
+Release:	3
 License:	GFDL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -63,6 +63,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon Feb 05 2007 Jesse Keating <jkeating@redhat.com> - 6.90-3
+- Drop the legacy repo file.
+
 * Fri Jan 26 2007 Jesse Keating <jkeating@redhat.com> - 6.90-2
 - Core?  What Core?
 
