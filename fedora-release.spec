@@ -18,7 +18,8 @@ BuildArch:	noarch
 Fedora release files
 
 %prep
-%setup -q -n fedora-release-6
+#%setup -q -n fedora-release-6
+%setup -q 
 
 %build
 
