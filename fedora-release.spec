@@ -2,8 +2,8 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	6.90
-Release:	3
+Version:	6.91
+Release:	1
 License:	GFDL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -11,37 +11,41 @@ Source:		%{name}-%{version}.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Requires:	fedora-release-notes >= 6
+# We require release notes to make sure that thoe don't get dropped during
+# upgrades, and just because we always want the release notes available
+# instead of explicitly asked for
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
 %description
-Fedora release files
+Fedora release files such as yum configs, eula, and various /etc/ files that
+define the release.
 
 %prep
-#%setup -q -n fedora-release-6
-%setup -q 
+%setup -q
 
 %build
 
 %install
 rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/etc
+install -d $RPM_BUILD_ROOT/etc
 echo "Fedora release %{version} (%{release_name})" > $RPM_BUILD_ROOT/etc/fedora-release
-cp $RPM_BUILD_ROOT/etc/fedora-release $RPM_BUILD_ROOT/etc/issue
+cp -p $RPM_BUILD_ROOT/etc/fedora-release $RPM_BUILD_ROOT/etc/issue
 echo "Kernel \r on an \m" >> $RPM_BUILD_ROOT/etc/issue
-cp $RPM_BUILD_ROOT/etc/issue $RPM_BUILD_ROOT/etc/issue.net
+cp -p $RPM_BUILD_ROOT/etc/issue $RPM_BUILD_ROOT/etc/issue.net
 echo >> $RPM_BUILD_ROOT/etc/issue
 ln -s fedora-release $RPM_BUILD_ROOT/etc/redhat-release
-mkdir -p $RPM_BUILD_ROOT/usr/share/eula $RPM_BUILD_ROOT/usr/share/firstboot/modules
-cp -f eula.txt $RPM_BUILD_ROOT/usr/share/eula/eula.en_US
-cp -f eula.py $RPM_BUILD_ROOT/usr/share/firstboot/modules/eula.py
+install -d $RPM_BUILD_ROOT/usr/share/eula 
+install -d $RPM_BUILD_ROOT/usr/share/firstboot/modules
+cp -p eula.txt $RPM_BUILD_ROOT/usr/share/eula/eula.en_US
+cp -p eula.py $RPM_BUILD_ROOT/usr/share/firstboot/modules/eula.py
 
-mkdir -p -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
+install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
 for file in RPM-GPG-KEY* ; do
 	install -m 644 $file $RPM_BUILD_ROOT/etc/pki/rpm-gpg
 done
 
-mkdir -p -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
+install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
 for file in fedora*repo ; do
   install -m 644 $file $RPM_BUILD_ROOT/etc/yum.repos.d
 done
@@ -50,7 +54,7 @@ done
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(-,root,root)
+%defattr(-,root,root,-)
 %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
 %dir /etc/yum.repos.d
@@ -64,6 +68,12 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Fri Feb 23 2007 Jesse Keating <jkeating@redhat.com> - 6.91-1
+- Bump for Test 2
+
+* Tue Feb 13 2007 Jesse Keating <jkeating@redhat.com> - 6.90-4
+- Specfile cleanups
+
 * Mon Feb 05 2007 Jesse Keating <jkeating@redhat.com> - 6.90-3
 - Drop the legacy repo file.
 
