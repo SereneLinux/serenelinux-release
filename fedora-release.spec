@@ -2,7 +2,7 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	6.91
+Version:	6.92
 Release:	1
 License:	GFDL
 Group:		System Environment/Base
@@ -11,14 +11,14 @@ Source:		%{name}-%{version}.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Requires:	fedora-release-notes >= 6
-# We require release notes to make sure that thoe don't get dropped during
+# We require release notes to make sure that they don't get dropped during
 # upgrades, and just because we always want the release notes available
 # instead of explicitly asked for
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
 %description
-Fedora release files such as yum configs, eula, and various /etc/ files that
+Fedora release files such as yum configs and various /etc/ files that
 define the release.
 
 %prep
@@ -35,10 +35,6 @@ echo "Kernel \r on an \m" >> $RPM_BUILD_ROOT/etc/issue
 cp -p $RPM_BUILD_ROOT/etc/issue $RPM_BUILD_ROOT/etc/issue.net
 echo >> $RPM_BUILD_ROOT/etc/issue
 ln -s fedora-release $RPM_BUILD_ROOT/etc/redhat-release
-install -d $RPM_BUILD_ROOT/usr/share/eula 
-install -d $RPM_BUILD_ROOT/usr/share/firstboot/modules
-cp -p eula.txt $RPM_BUILD_ROOT/usr/share/eula/eula.en_US
-cp -p eula.py $RPM_BUILD_ROOT/usr/share/firstboot/modules/eula.py
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
 for file in RPM-GPG-KEY* ; do
@@ -59,15 +55,17 @@ rm -rf $RPM_BUILD_ROOT
 /etc/redhat-release
 %dir /etc/yum.repos.d
 %config(noreplace) /etc/yum.repos.d/*
-%doc eula.txt GPL 
+%doc GPL 
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
-/usr/share/firstboot/modules/eula.py*
-/usr/share/eula/eula.en_US
 %dir /etc/pki/rpm-gpg
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon Mar 19 2007 Jesse Keating <jkeating@redhat.com> - 6.92-1
+- Bump for Test 3
+- No more eula in fedora-release, moved to firstboot
+
 * Fri Feb 23 2007 Jesse Keating <jkeating@redhat.com> - 6.91-1
 - Bump for Test 2
 
