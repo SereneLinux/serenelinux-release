@@ -2,7 +2,7 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	6.92
+Version:	6.93
 Release:	1
 License:	GFDL
 Group:		System Environment/Base
@@ -62,6 +62,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Fri Apr 20 2007 Jesse Keating <jkeating@redhat.com> - 6.93-1
+- Bump for Test 4
+
 * Mon Mar 19 2007 Jesse Keating <jkeating@redhat.com> - 6.92-1
 - Bump for Test 3
 - No more eula in fedora-release, moved to firstboot
