@@ -3,7 +3,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	7
-Release:	1
+Release:	2
 License:	GFDL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -62,6 +62,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon May 21 2007 Jesse Keating <jkeating@redhat.com> - 7-2
+- Use Everything in the non-mirror URL to the release tree
+
 * Mon May 21 2007 Jesse Keating <jkeating@redhat.com> - 7-1
 - First build for Fedora 7
 - Remove Extras repos (YAY!)
