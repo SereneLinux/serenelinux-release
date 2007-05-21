@@ -2,7 +2,7 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	6.93
+Version:	7
 Release:	1
 License:	GFDL
 Group:		System Environment/Base
@@ -62,6 +62,13 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon May 21 2007 Jesse Keating <jkeating@redhat.com> - 7-1
+- First build for Fedora 7
+- Remove Extras repos (YAY!)
+- Remove references to "core" in repo files.
+- Adjust repo files for new mirror structure
+- Remove Legacy repo
+
 * Fri Apr 20 2007 Jesse Keating <jkeating@redhat.com> - 6.93-1
 - Bump for Test 4
 
