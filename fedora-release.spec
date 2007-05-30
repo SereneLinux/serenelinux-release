@@ -2,7 +2,7 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	6.93
+Version:	7.89
 Release:	1
 License:	GFDL
 Group:		System Environment/Base
@@ -10,7 +10,7 @@ URL:		http://fedoraproject.org
 Source:		%{name}-%{version}.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
-Requires:	fedora-release-notes >= 6
+Requires:	fedora-release-notes >= 7
 # We require release notes to make sure that they don't get dropped during
 # upgrades, and just because we always want the release notes available
 # instead of explicitly asked for
@@ -62,6 +62,23 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Wed May 30 2007 Jesse Keating <jkeating@redhat.com> - 7.89-1
+- And we're back to rawhide.  Re-enable devel repos
+
+* Thu May 24 2007 Jesse Keating <jkeating@redhat.com> - 7-3
+- We have a name!
+- Require the newer release notes
+
+* Mon May 21 2007 Jesse Keating <jkeating@redhat.com> - 7-2
+- Use Everything in the non-mirror URL to the release tree
+
+* Mon May 21 2007 Jesse Keating <jkeating@redhat.com> - 7-1
+- First build for Fedora 7
+- Remove Extras repos (YAY!)
+- Remove references to "core" in repo files.
+- Adjust repo files for new mirror structure
+- Remove Legacy repo
+
 * Fri Apr 20 2007 Jesse Keating <jkeating@redhat.com> - 6.93-1
 - Bump for Test 4
 
