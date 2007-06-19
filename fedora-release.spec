@@ -1,9 +1,10 @@
 %define release_name Rawhide
+%define dist_version 8
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	7.89
-Release:	1
+Release:	2
 License:	GFDL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -46,6 +47,16 @@ for file in fedora*repo ; do
   install -m 644 $file $RPM_BUILD_ROOT/etc/yum.repos.d
 done
 
+# Set up the dist tag macros
+install -d -m 755 $RPM_BUILD_ROOT/etc/rpm
+cat >> $RPM_BUILD_ROOT/etc/rpm/macros.dist << EOF
+# dist macros.
+
+%%fedora		%{dist_version}
+%%dist		.fc%{dist_version}
+%%fc%{dist_version}		1
+EOF
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -58,10 +69,14 @@ rm -rf $RPM_BUILD_ROOT
 %doc GPL 
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
+%config(noreplace) %attr(0644,root,root) /etc/rpm/macros.dist
 %dir /etc/pki/rpm-gpg
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Tue Jun 19 2007 Jesse Keating <jkeating@redhat.com> - 7.89-2
+- Define the dist macros in this package since we define everyting else here
+
 * Wed May 30 2007 Jesse Keating <jkeating@redhat.com> - 7.89-1
 - And we're back to rawhide.  Re-enable devel repos
 
