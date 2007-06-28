@@ -48,6 +48,7 @@ for file in fedora*repo ; do
 done
 
 # Set up the dist tag macros
+install -d -m 755 $RPM_BUILD_ROOT/etc/rpm
 cat >> $RPM_BUILD_ROOT/etc/rpm/macros.dist << EOF
 # dist macros.
 
