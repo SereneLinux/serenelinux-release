@@ -4,8 +4,8 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	7.89
-Release:	2
-License:	GFDL
+Release:	3
+License:	GPL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
 Source:		%{name}-%{version}.tar.gz
@@ -48,7 +48,6 @@ for file in fedora*repo ; do
 done
 
 # Set up the dist tag macros
-install -d -m 755 $RPM_BUILD_ROOT/etc/rpm
 cat >> $RPM_BUILD_ROOT/etc/rpm/macros.dist << EOF
 # dist macros.
 
@@ -62,18 +61,22 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%attr(0644,root,root) /etc/fedora-release
+%doc GPL 
+%config %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
 %dir /etc/yum.repos.d
 %config(noreplace) /etc/yum.repos.d/*
-%doc GPL 
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
-%config(noreplace) %attr(0644,root,root) /etc/rpm/macros.dist
+%config %attr(0644,root,root) /etc/rpm/macros.dist
 %dir /etc/pki/rpm-gpg
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Thu Jun 28 2007 Jesse Keating <jkeating@redhat.com> - 7.89-3
+- Cleanups from review
+- Don't (noreplace) the dist tag macro file
+
 * Tue Jun 19 2007 Jesse Keating <jkeating@redhat.com> - 7.89-2
 - Define the dist macros in this package since we define everyting else here
 
