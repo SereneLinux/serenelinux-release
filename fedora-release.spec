@@ -3,8 +3,8 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	7.89
-Release:	3
+Version:	7.90
+Release:	1
 License:	GPL
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -74,6 +74,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Thu Jul 27 2007 Jesse Keating <jkeating@redhat.com> - 7.90-1
+- Bump for F8 Test1
+
 * Thu Jun 28 2007 Jesse Keating <jkeating@redhat.com> - 7.89-3
 - Cleanups from review
 - Don't (noreplace) the dist tag macro file
