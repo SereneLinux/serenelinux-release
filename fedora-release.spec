@@ -3,14 +3,15 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	7.90
+Version:	7.91
 Release:	1
-License:	GPL
+License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
 Source:		%{name}-%{version}.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
+Provides:	system-release = %{version}-%{release}
 Requires:	fedora-release-notes >= 7
 # We require release notes to make sure that they don't get dropped during
 # upgrades, and just because we always want the release notes available
@@ -36,6 +37,7 @@ echo "Kernel \r on an \m" >> $RPM_BUILD_ROOT/etc/issue
 cp -p $RPM_BUILD_ROOT/etc/issue $RPM_BUILD_ROOT/etc/issue.net
 echo >> $RPM_BUILD_ROOT/etc/issue
 ln -s fedora-release $RPM_BUILD_ROOT/etc/redhat-release
+ln -s fedora-release $RPM_BUILD_ROOT/etc/system-release
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
 for file in RPM-GPG-KEY* ; do
@@ -65,6 +67,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc GPL 
 %config %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
+/etc/system-release
 %dir /etc/yum.repos.d
 %config(noreplace) /etc/yum.repos.d/*
 %config(noreplace) %attr(0644,root,root) /etc/issue
@@ -74,6 +77,12 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Thu Aug 30 2007 Jesse Keating <jkeating@redhat.com> - 7.91-1
+- Provide system-release, useful for spinoffs.
+- Also link system-release to fedora-release for file level checks
+- Bump for F8 Test2
+- Fix license tag
+
 * Thu Jul 27 2007 Jesse Keating <jkeating@redhat.com> - 7.90-1
 - Bump for F8 Test1
 
