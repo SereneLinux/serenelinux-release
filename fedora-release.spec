@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	7.91
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -77,6 +77,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Fri Sep 14 2007 Jesse Keating <jkeating@redhat.com> - 7.91-2
+- Use failovermethod=priority in yum configs (243698)
+
 * Thu Aug 30 2007 Jesse Keating <jkeating@redhat.com> - 7.91-1
 - Provide system-release, useful for spinoffs.
 - Also link system-release to fedora-release for file level checks
