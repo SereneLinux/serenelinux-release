@@ -3,8 +3,8 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	7.91
-Release:	2
+Version:	7.92
+Release:	1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -49,6 +49,11 @@ for file in fedora*repo ; do
   install -m 644 $file $RPM_BUILD_ROOT/etc/yum.repos.d
 done
 
+install -d -m 755 $RPM_BUILD_ROOT/%{_datadir}/%{name}
+for file in compose/*; do
+  install -m 644 $file $RPM_BUILD_ROOT/%{_datadir}/%{name}
+done
+
 # Set up the dist tag macros
 install -d -m 755 $RPM_BUILD_ROOT/etc/rpm
 cat >> $RPM_BUILD_ROOT/etc/rpm/macros.dist << EOF
@@ -73,10 +78,16 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
 %config %attr(0644,root,root) /etc/rpm/macros.dist
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/*
 %dir /etc/pki/rpm-gpg
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Fri Sep 28 2007 Jesse Keating <jkeating@redhat.com> - 7.92-1
+- Bump for F8 Test2.
+- Package up the compose kickstart files
+
 * Fri Sep 14 2007 Jesse Keating <jkeating@redhat.com> - 7.91-2
 - Use failovermethod=priority in yum configs (243698)
 
