@@ -1,9 +1,9 @@
 %define release_name Rawhide
-%define dist_version 8
+%define dist_version 9
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	7.92
+Version:	8.90
 Release:	1
 License:	GPLv2
 Group:		System Environment/Base
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Wed Oct 03 2007 Jesse Keating <jkeating@redhat.com> - 8.90-1
+- First build for Fedora 9 development.
+
 * Fri Sep 28 2007 Jesse Keating <jkeating@redhat.com> - 7.92-1
 - Bump for F8 Test2.
 - Package up the compose kickstart files
