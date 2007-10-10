@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	7.92
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Wed Oct 10 2007 Jesse Keating <jkeating@redhat.com> - 7.92-2
+- Add gpg info to development repos
+
 * Fri Sep 28 2007 Jesse Keating <jkeating@redhat.com> - 7.92-1
 - Bump for F8 Test2.
 - Package up the compose kickstart files
