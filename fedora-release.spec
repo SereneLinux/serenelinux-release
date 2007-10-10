@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	8.90
-Release:	2
+Release:	3
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Wed Oct 10 2007 Jesse Keating <jkeating@redhat.com> - 8.90-3
+- Bump for cvs oopsie
+
 * Wed Oct 10 2007 Jesse Keating <jkeating@redhat.com> - 8.90-2
 - Add the gpg info to the devel repo
 
