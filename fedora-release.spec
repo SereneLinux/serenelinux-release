@@ -1,10 +1,10 @@
-%define release_name Rawhide
+%define release_name Werewolf
 %define dist_version 8
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	7.92
-Release:	2
+Version:	8
+Release:	1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Fri Oct 19 2007 Jesse Keating <jkeating@redhat.com> - 8-1
+- Build for Fedora 8, add release name, update compose configs
+
 * Wed Oct 10 2007 Jesse Keating <jkeating@redhat.com> - 7.92-2
 - Add gpg info to development repos
 
