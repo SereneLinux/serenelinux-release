@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	8
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Fri Oct 19 2007 Jesse Keating <jkeating@redhat.com> - 8-2
+- Disable development, enable release/updates.
+
 * Fri Oct 19 2007 Jesse Keating <jkeating@redhat.com> - 8-1
 - Build for Fedora 8, add release name, update compose configs
 
