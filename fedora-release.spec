@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	8
-Release:	3
+Release:	4
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Wed Dec 12 2007 Jesse Keating <jkeating@redhat.com> - 8-4
+- Change the urls in the compose configs to point to Fedora 8, not rawhide.
+
 * Mon Oct 29 2007 Jesse Keating <jkeating@redhat.com> - 8-3
 - Update the compose configs
 
