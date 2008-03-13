@@ -3,8 +3,8 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	8.90
-Release:	3
+Version:	8.92
+Release:	1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -12,7 +12,7 @@ Source:		%{name}-%{version}.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
-Requires:	fedora-release-notes >= 7
+Requires:	fedora-release-notes >= 8
 # We require release notes to make sure that they don't get dropped during
 # upgrades, and just because we always want the release notes available
 # instead of explicitly asked for
@@ -32,8 +32,9 @@ define the release.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc
 echo "Fedora release %{version} (%{release_name})" > $RPM_BUILD_ROOT/etc/fedora-release
+echo "cpe://o:fedora_project:fedora:%{version}" > $RPM_BUILD_ROOT/etc/system-release-cpe
 cp -p $RPM_BUILD_ROOT/etc/fedora-release $RPM_BUILD_ROOT/etc/issue
-echo "Kernel \r on an \m" >> $RPM_BUILD_ROOT/etc/issue
+echo "Kernel \r on an \m (\l)" >> $RPM_BUILD_ROOT/etc/issue
 cp -p $RPM_BUILD_ROOT/etc/issue $RPM_BUILD_ROOT/etc/issue.net
 echo >> $RPM_BUILD_ROOT/etc/issue
 ln -s fedora-release $RPM_BUILD_ROOT/etc/redhat-release
@@ -73,6 +74,7 @@ rm -rf $RPM_BUILD_ROOT
 %config %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
 /etc/system-release
+/etc/system-release-cpe
 %dir /etc/yum.repos.d
 %config(noreplace) /etc/yum.repos.d/*
 %config(noreplace) %attr(0644,root,root) /etc/issue
@@ -84,6 +86,13 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Thu Mar 13 2008 Jesse Keating <jkeating@redhat.com> - 8.92-1
+- Update for 9 Beta
+- Update the compose files for 9 Beta
+- Add system-release-cpe (from Mark Cox)
+- Add terminal to issue (#436387)
+- Rename development to rawhide where appropriate.
+
 * Wed Oct 10 2007 Jesse Keating <jkeating@redhat.com> - 8.90-3
 - Bump for cvs oopsie
 
