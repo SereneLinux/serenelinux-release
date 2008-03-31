@@ -1,9 +1,9 @@
 %define release_name Rawhide
-%define dist_version 9
+%define dist_version 10
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	8.92
+Version:	9.90
 Release:	1
 License:	GPLv2
 Group:		System Environment/Base
@@ -86,6 +86,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon Mar 31 2008 Jesse Keating <jkeating@redhat.com> - 9.90-1
+- Update for Fedora 10 rawhide.
+
 * Thu Mar 13 2008 Jesse Keating <jkeating@redhat.com> - 8.92-1
 - Update for 9 Beta
 - Update the compose files for 9 Beta
