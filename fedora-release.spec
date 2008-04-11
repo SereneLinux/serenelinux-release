@@ -3,7 +3,7 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	8.92
+Version:	8.93
 Release:	1
 License:	GPLv2
 Group:		System Environment/Base
@@ -86,6 +86,10 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Fri Apr 11 2008 Jesse Keating <jkeating@redhat.com> - 8.93-1
+- Update for preview release
+- Turn off rawhide, turn on others, rely on mirrormanager redirection
+
 * Thu Mar 13 2008 Jesse Keating <jkeating@redhat.com> - 8.92-1
 - Update for 9 Beta
 - Update the compose files for 9 Beta
