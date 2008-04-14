@@ -1,13 +1,13 @@
-%define release_name Rawhide
-%define dist_version 9
+%define release_name Joyride
+%define dist_version 3
 
-Summary:	Fedora release files
+Summary:	OLPC release files
 Name:		fedora-release
 Version:	8.93
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
-URL:		http://fedoraproject.org
+URL:		http://laptop.org
 Source:		%{name}-%{version}.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
@@ -31,14 +31,15 @@ define the release.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc
-echo "Fedora release %{version} (%{release_name})" > $RPM_BUILD_ROOT/etc/fedora-release
-echo "cpe://o:fedora_project:fedora:%{version}" > $RPM_BUILD_ROOT/etc/system-release-cpe
-cp -p $RPM_BUILD_ROOT/etc/fedora-release $RPM_BUILD_ROOT/etc/issue
+echo "OLPC release %{version} (%{release_name})" > $RPM_BUILD_ROOT/etc/olpc-release
+echo "cpe://o:olpc_project:olpc:%{version}" > $RPM_BUILD_ROOT/etc/system-release-cpe
+cp -p $RPM_BUILD_ROOT/etc/olpc-release $RPM_BUILD_ROOT/etc/issue
 echo "Kernel \r on an \m (\l)" >> $RPM_BUILD_ROOT/etc/issue
 cp -p $RPM_BUILD_ROOT/etc/issue $RPM_BUILD_ROOT/etc/issue.net
 echo >> $RPM_BUILD_ROOT/etc/issue
-ln -s fedora-release $RPM_BUILD_ROOT/etc/redhat-release
-ln -s fedora-release $RPM_BUILD_ROOT/etc/system-release
+ln -s olpc-release $RPM_BUILD_ROOT/etc/fedora-release
+ln -s olpc-release $RPM_BUILD_ROOT/etc/redhat-release
+ln -s olpc-release $RPM_BUILD_ROOT/etc/system-release
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
 for file in RPM-GPG-KEY* ; do
@@ -60,9 +61,10 @@ install -d -m 755 $RPM_BUILD_ROOT/etc/rpm
 cat >> $RPM_BUILD_ROOT/etc/rpm/macros.dist << EOF
 # dist macros.
 
-%%fedora		%{dist_version}
-%%dist		.fc%{dist_version}
-%%fc%{dist_version}		1
+%%fedora		9
+%%olpc			%{dist_version}
+%%dist		.olpc%{dist_version}
+%%olpc%{dist_version}		1
 EOF
 
 %clean
@@ -71,7 +73,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc GPL 
-%config %attr(0644,root,root) /etc/fedora-release
+%config %attr(0644,root,root) /etc/olpc-release
+/etc/fedora-release
 /etc/redhat-release
 /etc/system-release
 /etc/system-release-cpe
@@ -86,6 +89,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon Apr 14 2008 Dennis Gilmore <dennis@laptop.org> - 8.93-2
+- setup for olpc
+
 * Fri Apr 11 2008 Jesse Keating <jkeating@redhat.com> - 8.93-1
 - Update for preview release
 - Turn off rawhide, turn on others, rely on mirrormanager redirection
