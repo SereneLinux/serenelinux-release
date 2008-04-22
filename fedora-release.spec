@@ -3,14 +3,13 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	8.93
-Release:	1
+Version:	9
+Release:	0.1.rc
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
 Source:		%{name}-%{version}.tar.gz
-Obsoletes:	redhat-release
-Provides:	redhat-release
+Provides:	redhat-release = %{version}-%{release}
 Provides:	system-release = %{version}-%{release}
 Requires:	fedora-release-notes >= 8
 # We require release notes to make sure that they don't get dropped during
@@ -86,6 +85,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Tue Apr 22 2008 Jesse Keating <jkeating@redhat.com> - 9-0.1.rc
+- Make version 9 for yum, rpm version clearly a pre-release.
+
 * Fri Apr 11 2008 Jesse Keating <jkeating@redhat.com> - 8.93-1
 - Update for preview release
 - Turn off rawhide, turn on others, rely on mirrormanager redirection
