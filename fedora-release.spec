@@ -1,17 +1,17 @@
-%define release_name Rawhide
+%define release_name Sulphur
 %define dist_version 9
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	9
-Release:	0.1.rc
+Release:	1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
 Source:		%{name}-%{version}.tar.gz
 Provides:	redhat-release = %{version}-%{release}
 Provides:	system-release = %{version}-%{release}
-Requires:	fedora-release-notes >= 8
+Requires:	fedora-release-notes >= 9
 # We require release notes to make sure that they don't get dropped during
 # upgrades, and just because we always want the release notes available
 # instead of explicitly asked for
@@ -85,6 +85,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Thu May 01 2008 Jesse Keating <jkeating@redhat.com> - 9-1
+- Make the final package, set the release name.
+
 * Tue Apr 22 2008 Jesse Keating <jkeating@redhat.com> - 9-0.1.rc
 - Make version 9 for yum, rpm version clearly a pre-release.
 
