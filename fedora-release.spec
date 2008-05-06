@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	9
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -85,6 +85,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Tue May 06 2008 Jesse Keating <jkeating@redhat.com> - 9-2
+- Update compose files with changes needed during release candidates
+
 * Thu May 01 2008 Jesse Keating <jkeating@redhat.com> - 9-1
 - Make the final package, set the release name.
 
