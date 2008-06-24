@@ -3,7 +3,7 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	9.90
+Version:	9.90.1
 Release:	1
 License:	GPLv2
 Group:		System Environment/Base
@@ -41,9 +41,20 @@ ln -s fedora-release $RPM_BUILD_ROOT/etc/redhat-release
 ln -s fedora-release $RPM_BUILD_ROOT/etc/system-release
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
-for file in RPM-GPG-KEY* ; do
-	install -m 644 $file $RPM_BUILD_ROOT/etc/pki/rpm-gpg
+
+install -m 644 RPM-GPG-KEY* $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
+
+# Install all the keys, link the primary keys to primary arch files
+# and to compat generic location
+pushd $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
+for arch in i386 x86_64 ppc ppc64
+  do
+  ln -s RPM-GPG-KEY-fedora-primary RPM-GPG-KEY-fedora-$arch
+  ln -s RPM-GPG-KEY-fedora-test-primary RPM-GPG-KEY-fedora-test-$arch
 done
+ln -s RPM-GPG-KEY-fedora-primary RPM-GPG-KEY-fedora
+ln -s RPM-GPG-KEY-fedora-test-primary RPM-GPG-KEY-fedora-test
+popd
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
 for file in fedora*repo ; do
@@ -74,7 +85,7 @@ rm -rf $RPM_BUILD_ROOT
 %config %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
 /etc/system-release
-/etc/system-release-cpe
+%config %attr(0644,root,root) /etc/system-release-cpe
 %dir /etc/yum.repos.d
 %config(noreplace) /etc/yum.repos.d/*
 %config(noreplace) %attr(0644,root,root) /etc/issue
@@ -86,6 +97,11 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Wed Jun 11 2008 Jesse Keating <jkeating@redhat.com> - 9.90-2
+- Package up the ia64 key as the first secondary arch
+- Mark config files correctly
+- Stop using download.fedora.redhat.com and use download.fedoraproject.org instead
+
 * Mon Mar 31 2008 Jesse Keating <jkeating@redhat.com> - 9.90-1
 - Update for Fedora 10 rawhide.
 
