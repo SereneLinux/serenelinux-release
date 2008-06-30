@@ -3,8 +3,8 @@
 
 Summary:	OLPC release files
 Name:		fedora-release
-Version:	8.93
-Release:	2
+Version:	9
+Release:	1.1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://laptop.org
@@ -89,6 +89,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon Jun 30 2008 Dennis Gilmore <dennis@laptop.org> - 9-1.1
+- update releasever to 9
+
 * Mon Apr 14 2008 Dennis Gilmore <dennis@laptop.org> - 8.93-2
 - setup for olpc
 
