@@ -1,18 +1,17 @@
 %define release_name Joyride
 %define dist_version 3
 
-Summary:	OLPC release files
+Summary:	Fedora release files
 Name:		fedora-release
 Version:	9
-Release:	1.1
+Release:	3.1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://laptop.org
 Source:		%{name}-%{version}.tar.gz
-Obsoletes:	redhat-release
-Provides:	redhat-release
+Provides:	redhat-release = %{version}-%{release}
 Provides:	system-release = %{version}-%{release}
-Requires:	fedora-release-notes >= 8
+#Requires:	fedora-release-notes >= 9
 # We require release notes to make sure that they don't get dropped during
 # upgrades, and just because we always want the release notes available
 # instead of explicitly asked for
@@ -31,20 +30,31 @@ define the release.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc
-echo "OLPC release %{version} (%{release_name})" > $RPM_BUILD_ROOT/etc/olpc-release
+echo "8.2" > $RPM_BUILD_ROOT/etc/olpc-release
+echo "OLPC release %{version} (%{release_name})" > $RPM_BUILD_ROOT/etc/fedora-release
 echo "cpe://o:olpc_project:olpc:%{version}" > $RPM_BUILD_ROOT/etc/system-release-cpe
-cp -p $RPM_BUILD_ROOT/etc/olpc-release $RPM_BUILD_ROOT/etc/issue
+cp -p $RPM_BUILD_ROOT/etc/fedora-release $RPM_BUILD_ROOT/etc/issue
 echo "Kernel \r on an \m (\l)" >> $RPM_BUILD_ROOT/etc/issue
 cp -p $RPM_BUILD_ROOT/etc/issue $RPM_BUILD_ROOT/etc/issue.net
 echo >> $RPM_BUILD_ROOT/etc/issue
-ln -s olpc-release $RPM_BUILD_ROOT/etc/fedora-release
-ln -s olpc-release $RPM_BUILD_ROOT/etc/redhat-release
-ln -s olpc-release $RPM_BUILD_ROOT/etc/system-release
+ln -s fedora-release $RPM_BUILD_ROOT/etc/redhat-release
+ln -s fedora-release $RPM_BUILD_ROOT/etc/system-release
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
-for file in RPM-GPG-KEY* ; do
-	install -m 644 $file $RPM_BUILD_ROOT/etc/pki/rpm-gpg
+
+install -m 644 RPM-GPG-KEY* $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
+
+# Install all the keys, link the primary keys to primary arch files
+# and to compat generic location
+pushd $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
+for arch in i386 x86_64 ppc ppc64
+  do
+  ln -s RPM-GPG-KEY-fedora-primary RPM-GPG-KEY-fedora-$arch
+  ln -s RPM-GPG-KEY-fedora-test-primary RPM-GPG-KEY-fedora-test-$arch
 done
+ln -s RPM-GPG-KEY-fedora-primary RPM-GPG-KEY-fedora
+ln -s RPM-GPG-KEY-fedora-test-primary RPM-GPG-KEY-fedora-test
+popd
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
 for file in fedora*repo ; do
@@ -74,10 +84,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc GPL 
 %config %attr(0644,root,root) /etc/olpc-release
-/etc/fedora-release
+%config %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
 /etc/system-release
-/etc/system-release-cpe
+%config %attr(0644,root,root) /etc/system-release-cpe
 %dir /etc/yum.repos.d
 %config(noreplace) /etc/yum.repos.d/*
 %config(noreplace) %attr(0644,root,root) /etc/issue
@@ -89,11 +99,23 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
-* Mon Jun 30 2008 Dennis Gilmore <dennis@laptop.org> - 9-1.1
-- update releasever to 9
+* Fri Sep 05 2008 C. Scott Ananian <cscott@laptop.org> - 9-3.1
+- OLPC-local changes.
 
-* Mon Apr 14 2008 Dennis Gilmore <dennis@laptop.org> - 8.93-2
-- setup for olpc
+* Wed Jun 25 2008 Jesse Keating <jkeating@redhat.com> - 9-3
+- Add ia64 key
+- Fix config file markings
+- Stop using download.fedora.redhat.com in favor of download.fedoraproject.org
+- Reference GPG keys by arch
+
+* Tue May 06 2008 Jesse Keating <jkeating@redhat.com> - 9-2
+- Update compose files with changes needed during release candidates
+
+* Thu May 01 2008 Jesse Keating <jkeating@redhat.com> - 9-1
+- Make the final package, set the release name.
+
+* Tue Apr 22 2008 Jesse Keating <jkeating@redhat.com> - 9-0.1.rc
+- Make version 9 for yum, rpm version clearly a pre-release.
 
 * Fri Apr 11 2008 Jesse Keating <jkeating@redhat.com> - 8.93-1
 - Update for preview release
