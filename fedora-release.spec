@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	8
-Release:	5
+Release:	6.transition
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon Sep 08 2008 Warren Togami <wtogami@redhat.com> - 8-6
+- transition into new key for Fedora 8 and 9
+
 * Wed Dec 12 2007 Jesse Keating <jkeating@redhat.com> - 8-5
 - Change the urls in the compose configs to point to Fedora 8, not rawhide.
 - Remove the "core" from updates-testing-source
