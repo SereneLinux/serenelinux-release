@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	9
-Release:	3
+Release:	4.transition
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -53,6 +53,14 @@ for arch in i386 x86_64 ppc ppc64
 done
 ln -s RPM-GPG-KEY-fedora-primary RPM-GPG-KEY-fedora
 ln -s RPM-GPG-KEY-fedora-test-primary RPM-GPG-KEY-fedora-test
+# Do the same for newkey
+for arch in i386 x86_64 ppc ppc64
+  do
+  ln -s RPM-GPG-KEY-fedora-8-and-9-primary      RPM-GPG-KEY-fedora-8-and-9-$arch
+  ln -s RPM-GPG-KEY-fedora-test-8-and-9-primary RPM-GPG-KEY-fedora-test-8-and-9-$arch
+done
+ln -s RPM-GPG-KEY-fedora-8-and-9-primary      RPM-GPG-KEY-fedora-8-and-9
+ln -s RPM-GPG-KEY-fedora-test-8-and-9-primary RPM-GPG-KEY-fedora-test-8-and-9
 popd
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
@@ -96,6 +104,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Fri Sep 05 2008 Warren Togami <wtogami@redhat.com> - 9-4.transition
+- transition state between old and new key
+
 * Wed Jun 25 2008 Jesse Keating <jkeating@redhat.com> - 9-3
 - Add ia64 key
 - Fix config file markings
