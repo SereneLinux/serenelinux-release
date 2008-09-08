@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	9
-Release:	4.transition
+Release:	5.transition
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -104,7 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
-* Fri Sep 05 2008 Warren Togami <wtogami@redhat.com> - 9-4.transition
+* Mon Sep 08 2008 Warren Togami <wtogami@redhat.com> - 9-5.transition
 - transition state between old and new key
 
 * Wed Jun 25 2008 Jesse Keating <jkeating@redhat.com> - 9-3
