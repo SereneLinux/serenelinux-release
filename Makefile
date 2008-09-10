@@ -1,7 +1,8 @@
 # Makefile for source rpm: fedora-release
-# $Id: Makefile,v 1.2 2007/10/15 18:44:51 notting Exp $
+# $Id: Makefile,v 1.3 2008/09/10 22:26:31 cscott Exp $
 NAME := fedora-release
 SPECFILE = $(firstword $(wildcard *.spec))
+MOCKCFG = olpc-3-i386
 
 define find-makefile-common
 for d in common ../common ../../common ; do if [ -f $$d/Makefile.common ] ; then if [ -f $$d/CVS/Root -a -w $$/Makefile.common ] ; then cd $$d ; cvs -Q update ; fi ; echo "$$d/Makefile.common" ; break ; fi ; done

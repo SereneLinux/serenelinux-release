@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	9
-Release:	3.1
+Release:	5.transition.1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://laptop.org
@@ -54,6 +54,14 @@ for arch in i386 x86_64 ppc ppc64
 done
 ln -s RPM-GPG-KEY-fedora-primary RPM-GPG-KEY-fedora
 ln -s RPM-GPG-KEY-fedora-test-primary RPM-GPG-KEY-fedora-test
+# Do the same for newkey
+for arch in i386 x86_64 ppc ppc64
+  do
+  ln -s RPM-GPG-KEY-fedora-8-and-9-primary      RPM-GPG-KEY-fedora-8-and-9-$arch
+  ln -s RPM-GPG-KEY-fedora-test-8-and-9-primary RPM-GPG-KEY-fedora-test-8-and-9-$arch
+done
+ln -s RPM-GPG-KEY-fedora-8-and-9-primary      RPM-GPG-KEY-fedora-8-and-9
+ln -s RPM-GPG-KEY-fedora-test-8-and-9-primary RPM-GPG-KEY-fedora-test-8-and-9
 popd
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
@@ -99,6 +107,12 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Wed Sep 10 2008 C. Scott Ananian <cscott@laptop.org> - 9-5.transition.1
+- Update OLPC fork to 5.transition.
+
+* Mon Sep 08 2008 Warren Togami <wtogami@redhat.com> - 9-5.transition
+- transition state between old and new key
+
 * Fri Sep 05 2008 C. Scott Ananian <cscott@laptop.org> - 9-3.1
 - OLPC-local changes.
 
