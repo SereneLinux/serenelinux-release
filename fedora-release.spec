@@ -3,7 +3,7 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	9.90.1
+Version:	9.91
 Release:	1
 License:	GPLv2
 Group:		System Environment/Base
@@ -49,11 +49,11 @@ install -m 644 RPM-GPG-KEY* $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 pushd $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 for arch in i386 x86_64 ppc ppc64
   do
-  ln -s RPM-GPG-KEY-fedora-primary RPM-GPG-KEY-fedora-$arch
-  ln -s RPM-GPG-KEY-fedora-test-primary RPM-GPG-KEY-fedora-test-$arch
+  ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-$arch
+  ln -s RPM-GPG-KEY-fedora-test-%{dist_version}-primary RPM-GPG-KEY-fedora-test-$arch
 done
-ln -s RPM-GPG-KEY-fedora-primary RPM-GPG-KEY-fedora
-ln -s RPM-GPG-KEY-fedora-test-primary RPM-GPG-KEY-fedora-test
+ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora
+ln -s RPM-GPG-KEY-fedora-test-%{dist_version}-primary RPM-GPG-KEY-fedora-test
 popd
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
@@ -97,6 +97,13 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon Sep 15 2008 Jesse Keating <jkeating@redhat.com> - 9.91-1
+- Update for Fedora 10 beta
+- Add the new keys for F10
+- Remove F8/9 keys
+- Update compose configs
+- Clarify rawhide repo definition
+
 * Wed Jun 11 2008 Jesse Keating <jkeating@redhat.com> - 9.90-2
 - Package up the ia64 key as the first secondary arch
 - Mark config files correctly
