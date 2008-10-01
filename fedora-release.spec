@@ -1,9 +1,9 @@
 %define release_name Rawhide
-%define dist_version 10
+%define dist_version 11
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	9.91
+Version:	10.90
 Release:	1
 License:	GPLv2
 Group:		System Environment/Base
@@ -97,6 +97,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Wed Oct 01 2008 Jesse Keating <jkeating@redhat.com> - 10.90-1
+- Initial build for Fedora 11.
+
 * Mon Sep 15 2008 Jesse Keating <jkeating@redhat.com> - 9.91-1
 - Update for Fedora 10 beta
 - Add the new keys for F10
