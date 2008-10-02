@@ -3,7 +3,7 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	9.91
+Version:	9.92
 Release:	1
 License:	GPLv2
 Group:		System Environment/Base
@@ -97,6 +97,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Thu Oct 02 2008 Jesse Keating <jkeating@redhat.com> - 9.92-1
+- Make the release version correct for 10-Beta.
+
 * Mon Sep 15 2008 Jesse Keating <jkeating@redhat.com> - 9.91-1
 - Update for Fedora 10 beta
 - Add the new keys for F10
