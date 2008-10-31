@@ -3,7 +3,7 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	9.92
+Version:	9.93
 Release:	1
 License:	GPLv2
 Group:		System Environment/Base
@@ -12,7 +12,7 @@ Source:		%{name}-%{version}.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
-Requires:	fedora-release-notes >= 8
+Requires:	fedora-release-notes >= 9
 # We require release notes to make sure that they don't get dropped during
 # upgrades, and just because we always want the release notes available
 # instead of explicitly asked for
@@ -61,11 +61,6 @@ for file in fedora*repo ; do
   install -m 644 $file $RPM_BUILD_ROOT/etc/yum.repos.d
 done
 
-install -d -m 755 $RPM_BUILD_ROOT/%{_datadir}/%{name}
-for file in compose/*; do
-  install -m 644 $file $RPM_BUILD_ROOT/%{_datadir}/%{name}
-done
-
 # Set up the dist tag macros
 install -d -m 755 $RPM_BUILD_ROOT/etc/rpm
 cat >> $RPM_BUILD_ROOT/etc/rpm/macros.dist << EOF
@@ -91,12 +86,14 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
 %config %attr(0644,root,root) /etc/rpm/macros.dist
-%dir %{_datadir}/%{name}
-%{_datadir}/%{name}/*
 %dir /etc/pki/rpm-gpg
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Fri Oct 31 2008 jkeating <jkeating@redhat.com> 9.93-1
+- Update for Fedora 10 Preview
+- Remove compose content, that's now in spin-kickstarts
+
 * Thu Oct 02 2008 Jesse Keating <jkeating@redhat.com> - 9.92-1
 - Make the release version correct for 10-Beta.
 
@@ -237,4 +234,3 @@ rm -rf $RPM_BUILD_ROOT
 - Look, a changelog!
 - Removed duplicate html/css content from doc dir.
 - Add lynx as a buildreq
-
