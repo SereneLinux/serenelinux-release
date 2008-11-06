@@ -1,9 +1,9 @@
-%define release_name Rawhide
+%define release_name Cambridge
 %define dist_version 10
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	9.93
+Version:	10
 Release:	1
 License:	GPLv2
 Group:		System Environment/Base
@@ -12,7 +12,7 @@ Source:		%{name}-%{version}.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
-Requires:	fedora-release-notes >= 9
+Requires:	fedora-release-notes >= 10
 # We require release notes to make sure that they don't get dropped during
 # upgrades, and just because we always want the release notes available
 # instead of explicitly asked for
@@ -90,7 +90,13 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
-* Fri Oct 31 2008 jkeating <jkeating@redhat.com> 9.93-1
+* Fri Oct 31 2008 Jesse Keating <jkeating@redhat.com> - 10-1
+- Update for Fedora 10 release
+- Set name to Cambridge
+- Turn off rawhide, turn on fedora and fedora-updates
+- Fix preview changelog entry
+
+* Fri Oct 31 2008 Jesse Keating <jkeating@redhat.com> - 9.93-1
 - Update for Fedora 10 Preview
 - Remove compose content, that's now in spin-kickstarts
 
