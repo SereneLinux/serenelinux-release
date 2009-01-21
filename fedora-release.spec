@@ -3,7 +3,7 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	10.90
+Version:	10.91
 Release:	1
 License:	GPLv2
 Group:		System Environment/Base
@@ -12,7 +12,7 @@ Source:		%{name}-%{version}.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
-Requires:	fedora-release-notes >= 8
+Requires:	fedora-release-notes >= 10
 # We require release notes to make sure that they don't get dropped during
 # upgrades, and just because we always want the release notes available
 # instead of explicitly asked for
@@ -97,6 +97,10 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Wed Jan 21 2009 Jesse Keating <jkeating@redhat.com> - 10.91-1
+- Update for Fedora 11 Alpha
+- Use metalink urls to get mirror information
+
 * Wed Oct 01 2008 Jesse Keating <jkeating@redhat.com> - 10.90-1
 - Initial build for Fedora 11.
 
