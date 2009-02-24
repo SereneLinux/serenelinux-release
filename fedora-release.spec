@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	10.91
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -97,6 +97,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Tue Feb 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 10.91-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
 * Wed Jan 21 2009 Jesse Keating <jkeating@redhat.com> - 10.91-1
 - Update for Fedora 11 Alpha
 - Use metalink urls to get mirror information
