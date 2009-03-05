@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	10.91
-Release:	3
+Release:	4
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -12,10 +12,6 @@ Source:		%{name}-%{version}.tar.gz
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
-Requires:	fedora-release-notes >= 10
-# We require release notes to make sure that they don't get dropped during
-# upgrades, and just because we always want the release notes available
-# instead of explicitly asked for
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
@@ -97,6 +93,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Thu Mar 05 2009 Jesse Keating <jkeating@redhat.com> - 10.91-4
+- Drop req on fedora-release-notes (#483018)
+
 * Tue Mar 03 2009 Jesse Keating <jkeating@redhat.com> - 10.91-3
 - Move metalink urls to mirrorlist for helping anaconda
 
