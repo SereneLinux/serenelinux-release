@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	10.91
-Release:	2
+Release:	3
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -32,7 +32,7 @@ define the release.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc
 echo "Fedora release %{version} (%{release_name})" > $RPM_BUILD_ROOT/etc/fedora-release
-echo "cpe://o:fedora_project:fedora:%{version}" > $RPM_BUILD_ROOT/etc/system-release-cpe
+echo "cpe:/o:fedoraproject:fedora:%{version}" > $RPM_BUILD_ROOT/etc/system-release-cpe
 cp -p $RPM_BUILD_ROOT/etc/fedora-release $RPM_BUILD_ROOT/etc/issue
 echo "Kernel \r on an \m (\l)" >> $RPM_BUILD_ROOT/etc/issue
 cp -p $RPM_BUILD_ROOT/etc/issue $RPM_BUILD_ROOT/etc/issue.net
@@ -97,8 +97,14 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Tue Mar 03 2009 Jesse Keating <jkeating@redhat.com> - 10.91-3
+- Move metalink urls to mirrorlist for helping anaconda
+
 * Tue Feb 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 10.91-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
+* Wed Feb 04 2009 Jesse Keating <jkeating@redhat.com> - 10.91-1
+- Use the correct CPE name (#481287)
 
 * Wed Jan 21 2009 Jesse Keating <jkeating@redhat.com> - 10.91-1
 - Update for Fedora 11 Alpha
