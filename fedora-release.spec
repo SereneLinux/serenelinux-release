@@ -3,8 +3,8 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	10.91
-Release:	4
+Version:	10.92
+Release:	1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -93,6 +93,10 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon Mar 09 2009 Jesse Keating <jkeating@redhat.com> - 10.92-1
+- Bump for F11 Beta
+- Add the (giant) F11 Test key
+
 * Thu Mar 05 2009 Jesse Keating <jkeating@redhat.com> - 10.91-4
 - Drop req on fedora-release-notes (#483018)
 
