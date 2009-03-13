@@ -4,11 +4,12 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	9
-Release:	5.transition
+Release:	6.transition
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
 Source:		%{name}-%{version}.tar.gz
+Source2:	RPM-GPG-KEY-fedora-9-sparc
 Provides:	redhat-release = %{version}-%{release}
 Provides:	system-release = %{version}-%{release}
 Requires:	fedora-release-notes >= 9
@@ -42,6 +43,7 @@ ln -s fedora-release $RPM_BUILD_ROOT/etc/system-release
 install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
 
 install -m 644 RPM-GPG-KEY* $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 
 # Install all the keys, link the primary keys to primary arch files
 # and to compat generic location
@@ -51,6 +53,11 @@ for arch in i386 x86_64 ppc ppc64
   ln -s RPM-GPG-KEY-fedora-primary RPM-GPG-KEY-fedora-$arch
   ln -s RPM-GPG-KEY-fedora-test-primary RPM-GPG-KEY-fedora-test-$arch
 done
+for arch in sparc sparc64
+  do 
+  ln -s RPM-GPG-KEY-fedora-9-sparc RPM-GPG-KEY-fedora-$arch
+  ln -s RPM-GPG-KEY-fedora-9-sparc RPM-GPG-KEY-fedora-test-$arch
+done  
 ln -s RPM-GPG-KEY-fedora-primary RPM-GPG-KEY-fedora
 ln -s RPM-GPG-KEY-fedora-test-primary RPM-GPG-KEY-fedora-test
 # Do the same for newkey
@@ -59,6 +66,11 @@ for arch in i386 x86_64 ppc ppc64
   ln -s RPM-GPG-KEY-fedora-8-and-9-primary      RPM-GPG-KEY-fedora-8-and-9-$arch
   ln -s RPM-GPG-KEY-fedora-test-8-and-9-primary RPM-GPG-KEY-fedora-test-8-and-9-$arch
 done
+for arch in sparc sparc64
+  do 
+  ln -s RPM-GPG-KEY-fedora-9-sparc RPM-GPG-KEY-fedora-8-and-9-$arch
+  ln -s RPM-GPG-KEY-fedora-9-sparc RPM-GPG-KEY-fedora-test-8-and-9-$arch
+done  
 ln -s RPM-GPG-KEY-fedora-8-and-9-primary      RPM-GPG-KEY-fedora-8-and-9
 ln -s RPM-GPG-KEY-fedora-test-8-and-9-primary RPM-GPG-KEY-fedora-test-8-and-9
 popd
@@ -104,6 +116,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Fri Mar 13 2009 Dennis Gilmore <dennis@ausil.us> - 9.6.transition
+- add sparc key 
+
 * Mon Sep 08 2008 Warren Togami <wtogami@redhat.com> - 9-5.transition
 - transition state between old and new key
 
