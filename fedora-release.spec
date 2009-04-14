@@ -1,9 +1,9 @@
-%define release_name Rawhide
+%define release_name Leonidas
 %define dist_version 11
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	10.92
+Version:	10.93
 Release:	1
 License:	GPLv2
 Group:		System Environment/Base
@@ -93,6 +93,10 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Tue Apr 14 2009 Jesse Keating <jkeating@redhat.com> - 10.93-1
+- Bump for F11 Preview
+- Add the release name
+
 * Mon Mar 09 2009 Jesse Keating <jkeating@redhat.com> - 10.92-1
 - Bump for F11 Beta
 - Add the (giant) F11 Test key
