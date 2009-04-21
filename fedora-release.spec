@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	10.93
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -46,10 +46,8 @@ pushd $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 for arch in i386 x86_64 ppc ppc64
   do
   ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-$arch
-  ln -s RPM-GPG-KEY-fedora-test-%{dist_version}-primary RPM-GPG-KEY-fedora-test-$arch
 done
 ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora
-ln -s RPM-GPG-KEY-fedora-test-%{dist_version}-primary RPM-GPG-KEY-fedora-test
 popd
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
@@ -93,6 +91,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Tue Apr 21 2009 Jesse Keating <jkeating@redhat.com> - 10.93-2
+- Drop reference to the "test" key, we only do one key per release now
+
 * Tue Apr 14 2009 Jesse Keating <jkeating@redhat.com> - 10.93-1
 - Bump for F11 Preview
 - Add the release name
