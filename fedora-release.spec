@@ -3,8 +3,8 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	10.93
-Release:	2
+Version:	11
+Release:	1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -55,11 +55,6 @@ for file in fedora*repo ; do
   install -m 644 $file $RPM_BUILD_ROOT/etc/yum.repos.d
 done
 
-install -d -m 755 $RPM_BUILD_ROOT/%{_datadir}/%{name}
-for file in compose/*; do
-  install -m 644 $file $RPM_BUILD_ROOT/%{_datadir}/%{name}
-done
-
 # Set up the dist tag macros
 install -d -m 755 $RPM_BUILD_ROOT/etc/rpm
 cat >> $RPM_BUILD_ROOT/etc/rpm/macros.dist << EOF
@@ -85,12 +80,15 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
 %config %attr(0644,root,root) /etc/rpm/macros.dist
-%dir %{_datadir}/%{name}
-%{_datadir}/%{name}/*
 %dir /etc/pki/rpm-gpg
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon May 11 2009 Jesse Keating <jkeating@redhat.com> - 11-1
+- First attempt at release candidate.
+- Drop the compose configs, that's in spin-kickstarts
+- Enable fedora and updates repo, disable rawhide
+
 * Tue Apr 21 2009 Jesse Keating <jkeating@redhat.com> - 10.93-2
 - Drop reference to the "test" key, we only do one key per release now
 
