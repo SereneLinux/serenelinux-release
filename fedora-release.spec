@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	11.90
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -93,6 +93,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 11.90-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
 * Mon Mar 30 2009 Jesse Keating <jkeating@redhat.com> - 11.90-1
 - Build for F12 collection
 
