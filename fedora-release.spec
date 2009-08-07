@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	11.91
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Fri Aug 07 2009 Jesse Keating <jkeating@redhat.com> - 11.91-2
+- Fix the gpg key file name
+
 * Fri Aug 07 2009 Jesse Keating <jkeating@redhat.com> - 11.91-1
 - Update for F12-Alpha
 - Replace F11 key with F12
