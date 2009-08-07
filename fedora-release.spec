@@ -3,8 +3,8 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	11.90
-Release:	2
+Version:	11.91
+Release:	1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -46,20 +46,13 @@ pushd $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 for arch in i386 x86_64 ppc ppc64
   do
   ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-$arch
-  ln -s RPM-GPG-KEY-fedora-test-%{dist_version}-primary RPM-GPG-KEY-fedora-test-$arch
 done
 ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora
-ln -s RPM-GPG-KEY-fedora-test-%{dist_version}-primary RPM-GPG-KEY-fedora-test
 popd
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
 for file in fedora*repo ; do
   install -m 644 $file $RPM_BUILD_ROOT/etc/yum.repos.d
-done
-
-install -d -m 755 $RPM_BUILD_ROOT/%{_datadir}/%{name}
-for file in compose/*; do
-  install -m 644 $file $RPM_BUILD_ROOT/%{_datadir}/%{name}
 done
 
 # Set up the dist tag macros
@@ -87,14 +80,16 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
 %config %attr(0644,root,root) /etc/rpm/macros.dist
-%dir %{_datadir}/%{name}
-%{_datadir}/%{name}/*
 %dir /etc/pki/rpm-gpg
 /etc/pki/rpm-gpg/*
 
 %changelog
-* Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 11.90-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+* Fri Aug 07 2009 Jesse Keating <jkeating@redhat.com> - 11.91-1
+- Update for F12-Alpha
+- Replace F11 key with F12
+- Drop old keys and inactive secondary arch keys
+- Fix metalink urls to be https
+- Drop the compose stuff
 
 * Mon Mar 30 2009 Jesse Keating <jkeating@redhat.com> - 11.90-1
 - Build for F12 collection
