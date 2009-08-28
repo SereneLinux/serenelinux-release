@@ -1,10 +1,10 @@
 %define release_name Rawhide
-%define dist_version 12
+%define dist_version 13
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	11.91
-Release:	3
+Version:	13
+Release:	0.1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -84,6 +84,10 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Thu Aug 27 2009 Jesse Keating <jkeating@redhat.com> - 13-0.1
+- Bump for Fedora 13's rawhide.
+- Put the version at 13 from the start.
+
 * Fri Aug 07 2009 Jesse Keating <jkeating@redhat.com> - 11.91-3
 - Bump for new tarball
 
