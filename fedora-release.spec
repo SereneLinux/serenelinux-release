@@ -3,8 +3,8 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	11.91
-Release:	3
+Version:	11.92
+Release:	1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon Oct 05 2009 Jesse Keating <jkeating@redhat.com> - 11.92-1
+- Bump for 12-Beta
+
 * Fri Aug 07 2009 Jesse Keating <jkeating@redhat.com> - 11.91-3
 - Bump for new tarball
 
