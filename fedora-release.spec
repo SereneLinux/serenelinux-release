@@ -1,9 +1,9 @@
-%define release_name Rawhide
+%define release_name Constantine
 %define dist_version 12
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	11.92
+Version:	12
 Release:	1
 License:	GPLv2
 Group:		System Environment/Base
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Mon Nov 02 2009 Jesse Keating <jkeating@redhat.com> - 12-1
+- Set up for Fedora 12
+
 * Mon Oct 05 2009 Jesse Keating <jkeating@redhat.com> - 11.92-1
 - Bump for 12-Beta
 
