@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	12
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Wed Nov 11 2009 Jesse Keating <jkeating@redhat.com> - 12-2
+- Fix key paths in repo files for updates-testing and rawhide
+
 * Mon Nov 02 2009 Jesse Keating <jkeating@redhat.com> - 12-1
 - Set up for Fedora 12
 
