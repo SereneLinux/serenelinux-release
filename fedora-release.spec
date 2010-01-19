@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	13
-Release:	0.1
+Release:	0.2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -84,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Tue Jan 19 2010 Jesse Keating <jkeating@redhat.com> - 13-0.2
+- Add the key for Fedora 13
+
 * Thu Aug 27 2009 Jesse Keating <jkeating@redhat.com> - 13-0.1
 - Bump for Fedora 13's rawhide.
 - Put the version at 13 from the start.
