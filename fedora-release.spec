@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	13
-Release:	0.3
+Release:	0.4
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -18,6 +18,14 @@ BuildArch:	noarch
 %description
 Fedora release files such as yum configs and various /etc/ files that
 define the release.
+
+%package rawhide
+Summary:        Rawhide repo definitions
+Requires:       fedora-release-%{version}-%{release}
+
+%description rawhide
+This package provides the rawhide repo definitions.
+
 
 %prep
 %setup -q
@@ -76,14 +84,24 @@ rm -rf $RPM_BUILD_ROOT
 /etc/system-release
 %config %attr(0644,root,root) /etc/system-release-cpe
 %dir /etc/yum.repos.d
-%config(noreplace) /etc/yum.repos.d/*
+%config(noreplace) /etc/yum.repos.d/fedora.repo
+%config(noreplace) /etc/yum.repos.d/fedora-updates*.repo
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
 %config %attr(0644,root,root) /etc/rpm/macros.dist
 %dir /etc/pki/rpm-gpg
 /etc/pki/rpm-gpg/*
 
+%files rawhide
+%config(noreplace) /etc/yum.repos.d/fedora-rawhide.repo
+
+
 %changelog
+* Mon Feb 15 2010 Jesse Keating <jkeating@redhat.com> - 13-0.4
+- Move the rawhide repo file to it's own subpackage
+- Setup for branched F-13
+- Update the baseurl for rawhide
+
 * Tue Jan 19 2010 Jesse Keating <jkeating@redhat.com> - 13-0.3
 - Put the right key in the key file this time
 
