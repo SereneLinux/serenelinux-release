@@ -4,11 +4,11 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	14
-Release:	0.1
+Release:	0.2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
-Source:		%{name}-%{version}.tar.gz
+Source:		%{name}-%{version}.tar.bz2
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
@@ -21,7 +21,7 @@ define the release.
 
 %package rawhide
 Summary:        Rawhide repo definitions
-Requires:       fedora-release-%{version}-%{release}
+Requires:       fedora-release = %{version}-%{release}
 
 %description rawhide
 This package provides the rawhide repo definitions.
@@ -93,10 +93,16 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %files rawhide
+%defattr(-,root,root,-)
 %config(noreplace) /etc/yum.repos.d/fedora-rawhide.repo
 
 
 %changelog
+* Thu Feb 18 2010 Jesse Keating <jkeating@redhat.com> - 14-0.2
+- Fix the -rawhide requires
+- Fix the -rawhide files
+- Switch to bz2 source
+
 * Mon Feb 15 2010 Jesse Keating <jkeating@redhat.com> - 14-0.1
 - Update for Fedora 14
 - Move the rawhide repo file to it's own subpackage
