@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	14
-Release:	0.2
+Release:	0.3
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -98,6 +98,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Feb 18 2010 Jesse Keating <jkeating@redhat.com> - 14-0.3
+- Fix the key path in the updates-testing repo
+
 * Thu Feb 18 2010 Jesse Keating <jkeating@redhat.com> - 14-0.2
 - Fix the -rawhide requires
 - Fix the -rawhide files
