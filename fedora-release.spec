@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	14
-Release:	0.3
+Release:	0.4
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -12,6 +12,7 @@ Source:		%{name}-%{version}.tar.bz2
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
+Requires:       fedora-release-rawhide = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
@@ -98,6 +99,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Mar 02 2010 Jesse Keating <jkeating@redhat.com> - 14-0.4
+- When in rawhide, require the -rawhide subpackage.
+
 * Thu Feb 18 2010 Jesse Keating <jkeating@redhat.com> - 14-0.3
 - Fix the key path in the updates-testing repo
 
