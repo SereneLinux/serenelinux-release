@@ -4,11 +4,12 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	12
-Release:	2
+Release:	3
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
 Source:		%{name}-%{version}.tar.gz
+Source1:        RPM-GPG-KEY-fedora-12-sparc
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
@@ -39,15 +40,18 @@ ln -s fedora-release $RPM_BUILD_ROOT/etc/system-release
 install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
 
 install -m 644 RPM-GPG-KEY* $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 
 # Install all the keys, link the primary keys to primary arch files
 # and to compat generic location
+# link the sparc key to sparc64
 pushd $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 for arch in i386 x86_64 ppc ppc64
   do
   ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-$arch
 done
 ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora
+ln -s RPM-GPG-KEY-fedora-%{dist_version}-sparc RPM-GPG-KEY-fedora-%{dist_version}-sparc64
 popd
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
@@ -84,6 +88,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Tue Mar 16 2010 Dennis Gilmore <dennis@ausil.us> - 12-3
+- add sparc gpg key
+
 * Wed Nov 11 2009 Jesse Keating <jkeating@redhat.com> - 12-2
 - Fix key paths in repo files for updates-testing and rawhide
 
