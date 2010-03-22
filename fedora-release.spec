@@ -1,10 +1,10 @@
-%define release_name Rawhide
+%define release_name Goddard
 %define dist_version 13
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	13
-Release:	0.6
+Release:	0.7
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -98,6 +98,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Mar 22 2010 Jesse Keating <jkeating@redhat.com> - 13-0.7
+- Update the release name
+
 * Thu Feb 18 2010 Jesse Keating <jkeating@redhat.com> - 13-0.6
 - Fix key path in updates-testing repo
 
