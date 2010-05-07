@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	12
-Release:	3
+Release:	4
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -51,7 +51,10 @@ for arch in i386 x86_64 ppc ppc64
   ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-$arch
 done
 ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora
-ln -s RPM-GPG-KEY-fedora-%{dist_version}-sparc RPM-GPG-KEY-fedora-%{dist_version}-sparc64
+for arch in sparc sparc64
+  do
+  ln -s RPM-GPG-KEY-fedora-%{dist_version}-sparc RPM-GPG-KEY-fedora-$arch
+done
 popd
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
@@ -88,6 +91,9 @@ rm -rf $RPM_BUILD_ROOT
 /etc/pki/rpm-gpg/*
 
 %changelog
+* Thu May 06 2010 Dennis Gilmore <dennis@ausil.us> - 12-4
+- link the sparc key correctly
+
 * Tue Mar 16 2010 Dennis Gilmore <dennis@ausil.us> - 12-3
 - add sparc gpg key
 
