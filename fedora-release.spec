@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	14
-Release:	0.4
+Release:	0.6
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -52,11 +52,15 @@ install -m 644 RPM-GPG-KEY* $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 # Install all the keys, link the primary keys to primary arch files
 # and to compat generic location
 pushd $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
-for arch in i386 x86_64 ppc ppc64
+for arch in i386 x86_64
   do
   ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-$arch
 done
 ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora
+for arch in sparc sparc64
+  do
+  ln -s RPM-GPG-KEY-fedora-%{dist_version}-SPARC RPM-GPG-KEY-fedora-$arch
+done
 popd
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
@@ -99,6 +103,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jul 23 2010 Jesse Keating <jkeating@redhat.com> - 14-0.6
+- Add the Fedora 14 key
+
+* Thu May 06 2010 Dennis Gilmore <dennis@ausil.us> - 14-0.5
+- link sparc key
+- drop ppc ppc64 from primary arch list
+
 * Tue Mar 02 2010 Jesse Keating <jkeating@redhat.com> - 14-0.4
 - When in rawhide, require the -rawhide subpackage.
 
