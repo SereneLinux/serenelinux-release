@@ -1,10 +1,10 @@
 %define release_name Rawhide
-%define dist_version 14
+%define dist_version 15
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	14
-Release:	0.6
+Version:	15
+Release:	0.1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -103,6 +103,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jul 29 2010 Jesse Keating <jkeating@redhat.com> - 15-0.1
+- Build for Fedora 15
+
 * Fri Jul 23 2010 Jesse Keating <jkeating@redhat.com> - 14-0.6
 - Add the Fedora 14 key
 
