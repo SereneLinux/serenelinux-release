@@ -1,10 +1,10 @@
-%define release_name Rawhide
+%define release_name Branched
 %define dist_version 14
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	14
-Release:	0.6
+Release:	0.7
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -12,7 +12,6 @@ Source:		%{name}-%{version}.tar.bz2
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
-Requires:       fedora-release-rawhide = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
@@ -103,6 +102,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jul 29 2010 Jesse Keating <jkeating@redhat.com> - 14-0.7
+- Prep for F14 branched
+
 * Fri Jul 23 2010 Jesse Keating <jkeating@redhat.com> - 14-0.6
 - Add the Fedora 14 key
 
