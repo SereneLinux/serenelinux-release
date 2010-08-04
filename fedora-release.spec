@@ -1,10 +1,10 @@
-%define release_name Rawhide
+%define release_name Finian
 %define dist_version 15
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	15
-Release:	0.1
+Release:	0.2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
