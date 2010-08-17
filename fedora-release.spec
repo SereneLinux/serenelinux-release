@@ -1,10 +1,10 @@
-%define release_name Branched
+%define release_name Laughlin
 %define dist_version 14
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	14
-Release:	0.7
+Release:	0.8
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -102,6 +102,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Aug 17 2010 Bill Nottingham <notting@redhat.com> - 14-0.8
+- update release name
+- don't set metadata_expire=7d in fedora.repo (releng #3561)
+
 * Thu Jul 29 2010 Jesse Keating <jkeating@redhat.com> - 14-0.7
 - Prep for F14 branched
 
