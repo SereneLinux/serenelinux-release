@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	15
-Release:	0.5
+Release:	0.6
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -103,7 +103,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed Feb 09 2011 Dennis Gilmore - 15-0.5
+* Thu Feb 10 2011 Dennis Gilmore <dennis@ausil.us> - 15-0.6
+- disable rawhide repo
+- enable fedora repo
+- enable updates-testing repo
+
+* Wed Feb 09 2011 Dennis Gilmore <dennis@ausil.us> - 15-0.5
 - Add the Fedora 15 key
 
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 15-0.4
