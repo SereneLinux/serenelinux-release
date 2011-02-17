@@ -1,10 +1,10 @@
-%define release_name Rawhide
+%define release_name Lovelock
 %define dist_version 15
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	15
-Release:	0.6
+Release:	0.7
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -103,6 +103,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Feb 17 2011 Dennis Gilmore <dennis@ausil.us> - 15-0.7
+- define release_name as Lovelock (bz#677811)
+
 * Thu Feb 10 2011 Dennis Gilmore <dennis@ausil.us> - 15-0.6
 - disable rawhide repo
 - enable fedora repo
