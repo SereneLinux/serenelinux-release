@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	15
-Release:	0.7
+Release:	1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -103,6 +103,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed May 11 2011 Dennis Gilmore <dennis@ausil.us> - 15-1
+- enable updates
+- disable updates-testing
+- enable metadata_expire for 7 days for fedora repo
+
 * Thu Feb 17 2011 Dennis Gilmore <dennis@ausil.us> - 15-0.7
 - define release_name as Lovelock (bz#677811)
 
