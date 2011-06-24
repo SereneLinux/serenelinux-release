@@ -4,15 +4,15 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	15
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
 Source:		%{name}-%{version}.tar.bz2
 Obsoletes:	redhat-release
+Obsoletes:	redhat-release-rawhide < %{version}-%{release}
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
-Requires:       fedora-release-rawhide = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
@@ -57,9 +57,9 @@ for arch in i386 x86_64
   ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-$arch
 done
 ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora
-for arch in sparc sparc64
+for arch in sparc sparc64 s390 s390x arm ppc ppc64
   do
-  ln -s RPM-GPG-KEY-fedora-%{dist_version}-SPARC RPM-GPG-KEY-fedora-$arch
+  ln -s RPM-GPG-KEY-fedora-%{dist_version}-secondary RPM-GPG-KEY-fedora-$arch
 done
 popd
 
@@ -103,6 +103,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jun 24 2011 Dennis Gilmore <dennis@ausil.us> - 15-2
+- rename sparc key to secondary and setup for all secondary arches
+- obsolete fedora-release-rawhide < this version 
+- dont require fedora-release rawhide from main package
+
 * Wed May 11 2011 Dennis Gilmore <dennis@ausil.us> - 15-1
 - enable updates
 - disable updates-testing
