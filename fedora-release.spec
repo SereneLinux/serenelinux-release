@@ -4,13 +4,13 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	15
-Release:	2
+Release:	3
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
 Source:		%{name}-%{version}.tar.bz2
 Obsoletes:	redhat-release
-Obsoletes:	redhat-release-rawhide < %{version}-%{release}
+Obsoletes:	fedora-release-rawhide < %{version}-%{release}
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -103,6 +103,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jun 24 2011 Dennis Gilmore <dennis@ausil.us> - 15-3
+- obsolete fedora-release-rawhide not redhat-release-rawhide
+
 * Fri Jun 24 2011 Dennis Gilmore <dennis@ausil.us> - 15-2
 - rename sparc key to secondary and setup for all secondary arches
 - obsolete fedora-release-rawhide < this version 
