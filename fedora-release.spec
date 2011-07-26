@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	16
-Release:	0.1
+Release:	0.7
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -12,7 +12,6 @@ Source:		%{name}-%{version}.tar.bz2
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
-Requires:       fedora-release-rawhide = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
@@ -57,9 +56,9 @@ for arch in i386 x86_64
   ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-$arch
 done
 ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora
-for arch in sparc sparc64
+for arch in arm ppc ppc64 s390 s390x sparc sparc64
   do
-  ln -s RPM-GPG-KEY-fedora-%{dist_version}-SPARC RPM-GPG-KEY-fedora-$arch
+  ln -s RPM-GPG-KEY-fedora-%{dist_version}-secondary RPM-GPG-KEY-fedora-$arch
 done
 popd
 
@@ -103,6 +102,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jul 26 2011 Dennis Gilmore <dennis@ausil.us> - 16-0.7
+- add the fedora 16 key
+- enable the fedora repo
+- enable updates-testing
+- disable rawhide
+- do not require fedora-release-rawhide
+
 * Thu Feb 10 2011 Dennis Gilmore <dennis@ausil.us> - 16-0.1
 - Build for Fedora 16
 
