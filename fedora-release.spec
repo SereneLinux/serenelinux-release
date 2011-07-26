@@ -3,8 +3,8 @@
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	16
-Release:	0.7
+Version:	17
+Release:	0.1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -12,6 +12,7 @@ Source:		%{name}-%{version}.tar.bz2
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
+Requires:       fedora-release-rawhide = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
@@ -102,12 +103,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Tue Jul 26 2011 Dennis Gilmore <dennis@ausil.us> - 16-0.7
-- add the fedora 16 key
-- enable the fedora repo
-- enable updates-testing
-- disable rawhide
-- do not require fedora-release-rawhide
+* Tue Jul 26 2011 Dennis Gilmore <dennis@ausil.us> - 17-0.1
+- build for Fedora 17
 
 * Thu Feb 10 2011 Dennis Gilmore <dennis@ausil.us> - 16-0.1
 - Build for Fedora 16
