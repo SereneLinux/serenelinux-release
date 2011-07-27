@@ -1,10 +1,10 @@
 %define release_name Rawhide
-%define dist_version 16
+%define dist_version 17
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	17
-Release:	0.1
+Release:	0.2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -103,6 +103,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jul 26 2011 Dennis Gilmore <dennis@ausil.us> - 17-0.2
+- set dist_version to 17
+
 * Tue Jul 26 2011 Dennis Gilmore <dennis@ausil.us> - 17-0.1
 - build for Fedora 17
 
