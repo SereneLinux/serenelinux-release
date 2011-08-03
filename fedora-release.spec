@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	16
-Release:	0.8
+Release:	0.7
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -14,9 +14,6 @@ Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
-
-# Wrong versions
-Patch0:		0001-Rename-RPM-GPG-key-files-to-match-version.patch
 
 %description
 Fedora release files such as yum configs and various /etc/ files that
@@ -32,7 +29,6 @@ This package provides the rawhide repo definitions.
 
 %prep
 %setup -q
-%patch0 -p1 -b .version
 
 %build
 
@@ -106,9 +102,6 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed Aug 03 2011 Bastien Nocera <bnocera@redhat.com> 16-0.8
-- fix the version in the RPM GPG key file names
-
 * Tue Jul 26 2011 Dennis Gilmore <dennis@ausil.us> - 16-0.7
 - add the fedora 16 key
 - enable the fedora repo
