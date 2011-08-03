@@ -1,10 +1,10 @@
-%define release_name Rawhide
+%define release_name Verne
 %define dist_version 16
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	16
-Release:	0.7
+Release:	0.9
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -102,6 +102,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Aug 03 2011 Dennis Gilmore <dennis@ausil.us> - 16-0.9
+- add secondary arch key
+- change name from Rawhide to Verne
+
 * Tue Jul 26 2011 Dennis Gilmore <dennis@ausil.us> - 16-0.7
 - add the fedora 16 key
 - enable the fedora repo
