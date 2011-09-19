@@ -4,11 +4,12 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	14
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
 Source:		%{name}-%{version}.tar.bz2
+Source1:        RPM-GPG-KEY-fedora-%{dist_version}-secondary
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
@@ -29,6 +30,7 @@ This package provides the rawhide repo definitions.
 
 %prep
 %setup -q
+cp %{SOURCE1} .
 
 %build
 
@@ -56,9 +58,9 @@ for arch in i386 x86_64
   ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-$arch
 done
 ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora
-for arch in sparc sparc64
+for arch in arm ppc ppc64 s390 s390x sparc sparc64
   do
-  ln -s RPM-GPG-KEY-fedora-%{dist_version}-SPARC RPM-GPG-KEY-fedora-$arch
+  ln -s RPM-GPG-KEY-fedora-%{dist_version}-secondary RPM-GPG-KEY-fedora-$arch
 done
 popd
 
@@ -102,6 +104,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Sep 19 2011 Dennis Gilmore <dennis@ausil.us> - 14-2
+- add secondary arch key
+
 * Thu Oct 14 2010 Jesse Keating <jkeating@redhat.com> - 14-1
 - Enable updates, disable updates-testing, enable metadata_expire
 
