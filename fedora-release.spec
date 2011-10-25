@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	16
-Release:	0.9
+Release:	1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -102,6 +102,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Oct 24 2011 Dennis Gilmore <dennis@ausil.us>- 16-1
+- enable updates
+- disable updates-testing
+- set metadate_expire to 7days on the fedora repo
+
 * Tue Aug 03 2011 Dennis Gilmore <dennis@ausil.us> - 16-0.9
 - add secondary arch key
 - change name from Rawhide to Verne
