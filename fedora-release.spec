@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	17
-Release:	0.2
+Release:	0.3
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -57,7 +57,7 @@ for arch in i386 x86_64
   ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-$arch
 done
 ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora
-for arch in arm ppc ppc64 s390 s390x sparc sparc64
+for arch in arm armhfp arm64 ppc ppc64 s390 s390x sparc sparc64
   do
   ln -s RPM-GPG-KEY-fedora-%{dist_version}-secondary RPM-GPG-KEY-fedora-$arch
 done
@@ -103,6 +103,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Dec 28 2011 Dennis Gilmore <dennis@ausil.us> - 17-0.3
+- symlink the secondary arch key for the armhfp and arm64 basearch
+
 * Tue Jul 26 2011 Dennis Gilmore <dennis@ausil.us> - 17-0.2
 - set dist_version to 17
 
