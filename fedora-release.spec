@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	17
-Release:	0.3
+Release:	0.4
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -103,6 +103,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jan 10 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.4
+- install the fedora 17 gpg keys
+
 * Wed Dec 28 2011 Dennis Gilmore <dennis@ausil.us> - 17-0.3
 - symlink the secondary arch key for the armhfp and arm64 basearch
 
