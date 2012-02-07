@@ -1,10 +1,10 @@
-%define release_name Rawhide
+%define release_name Beefy Miracle
 %define dist_version 17
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	17
-Release:	0.4
+Release:	0.5
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -103,6 +103,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Feb 07 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.5
+- Set the release name to Beefy Miracle
+
 * Tue Jan 10 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.4
 - install the fedora 17 gpg keys
 
