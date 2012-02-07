@@ -1,10 +1,10 @@
 %define release_name Rawhide
-%define dist_version 17
+%define dist_version 18
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	17
-Release:	0.4
+Version:	18
+Release:	0.1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -103,6 +103,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jan 10 2012 Dennis Gilmore <dennis@ausil.us> - 18-0.1
+- setup for fedora 18
+- add the fedora 18 gpg keys
+
 * Tue Jan 10 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.4
 - install the fedora 17 gpg keys
 
