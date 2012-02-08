@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	17
-Release:	0.5
+Release:	0.6
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -12,7 +12,7 @@ Source:		%{name}-%{version}.tar.bz2
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
-Requires:       fedora-release-rawhide = %{version}-%{release}
+Obsoletes:      fedora-release-rawhide < %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
@@ -103,6 +103,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Feb 08 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.6
+- enable fedora and fedora-updates repos
+- Obsoletes old fedora-release-rawhide
+- disable rawhide
+- disable 7 day cache of metadata in fedora repo
+
 * Tue Feb 07 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.5
 - Set the release name to Beefy Miracle
 
