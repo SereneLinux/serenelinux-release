@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	17
-Release:	0.6
+Release:	0.7
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -45,6 +45,15 @@ echo >> $RPM_BUILD_ROOT/etc/issue
 ln -s fedora-release $RPM_BUILD_ROOT/etc/redhat-release
 ln -s fedora-release $RPM_BUILD_ROOT/etc/system-release
 
+cat << EOF >>$RPM_BUILD_ROOT/etc/os-release
+NAME=Fedora
+VERSION="%{version} (%{release_name})"
+ID=fedora
+VERSION_ID=%{version}
+PRETTY_NAME="Fedora %{version} (%{release_name})"
+ANSI_COLOR=0;34
+EOF
+
 install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
 
 install -m 644 RPM-GPG-KEY* $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
@@ -84,6 +93,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %doc GPL 
+%config %attr(0644,root,root) /etc/os-release
 %config %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
 /etc/system-release
@@ -103,6 +113,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Feb 08 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.7
+- add /etc/os-release file for bz#733117
+
 * Wed Feb 08 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.6
 - enable fedora and fedora-updates repos
 - Obsoletes old fedora-release-rawhide
