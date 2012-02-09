@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	17
-Release:	0.7
+Release:	0.8
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -113,6 +113,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Feb 09 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.8
+- enable updates-testing repo while branched
+
 * Wed Feb 08 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.7
 - add /etc/os-release file for bz#733117
 
