@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	17
-Release:	0.8
+Release:	0.9
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -51,7 +51,8 @@ VERSION="%{version} (%{release_name})"
 ID=fedora
 VERSION_ID=%{version}
 PRETTY_NAME="Fedora %{version} (%{release_name})"
-ANSI_COLOR=0;34
+ANSI_COLOR="0;34"
+CPE_NAME="cpe:/o:fedoraproject:fedora:%{version}"
 EOF
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
@@ -113,6 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Feb 27 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.9
+- add CPE info to os-release bz#790509
+
 * Thu Feb 09 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.8
 - enable updates-testing repo while branched
 
