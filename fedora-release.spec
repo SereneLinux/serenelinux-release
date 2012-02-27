@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	18
-Release:	0.2
+Release:	0.3
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -51,7 +51,8 @@ VERSION="%{version} (%{release_name})"
 ID=fedora
 VERSION_ID=%{version}
 PRETTY_NAME="Fedora %{version} (%{release_name})"
-ANSI_COLOR=0;34
+ANSI_COLOR="0;34"
+CPE_NAME="cpe:/o:fedoraproject:fedora:%{version}"
 EOF
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
@@ -113,6 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Feb 27 2012 Dennis Gilmore <dennis@ausil.us> - 18-0.3
+ add CPE info to os-release file bz#790509
+
 * Wed Feb 08 2012 Dennis Gilmore <dennis@ausil.us> - 18-0.2
 - add /etc/os-release file for bz#733117
 
