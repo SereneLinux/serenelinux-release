@@ -4,12 +4,11 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	17
-Release:	0.10
+Release:	0.11
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
 Source0:	%{name}-%{version}.tar.bz2
-Source1:	Fedora-Legal-README.txt
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
@@ -31,7 +30,6 @@ This package provides the rawhide repo definitions.
 
 %prep
 %setup -q
-cp %{SOURCE1} .
 sed -i 's|@@VERSION@@|%{dist_version}|g' Fedora-Legal-README.txt
 
 
@@ -118,6 +116,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Mar 29 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.11
+- move Fedora-Legal-README.txt upstream
+
 * Thu Mar 29 2012 Tom Callaway <spot@fedoraproject.org> - 17-0.10
 - add Fedora-Legal-README.txt
 
