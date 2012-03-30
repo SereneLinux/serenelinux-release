@@ -4,11 +4,12 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	17
-Release:	0.9
+Release:	0.10
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
-Source:		%{name}-%{version}.tar.bz2
+Source0:	%{name}-%{version}.tar.bz2
+Source1:	Fedora-Legal-README.txt
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
@@ -30,6 +31,9 @@ This package provides the rawhide repo definitions.
 
 %prep
 %setup -q
+cp %{SOURCE1} .
+sed -i 's|@@VERSION@@|%{dist_version}|g' Fedora-Legal-README.txt
+
 
 %build
 
@@ -93,7 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc GPL 
+%doc GPL Fedora-Legal-README.txt
 %config %attr(0644,root,root) /etc/os-release
 %config %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
@@ -114,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Mar 29 2012 Tom Callaway <spot@fedoraproject.org> - 17-0.10
+- add Fedora-Legal-README.txt
+
 * Mon Feb 27 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.9
 - add CPE info to os-release bz#790509
 
