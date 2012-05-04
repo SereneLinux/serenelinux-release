@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	17
-Release:	0.11
+Release:	1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -116,6 +116,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri May 04 2012 Dennis Gilmore <dennis@ausil.us> - 17-1
+- disable updates-testing repo
+- enable 7 day metadata cache for fedora repo
+
 * Thu Mar 29 2012 Dennis Gilmore <dennis@ausil.us> - 17-0.11
 - move Fedora-Legal-README.txt upstream
 
