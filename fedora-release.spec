@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	18
-Release:	0.4
+Release:	0.5
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -117,6 +117,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 18-0.5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Thu Mar 29 2012 Tom Callaway <spot@fedoraproject.org> - 18-0.4
 - add Fedora-Legal-README.txt
 
