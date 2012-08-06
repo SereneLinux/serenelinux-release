@@ -4,12 +4,11 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	18
-Release:	0.5
+Release:	0.6
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
-Source0:	%{name}-%{version}.tar.bz2
-Source1:	Fedora-Legal-README.txt
+Source:		%{name}-%{version}.tar.bz2
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
@@ -31,7 +30,6 @@ This package provides the rawhide repo definitions.
 
 %prep
 %setup -q
-cp %{SOURCE1} .
 sed -i 's|@@VERSION@@|%{dist_version}|g' Fedora-Legal-README.txt
 
 %build
@@ -117,6 +115,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Aug 06 2012 Dennis Gilmore <dennis@ausil.us> - 18-0.6
+- sync up from dist-git
+- replace the fedora 18 gpg keys
+- bring the Fedora-Legal-README file into upstream
+
 * Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 18-0.5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
