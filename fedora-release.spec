@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	18
-Release:	0.6
+Release:	0.7
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -12,7 +12,7 @@ Source:		%{name}-%{version}.tar.bz2
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
-Requires:       fedora-release-rawhide = %{version}-%{release}
+Obsoletes:      fedora-release-rawhide < %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
@@ -115,6 +115,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Aug 08 2012 Dennis Gilmore <dennis@ausil.us> - 18-0.7
+- disable rawhide
+- obsolete fedora-release-rawhide
+- enable fedora updates and updates-testing
+
 * Mon Aug 06 2012 Dennis Gilmore <dennis@ausil.us> - 18-0.6
 - sync up from dist-git
 - replace the fedora 18 gpg keys
