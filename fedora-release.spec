@@ -1,10 +1,10 @@
 %define release_name Rawhide
-%define dist_version 18
+%define dist_version 19
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	18
-Release:	0.6
+Version:	19
+Release:	0.1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -115,6 +115,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Aug 08 2012 Dennis Gilmore <dennis@ausil.us> - 19-0.1
+- setup for f19
+
 * Mon Aug 06 2012 Dennis Gilmore <dennis@ausil.us> - 18-0.6
 - sync up from dist-git
 - replace the fedora 18 gpg keys
