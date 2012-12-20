@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	18
-Release:	0.8
+Release:	1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -115,6 +115,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Dec 19 2012 Dennis Gilmore <dennis@ausil.us> - 18-1
+- disable updates-testing
+- add fedora 19 gpg keys
+
 * Fri Oct 31 2012 Dennis Gilmore <dennis@ausil.us> - 18-0.8
 - change name from rawhide to Spherical Cow
 
