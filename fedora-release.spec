@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	17
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -116,6 +116,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jan 08 2013 Dennis Gilmore <dennis@ausil.us> - 17-2
+- add the fedora 18 GPG keys
+
 * Fri May 04 2012 Dennis Gilmore <dennis@ausil.us> - 17-1
 - disable updates-testing repo
 - enable 7 day metadata cache for fedora repo
