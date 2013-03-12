@@ -1,10 +1,10 @@
-%define release_name Rawhide
+%define release_name Schrödinger's Cat
 %define dist_version 19
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	19
-Release:	0.3
+Release:	0.4
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -12,8 +12,7 @@ Source:		%{name}-%{version}.tar.bz2
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
-Requires:       fedora-release-rawhide = %{version}-%{release}
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Obsoletes:      fedora-release-rawhide < %{version}-%{release}
 BuildArch:	noarch
 
 %description
@@ -115,6 +114,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Mar 12 2013 Dennis Gilmore <dennis@ausil.us> - 19-0.4
+- update for branched
+- disable rawhide
+- enable fedora  updates and updates-testing
+- set release name
+
 * Mon Mar 11 2013 Ralf Corsépius <corsepiu@fedoraproject.org> - 19-0.3
 - Remove %%config from %%{_sysconfdir}/rpm/macros.*
   (https://fedorahosted.org/fpc/ticket/259).
