@@ -1,10 +1,10 @@
 %define release_name Rawhide
-%define dist_version 19
+%define dist_version 20
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	19
-Release:	0.3
+Version:	20
+Release:	0.1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -68,7 +68,7 @@ for arch in i386 x86_64
   ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-$arch
 done
 ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora
-for arch in arm armhfp arm64 ppc ppc64 s390 s390x sparc sparc64
+for arch in arm armhfp aarch64 ppc ppc64 s390 s390x
   do
   ln -s RPM-GPG-KEY-fedora-%{dist_version}-secondary RPM-GPG-KEY-fedora-$arch
 done
@@ -105,7 +105,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/yum.repos.d/fedora-updates*.repo
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
-%attr(0644,root,root) /etc/rpm/macros.dist
+%config %attr(0644,root,root) /etc/rpm/macros.dist
 %dir /etc/pki/rpm-gpg
 /etc/pki/rpm-gpg/*
 
@@ -115,12 +115,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Mon Mar 11 2013 Ralf Corsépius <corsepiu@fedoraproject.org> - 19-0.3
-- Remove %%config from %%{_sysconfdir}/rpm/macros.*
-  (https://fedorahosted.org/fpc/ticket/259).
-
-* Wed Feb 13 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 19-0.2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+* Tue Mar 12 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.1
+- setup for f20
+- 64 bit arm arch is aarch64 not arm64
+- drop sparc arches
 
 * Wed Aug 08 2012 Dennis Gilmore <dennis@ausil.us> - 19-0.1
 - setup for f19
