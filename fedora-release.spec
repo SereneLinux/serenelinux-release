@@ -1,4 +1,4 @@
-%define release_name Schrödinger's Cat
+%define release_name Schrödinger’s Cat
 %define dist_version 19
 
 Summary:	Fedora release files
