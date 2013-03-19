@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	19
-Release:	0.4
+Release:	0.5
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -114,6 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Mar 19 2013 Dennis Gilmore <dennis@ausil.us> - 19-0.5
+- apply patch from pjones removing shell quote character
+
 * Tue Mar 12 2013 Dennis Gilmore <dennis@ausil.us> - 19-0.4
 - update for branched
 - disable rawhide
