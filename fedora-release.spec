@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	19
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -114,6 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jun 21 2013 Dennis Gilmore <dennis@ausil.us> - 19-2
+- rebuild to use correct tarball
+
 * Wed Jun 19 2013 Dennis Gilmore <dennis@ausil.us> - 19-1
 - disable updates-testing
 - add f20 certs
