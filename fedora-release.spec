@@ -1,10 +1,11 @@
 %define release_name Rawhide
 %define dist_version 20
+%define bug_version Rawhide
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	20
-Release:	0.1
+Release:	0.2
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -48,12 +49,16 @@ ln -s fedora-release $RPM_BUILD_ROOT/etc/system-release
 
 cat << EOF >>$RPM_BUILD_ROOT/etc/os-release
 NAME=Fedora
-VERSION="%{version} (%{release_name})"
+VERSION="%{dist_version} (%{release_name})"
 ID=fedora
-VERSION_ID=%{version}
-PRETTY_NAME="Fedora %{version} (%{release_name})"
+VERSION_ID=%{dist_version}
+PRETTY_NAME="Fedora %{dist_version} (%{release_name})"
 ANSI_COLOR="0;34"
-CPE_NAME="cpe:/o:fedoraproject:fedora:%{version}"
+CPE_NAME="cpe:/o:fedoraproject:fedora:%{dist_version}"
+REDHAT_BUGZILLA_PRODUCT="Fedora"
+REDHAT_BUGZILLA_PRODUCT_VERSION=%{bug_version}
+REDHAT_SUPPORT_PRODUCTi="Fedora"
+REDHAT_SUPPORT_PRODUCT_VERSION=%{bug_version}
 EOF
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
@@ -65,12 +70,12 @@ install -m 644 RPM-GPG-KEY* $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 pushd $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 for arch in i386 x86_64
   do
-  ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-$arch
+  ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-%{dist_version}-$arch
 done
-ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora
+ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-%{dist_version}-fedora
 for arch in arm armhfp aarch64 ppc ppc64 s390 s390x
   do
-  ln -s RPM-GPG-KEY-fedora-%{dist_version}-secondary RPM-GPG-KEY-fedora-$arch
+  ln -s RPM-GPG-KEY-fedora-%{dist_version}-secondary RPM-GPG-KEY-fedora-%{dist_version}-$arch
 done
 popd
 
@@ -115,6 +120,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jun 19 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.2
+- add f20 keys
+- switch mirrorlist= to metalink= bz#948788
+- add bugzilla fields to os-release for brokeness in abrt bz#961477
+- add releasever into gpgkey paths
+- use consistent macros for dist_release value
+
 * Tue Mar 12 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.1
 - setup for f20
 - 64 bit arm arch is aarch64 not arm64
