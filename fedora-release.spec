@@ -5,7 +5,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	20
-Release:	0.2
+Release:	0.3
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -57,7 +57,7 @@ ANSI_COLOR="0;34"
 CPE_NAME="cpe:/o:fedoraproject:fedora:%{dist_version}"
 REDHAT_BUGZILLA_PRODUCT="Fedora"
 REDHAT_BUGZILLA_PRODUCT_VERSION=%{bug_version}
-REDHAT_SUPPORT_PRODUCTi="Fedora"
+REDHAT_SUPPORT_PRODUCT="Fedora"
 REDHAT_SUPPORT_PRODUCT_VERSION=%{bug_version}
 EOF
 
@@ -120,6 +120,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jul 08 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.3
+- fix up typo
+
 * Wed Jun 19 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.2
 - add f20 keys
 - switch mirrorlist= to metalink= bz#948788
