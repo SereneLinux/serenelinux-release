@@ -1,11 +1,11 @@
 %define release_name Rawhide
-%define dist_version 20
+%define dist_version 21
 %define bug_version Rawhide
 
 Summary:	Fedora release files
 Name:		fedora-release
-Version:	20
-Release:	0.4
+Version:	21
+Release:	0.1
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -120,6 +120,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Aug 20 2013 Dennis Gilmore <dennis@ausil.us> - 21-0.1
+- setup for f21 rawhide
+
 * Wed Jul 31 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.4
 - link armhfp gpg key to primary since its now living there
 
