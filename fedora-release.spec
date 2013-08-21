@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	19
-Release:	2
+Release:	3
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -64,12 +64,12 @@ install -m 644 RPM-GPG-KEY* $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 pushd $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 for arch in i386 x86_64
   do
-  ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-$arch
+  ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-%{dist_version}-$arch
 done
-ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora
+ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-%{dist_version}-fedora
 for arch in arm armhfp aarch64 ppc ppc64 s390 s390x
   do
-  ln -s RPM-GPG-KEY-fedora-%{dist_version}-secondary RPM-GPG-KEY-fedora-$arch
+  ln -s RPM-GPG-KEY-fedora-%{dist_version}-secondary RPM-GPG-KEY-fedora-%{dist_version}-$arch
 done
 popd
 
@@ -114,6 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Aug 20 2013 Dennis Gilmore <dennis@ausil.us> - 19-3
+- use version when setting up gpg check so fedup can pull in next release gpg key
+
 * Fri Jun 21 2013 Dennis Gilmore <dennis@ausil.us> - 19-2
 - rebuild to use correct tarball
 
