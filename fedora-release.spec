@@ -1,11 +1,11 @@
-%define release_name Rawhide
+%define release_name Null
 %define dist_version 20
-%define bug_version Rawhide
+%define bug_version 20
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	20
-Release:	0.4
+Release:	0.5
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -13,7 +13,7 @@ Source:		%{name}-%{version}.tar.bz2
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
-Requires:       fedora-release-rawhide = %{version}-%{release}
+Obsoletes:      fedora-release-rawhide < %{version}-%{release}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:	noarch
 
@@ -120,6 +120,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Aug 20 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.5
+- disable rawhide
+- enable fedora, updates and updates-testing
+- disable 7d metadata cache for fedora
+- Obsolete older fedora-release-rawhide
+
 * Wed Jul 31 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.4
 - link armhfp gpg key to primary since its now living there
 
