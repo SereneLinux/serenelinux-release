@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	19
-Release:	3
+Release:	4
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -12,7 +12,7 @@ Source:		%{name}-%{version}.tar.bz2
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
-Obsoletes:      fedora-release-rawhide < %{version}-%{release}
+Obsoletes:      fedora-release-rawhide < %{version}-1
 BuildArch:	noarch
 
 %description
@@ -114,6 +114,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Aug 30 2013 Dennis Gilmore <dennis@ausil.us> - 19-4
+- update f20 secondary gpg key, initial was mad incorrectly
+- only obsolete fedora-release-rawhide less than release 1
+
 * Tue Aug 20 2013 Dennis Gilmore <dennis@ausil.us> - 19-3
 - use version when setting up gpg check so fedup can pull in next release gpg key
 
