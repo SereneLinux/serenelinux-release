@@ -5,7 +5,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	20
-Release:	0.5
+Release:	0.6
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -120,6 +120,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Aug 30 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.6
+- update the fedora 20 secondary arch key it had been created incorrectly
+
 * Tue Aug 20 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.5
 - disable rawhide
 - enable fedora, updates and updates-testing
