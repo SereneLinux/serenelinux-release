@@ -1,11 +1,11 @@
-%define release_name Null
+%define release_name Heisenbug
 %define dist_version 20
 %define bug_version 20
 
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	20
-Release:	0.6
+Release:	0.7
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -120,6 +120,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Sep 03 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.7
+- set Fedora 20 release name
+
 * Fri Aug 30 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.6
 - update the fedora 20 secondary arch key it had been created incorrectly
 
