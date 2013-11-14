@@ -1,20 +1,19 @@
 %define release_name Schrödinger’s Cat
 %define dist_version 19
 
-Summary:	Fedora release files
-Name:		fedora-release
-Version:	19
-Release:	5
-License:	GPLv2
-Group:		System Environment/Base
-URL:		http://fedoraproject.org
-Source:		%{name}-%{version}.tar.bz2
-Source1:		archmap
-Obsoletes:	redhat-release
-Provides:	redhat-release
-Provides:	system-release = %{version}-%{release}
+Summary:        Fedora release files
+Name:           fedora-release
+Version:        19
+Release:        5
+License:        GPLv2
+Group:          System Environment/Base
+URL:            http://fedoraproject.org
+Source0:        %{name}-%{version}.tar.bz2
+Obsoletes:      redhat-release
+Provides:       redhat-release
+Provides:       system-release = %{version}-%{release}
 Obsoletes:      fedora-release-rawhide < %{version}-1
-BuildArch:	noarch
+BuildArch:      noarch
 
 %description
 Fedora release files such as yum configs and various /etc/ files that
@@ -67,7 +66,7 @@ install -m 644 RPM-GPG-KEY* $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 pushd $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 for keyfile in RPM-GPG-KEY*; do
     key=${keyfile#RPM-GPG-KEY-} # e.g. 'fedora-20-primary'
-    arches=$(sed -ne "s/^${key}://p" %{SOURCE1}) \
+    arches=$(sed -ne "s/^${key}://p" archmap) \
         || echo "WARNING: no archmap entry for $key"
     for arch in $arches; do
         # replace last part with $arch (fedora-20-primary -> fedora-20-$arch)
@@ -88,9 +87,9 @@ install -d -m 755 $RPM_BUILD_ROOT/etc/rpm
 cat >> $RPM_BUILD_ROOT/etc/rpm/macros.dist << EOF
 # dist macros.
 
-%%fedora		%{dist_version}
-%%dist		.fc%{dist_version}
-%%fc%{dist_version}		1
+%%fedora                %{dist_version}
+%%dist                .fc%{dist_version}
+%%fc%{dist_version}                1
 EOF
 
 %clean
