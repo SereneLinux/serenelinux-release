@@ -4,11 +4,12 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	19
-Release:	4
+Release:	5
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
 Source:		%{name}-%{version}.tar.bz2
+Source1:		archmap
 Obsoletes:	redhat-release
 Provides:	redhat-release
 Provides:	system-release = %{version}-%{release}
@@ -55,22 +56,26 @@ ANSI_COLOR="0;34"
 CPE_NAME="cpe:/o:fedoraproject:fedora:%{version}"
 EOF
 
+# Install the keys
 install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
-
 install -m 644 RPM-GPG-KEY* $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 
-# Install all the keys, link the primary keys to primary arch files
-# and to compat generic location
+# Link the primary/secondary keys to arch files, according to archmap.
+# Ex: if there's a key named RPM-GPG-KEY-fedora-19-primary, and archmap
+#     says "fedora-19-primary: i386 x86_64",
+#     RPM-GPG-KEY-fedora-19-{i386,x86_64} will be symlinked to that key.
 pushd $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
-for arch in i386 x86_64
-  do
-  ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-%{dist_version}-$arch
+for keyfile in RPM-GPG-KEY*; do
+    key=${keyfile#RPM-GPG-KEY-} # e.g. 'fedora-20-primary'
+    arches=$(sed -ne "s/^${key}://p" %{SOURCE1}) \
+        || echo "WARNING: no archmap entry for $key"
+    for arch in $arches; do
+        # replace last part with $arch (fedora-20-primary -> fedora-20-$arch)
+        ln -s $keyfile ${keyfile%%-*}-$arch # NOTE: RPM replaces %% with %
+    done
 done
+# and add symlink for compat generic location
 ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-%{dist_version}-fedora
-for arch in arm armhfp aarch64 ppc ppc64 s390 s390x
-  do
-  ln -s RPM-GPG-KEY-fedora-%{dist_version}-secondary RPM-GPG-KEY-fedora-%{dist_version}-$arch
-done
 popd
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
@@ -114,6 +119,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Oct 8 2013 Will Woods <wwoods@redhat.com> - 19-5
+- add fedora-20-$arch links for use during upgrades
+
 * Fri Aug 30 2013 Dennis Gilmore <dennis@ausil.us> - 19-4
 - update f20 secondary gpg key, initial was mad incorrectly
 - only obsolete fedora-release-rawhide less than release 1
