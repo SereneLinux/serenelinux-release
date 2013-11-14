@@ -2,20 +2,19 @@
 %define dist_version 20
 %define bug_version 20
 
-Summary:	Fedora release files
-Name:		fedora-release
-Version:	20
-Release:	0.7
-License:	GPLv2
-Group:		System Environment/Base
-URL:		http://fedoraproject.org
-Source:		%{name}-%{version}.tar.bz2
-Obsoletes:	redhat-release
-Provides:	redhat-release
-Provides:	system-release = %{version}-%{release}
+Summary:        Fedora release files
+Name:           fedora-release
+Version:        20
+Release:        0.8
+License:        GPLv2
+Group:          System Environment/Base
+URL:            http://fedoraproject.org
+Source:         %{name}-%{version}.tar.bz2
+Obsoletes:      redhat-release
+Provides:       redhat-release
+Provides:       system-release = %{version}-%{release}
 Obsoletes:      fedora-release-rawhide < %{version}-%{release}
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildArch:	noarch
+BuildArch:       noarch
 
 %description
 Fedora release files such as yum configs and various /etc/ files that
@@ -55,28 +54,34 @@ VERSION_ID=%{dist_version}
 PRETTY_NAME="Fedora %{dist_version} (%{release_name})"
 ANSI_COLOR="0;34"
 CPE_NAME="cpe:/o:fedoraproject:fedora:%{dist_version}"
+HOME_URL="https://fedoraproject.org/"
+BUG_REPORT_URL="https://bugzilla.redhat.com/"
 REDHAT_BUGZILLA_PRODUCT="Fedora"
 REDHAT_BUGZILLA_PRODUCT_VERSION=%{bug_version}
 REDHAT_SUPPORT_PRODUCT="Fedora"
 REDHAT_SUPPORT_PRODUCT_VERSION=%{bug_version}
 EOF
 
+# Install the keys
 install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
-
 install -m 644 RPM-GPG-KEY* $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
 
-# Install all the keys, link the primary keys to primary arch files
-# and to compat generic location
+# Link the primary/secondary keys to arch files, according to archmap.
+# Ex: if there's a key named RPM-GPG-KEY-fedora-19-primary, and archmap
+#     says "fedora-19-primary: i386 x86_64",
+#     RPM-GPG-KEY-fedora-19-{i386,x86_64} will be symlinked to that key.
 pushd $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
-for arch in i386 x86_64 armhfp
-  do
-  ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-fedora-%{dist_version}-$arch
+for keyfile in RPM-GPG-KEY*; do
+    key=${keyfile#RPM-GPG-KEY-} # e.g. 'fedora-20-primary'
+    arches=$(sed -ne "s/^${key}://p" $RPM_BUILD_DIR/%{name}-%{version}/archmap) \
+        || echo "WARNING: no archmap entry for $key"
+    for arch in $arches; do
+        # replace last part with $arch (fedora-20-primary -> fedora-20-$arch)
+        ln -s $keyfile ${keyfile%%-*}-$arch # NOTE: RPM replaces %% with %
+    done
 done
+# and add symlink for compat generic location
 ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-%{dist_version}-fedora
-for arch in aarch64 ppc ppc64 s390 s390x
-  do
-  ln -s RPM-GPG-KEY-fedora-%{dist_version}-secondary RPM-GPG-KEY-fedora-%{dist_version}-$arch
-done
 popd
 
 install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
@@ -89,9 +94,9 @@ install -d -m 755 $RPM_BUILD_ROOT/etc/rpm
 cat >> $RPM_BUILD_ROOT/etc/rpm/macros.dist << EOF
 # dist macros.
 
-%%fedora		%{dist_version}
-%%dist		.fc%{dist_version}
-%%fc%{dist_version}		1
+%%fedora                %{dist_version}
+%%dist                .fc%{dist_version}
+%%fc%{dist_version}                1
 EOF
 
 %clean
@@ -120,6 +125,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Nov 13 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.8
+- patch from Will Woods to use a archmap file for linking gpg keys
+- add f21 keys
+- add fields to /etc/os-release for rhbz#951119
+- set skip_if_unavailable=False for rhbz#985354
+
 * Tue Sep 03 2013 Dennis Gilmore <dennis@ausil.us> - 20-0.7
 - set Fedora 20 release name
 
