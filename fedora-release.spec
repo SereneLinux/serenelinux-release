@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	18
-Release:	5
+Release:	6
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -124,16 +124,19 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/yum.repos.d/fedora-rawhide.repo
 
 %changelog
-* Wed Dec 18 2013 Dennis Gilmore <dennis@ausil.us> - 18.5
+* Wed Dec 18 2013 Dennis Gilmore <dennis@ausil.us> - 18-6
+- actually commit all the changes 
+
+* Wed Dec 18 2013 Dennis Gilmore <dennis@ausil.us> - 18-5
 - add to git the archmap file
 
-* Wed Dec 18 2013 Dennis Gilmore <dennis@ausil.us> - 18.4
+* Wed Dec 18 2013 Dennis Gilmore <dennis@ausil.us> - 18-4
 - fix up urls 
 
-* Wed Dec 18 2013 Dennis Gilmore <dennis@ausil.us> - 18.3
+* Wed Dec 18 2013 Dennis Gilmore <dennis@ausil.us> - 18-3
 - reenable 7d metadat cache expiry for fedora repo
 
-* Wed Dec 18 2013 Dennis Gilmore <dennis@ausil.us> - 18.2
+* Wed Dec 18 2013 Dennis Gilmore <dennis@ausil.us> - 18-2
 - add f20 gpgkeys and update symlinks
 
 * Wed Dec 19 2012 Dennis Gilmore <dennis@ausil.us> - 18-1
