@@ -4,7 +4,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        19
-Release:        5
+Release:        6
 License:        GPLv2
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -53,6 +53,12 @@ VERSION_ID=%{version}
 PRETTY_NAME="Fedora %{version} (%{release_name})"
 ANSI_COLOR="0;34"
 CPE_NAME="cpe:/o:fedoraproject:fedora:%{version}"
+HOME_URL="https://fedoraproject.org/"
+BUG_REPORT_URL="https://bugzilla.redhat.com/"
+REDHAT_BUGZILLA_PRODUCT="Fedora"
+REDHAT_BUGZILLA_PRODUCT_VERSION=%{bug_version}
+REDHAT_SUPPORT_PRODUCT="Fedora"
+REDHAT_SUPPORT_PRODUCT_VERSION=%{bug_version}
 EOF
 
 # Install the keys
@@ -118,6 +124,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Dec 16 2013 Dennis Gilmore <dennis@ausil.us> - 19-6
+- add f21 keys
+
 * Tue Oct 8 2013 Will Woods <wwoods@redhat.com> - 19-5
 - add fedora-20-$arch links for use during upgrades
 
