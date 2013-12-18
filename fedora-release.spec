@@ -4,7 +4,7 @@
 Summary:	Fedora release files
 Name:		fedora-release
 Version:	18
-Release:	4
+Release:	5
 License:	GPLv2
 Group:		System Environment/Base
 URL:		http://fedoraproject.org
@@ -124,6 +124,9 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/yum.repos.d/fedora-rawhide.repo
 
 %changelog
+* Wed Dec 18 2013 Dennis Gilmore <dennis@ausil.us> - 18.5
+- add to git the archmap file
+
 * Wed Dec 18 2013 Dennis Gilmore <dennis@ausil.us> - 18.4
 - fix up urls 
 
