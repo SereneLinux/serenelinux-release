@@ -5,14 +5,15 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        20
-Release:        1
+Release:        2
 License:        GPLv2
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
 Source:         %{name}-%{version}.tar.bz2
 Obsoletes:      redhat-release
 Provides:       redhat-release
-Provides:       system-release = %{version}-%{release}
+Provides:       system-release
+Provides:       system-release(release)
 Obsoletes:      fedora-release-rawhide < 20-0.5
 BuildArch:       noarch
 
@@ -125,6 +126,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Dec 21 2013 Bruno Wolff III <bruno@wolff.to> - 20-2
+- Changed to work better with recent yum change (bug 1040607)
+
 * Wed Nov 27 2013 Dennis Gilmore <dennis@ausil.us> - 20-1
 - enabled metadata caching for fedora
 - disable updates-testing
