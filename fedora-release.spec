@@ -5,14 +5,15 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        21
-Release:        0.2
+Release:        0.3
 License:        GPLv2
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
 Source:         %{name}-%{version}.tar.bz2
 Obsoletes:      redhat-release
 Provides:       redhat-release
-Provides:       system-release = %{version}-%{release}
+Provides:       system-release
+Provides:       system-release(release)
 Requires:       fedora-release-rawhide = %{version}-%{release}
 BuildArch:      noarch
 
@@ -124,6 +125,9 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/yum.repos.d/fedora-rawhide.repo
 
 %changelog
+* Sat Dec 21 2013 Bruno Wolff III <bruno@wolff.to> - 21-0.3
+- Changed to work better with recent yum change (bug 1040607)
+
 * Wed Nov 13 2013 Dennis Gilmore <dennis@ausil.us> - 21-0.2
 - remove f20 keys add f21
 - patch from Will Woods to use a archmap file for linking gpg keys
