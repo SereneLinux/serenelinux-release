@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        21
-Release:        0.2
+Release:        0.4
 License:        GPLv2
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -90,8 +90,8 @@ for file in fedora*repo ; do
 done
 
 # Set up the dist tag macros
-install -d -m 755 $RPM_BUILD_ROOT/etc/rpm
-cat >> $RPM_BUILD_ROOT/etc/rpm/macros.dist << EOF
+install -d -m 755 $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d
+cat >> $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.dist << EOF
 # dist macros.
 
 %%fedora                %{dist_version}
@@ -115,7 +115,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/yum.repos.d/fedora-updates*.repo
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
-%config %attr(0644,root,root) /etc/rpm/macros.dist
+%attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
 %dir /etc/pki/rpm-gpg
 /etc/pki/rpm-gpg/*
 
@@ -124,6 +124,13 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/yum.repos.d/fedora-rawhide.repo
 
 %changelog
+* Mon Jan 13 2014 Dennis Gilmore <dennis@ausil.us> - 21-0.4
+- set metadata expiry to 12 hours as dnf defaults to something silly bz#1045678
+
+* Sat Dec 28 2013 Ville Skyttä <ville.skytta@iki.fi> - 21-0.3
+- Install macros.dist as non-%%config to %%{_rpmconfigdir}/macros.d (#846679).
+- Fix bogus date in %%changelog.
+
 * Wed Nov 13 2013 Dennis Gilmore <dennis@ausil.us> - 21-0.2
 - remove f20 keys add f21
 - patch from Will Woods to use a archmap file for linking gpg keys
@@ -314,7 +321,7 @@ rm -rf $RPM_BUILD_ROOT
 - Bump for F8 Test2
 - Fix license tag
 
-* Thu Jul 27 2007 Jesse Keating <jkeating@redhat.com> - 7.90-1
+* Fri Jul 27 2007 Jesse Keating <jkeating@redhat.com> - 7.90-1
 - Bump for F8 Test1
 
 * Thu Jun 28 2007 Jesse Keating <jkeating@redhat.com> - 7.89-3
