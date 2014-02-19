@@ -5,14 +5,15 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        21
-Release:        0.4
+Release:        0.5
 License:        GPLv2
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
 Source:         %{name}-%{version}.tar.bz2
 Obsoletes:      redhat-release
 Provides:       redhat-release
-Provides:       system-release = %{version}-%{release}
+Provides:       system-release
+Provides:       system-release(%{version})
 Requires:       fedora-release-rawhide = %{version}-%{release}
 BuildArch:      noarch
 
@@ -124,6 +125,9 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/yum.repos.d/fedora-rawhide.repo
 
 %changelog
+* Wed Feb 17 2014 Dennis Gilmore <dennis@ausil.us> - 21-0.5
+- provide system-release(%%version) rhbz#1047058
+
 * Mon Jan 13 2014 Dennis Gilmore <dennis@ausil.us> - 21-0.4
 - set metadata expiry to 12 hours as dnf defaults to something silly bz#1045678
 
