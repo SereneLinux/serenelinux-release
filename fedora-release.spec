@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        20
-Release:        2
+Release:        3
 License:        GPLv2
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -126,6 +126,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Feb 19 2014 Dennis Gilmore <dennis@ausil.us> - 20-3
+- bump for downstream breakage
+
 * Wed Feb 19 2014 Dennis Gilmore <dennis@ausil.us> - 20-2
 - provide system-release(%%version) rhbz#1047058
 
