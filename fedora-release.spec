@@ -5,14 +5,15 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        19
-Release:        7
+Release:        8
 License:        GPLv2
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
 Source0:        %{name}-%{version}.tar.bz2
 Obsoletes:      redhat-release
 Provides:       redhat-release
-Provides:       system-release = %{version}-%{release}
+Provides:       system-release
+Provides:       system-release(%{version})
 Obsoletes:      fedora-release-rawhide < %{version}-1
 BuildArch:      noarch
 
@@ -125,6 +126,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Feb 19 2014 Dennis Gilmore <dennis@ausil.us> - 19-8
+- provide system-release(%%version) rhbz#1047058
+
 * Wed Feb 19 2014 Dennis Gilmore <dennis@ausil.us> - 19-7
 - define bug_version macro rhbz#1062156
 
