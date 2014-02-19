@@ -1,10 +1,11 @@
 %define release_name Schrödinger’s Cat
 %define dist_version 19
+%define bug_version 19
 
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        19
-Release:        6
+Release:        7
 License:        GPLv2
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -124,6 +125,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Feb 19 2014 Dennis Gilmore <dennis@ausil.us> - 19-7
+- define bug_version macro rhbz#1062156
+
 * Wed Dec 16 2013 Dennis Gilmore <dennis@ausil.us> - 19-6
 - add f21 keys
 
