@@ -5,8 +5,8 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        21
-Release:        0.5
-License:        GPLv2
+Release:        0.6
+License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
 Source:         %{name}-%{version}.tar.bz2
@@ -105,7 +105,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc GPL Fedora-Legal-README.txt
+%doc LICENSE Fedora-Legal-README.txt
 %config %attr(0644,root,root) /etc/os-release
 %config %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
@@ -125,6 +125,11 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/yum.repos.d/fedora-rawhide.repo
 
 %changelog
+* Sat May 10 2014 Dennis Gilmore <dennis@ausil.us> - 21-0.6
+- update Fedora-Legal-README.txt with updates from legal rhbz#1096434
+- Change license to MIT to reflect the change in the fedora compilation
+- based on reccomendations from Red Hat Legal rhbz#1096434
+
 * Wed Feb 17 2014 Dennis Gilmore <dennis@ausil.us> - 21-0.5
 - provide system-release(%%version) rhbz#1047058
 
