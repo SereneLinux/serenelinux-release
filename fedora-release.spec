@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        21
-Release:        0.6
+Release:        0.7
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -125,6 +125,9 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/yum.repos.d/fedora-rawhide.repo
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 21-0.7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Sat May 10 2014 Dennis Gilmore <dennis@ausil.us> - 21-0.6
 - update Fedora-Legal-README.txt with updates from legal rhbz#1096434
 - Change license to MIT to reflect the change in the fedora compilation
