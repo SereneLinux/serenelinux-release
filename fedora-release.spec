@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        21
-Release:        0.7
+Release:        0.8
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -14,20 +14,63 @@ Obsoletes:      redhat-release
 Provides:       redhat-release
 Provides:       system-release
 Provides:       system-release(%{version})
-Requires:       fedora-release-rawhide = %{version}-%{release}
+Requires:       fedora-repos(%{version})
 BuildArch:      noarch
 
 %description
-Fedora release files such as yum configs and various /etc/ files that
-define the release.
+Fedora release files such as various /etc/ files that define the release.
 
-%package rawhide
-Summary:        Rawhide repo definitions
+%package standard
+Summary:        Base package for non-product-specific default configurations
+Provides:       system-release-standard
+Provides:       system-release-standard(%{version})
 Requires:       fedora-release = %{version}-%{release}
+Conflicts:      fedora-release-cloud
+Conflicts:      fedora-release-server
+Conflicts:      fedora-release-workstation
 
-%description rawhide
-This package provides the rawhide repo definitions.
+%description standard
+Provides a base package for non-product-specific configuration files to
+depend on.
 
+%package cloud
+Summary:        Base package for Fedora Cloud-specific default configurations
+Provides:       system-release-cloud
+Provides:       system-release-cloud(%{version})
+Requires:       fedora-release = %{version}-%{release}
+Conflicts:      fedora-release-server
+Conflicts:      fedora-release-standard
+Conflicts:      fedora-release-workstation
+
+%description cloud
+Provides a base package for Fedora Cloud-specific configuration files to
+depend on.
+
+%package server
+Summary:        Base package for Fedora Server-specific default configurations
+Provides:       system-release-server
+Provides:       system-release-server(%{version})
+Requires:       fedora-release = %{version}-%{release}
+Conflicts:      fedora-release-cloud
+Conflicts:      fedora-release-standard
+Conflicts:      fedora-release-workstation
+
+%description server
+Provides a base package for Fedora Server-specific configuration files to
+depend on.
+
+%package workstation
+Summary:        Base package for Fedora Workstation-specific default configurations
+Provides:       system-release-workstation
+Provides:       system-release-workstation(%{version})
+Requires:       fedora-release = %{version}-%{release}
+Conflicts:      fedora-release-cloud
+Conflicts:      fedora-release-server
+Conflicts:      fedora-release-standard
+
+%description workstation
+Provides a base package for Fedora Workstation-specific configuration files to
+depend on.
 
 %prep
 %setup -q
@@ -63,33 +106,6 @@ REDHAT_SUPPORT_PRODUCT="Fedora"
 REDHAT_SUPPORT_PRODUCT_VERSION=%{bug_version}
 EOF
 
-# Install the keys
-install -d -m 755 $RPM_BUILD_ROOT/etc/pki/rpm-gpg
-install -m 644 RPM-GPG-KEY* $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
-
-# Link the primary/secondary keys to arch files, according to archmap.
-# Ex: if there's a key named RPM-GPG-KEY-fedora-19-primary, and archmap
-#     says "fedora-19-primary: i386 x86_64",
-#     RPM-GPG-KEY-fedora-19-{i386,x86_64} will be symlinked to that key.
-pushd $RPM_BUILD_ROOT/etc/pki/rpm-gpg/
-for keyfile in RPM-GPG-KEY*; do
-    key=${keyfile#RPM-GPG-KEY-} # e.g. 'fedora-20-primary'
-    arches=$(sed -ne "s/^${key}://p" $RPM_BUILD_DIR/%{name}-%{version}/archmap) \
-        || echo "WARNING: no archmap entry for $key"
-    for arch in $arches; do
-        # replace last part with $arch (fedora-20-primary -> fedora-20-$arch)
-        ln -s $keyfile ${keyfile%%-*}-$arch # NOTE: RPM replaces %% with %
-    done
-done
-# and add symlink for compat generic location
-ln -s RPM-GPG-KEY-fedora-%{dist_version}-primary RPM-GPG-KEY-%{dist_version}-fedora
-popd
-
-install -d -m 755 $RPM_BUILD_ROOT/etc/yum.repos.d
-for file in fedora*repo ; do
-  install -m 644 $file $RPM_BUILD_ROOT/etc/yum.repos.d
-done
-
 # Set up the dist tag macros
 install -d -m 755 $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d
 cat >> $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.dist << EOF
@@ -111,20 +127,28 @@ rm -rf $RPM_BUILD_ROOT
 /etc/redhat-release
 /etc/system-release
 %config %attr(0644,root,root) /etc/system-release-cpe
-%dir /etc/yum.repos.d
-%config(noreplace) /etc/yum.repos.d/fedora.repo
-%config(noreplace) /etc/yum.repos.d/fedora-updates*.repo
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
-%dir /etc/pki/rpm-gpg
-/etc/pki/rpm-gpg/*
 
-%files rawhide
-%defattr(-,root,root,-)
-%config(noreplace) /etc/yum.repos.d/fedora-rawhide.repo
+%files standard
+%doc LICENSE
+
+%files cloud
+%doc LICENSE
+
+%files server
+%doc LICENSE
+
+%files workstation
+%doc LICENSE
 
 %changelog
+* Tue Jul 08 2014 Stephen Gallagher <sgallagh@redhat.com> 21-0.8
+- Provide new release file metapackages for Fedora Products
+- drop .repo files and gpg keys (dennis)
+- Require fedora-repos
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 21-0.7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
