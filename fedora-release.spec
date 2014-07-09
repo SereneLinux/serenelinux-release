@@ -1,11 +1,11 @@
 %define release_name Rawhide
-%define dist_version 21
+%define dist_version 22
 %define bug_version Rawhide
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        21
-Release:        0.8
+Version:        22
+Release:        0.1
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -144,6 +144,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc LICENSE
 
 %changelog
+* Tue Jul 08 2014 Dennis Gilmore <dennis@ausil.us> 22-0.1
+- setup for rawhide targetiing f22
+
 * Tue Jul 08 2014 Stephen Gallagher <sgallagh@redhat.com> 21-0.8
 - Provide new release file metapackages for Fedora Products
 - drop .repo files and gpg keys (dennis)
