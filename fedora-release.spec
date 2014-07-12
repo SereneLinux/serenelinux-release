@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        22
-Release:        0.1
+Release:        0.2
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -121,7 +121,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc LICENSE Fedora-Legal-README.txt
+%{!?_licensedir:%global license %%doc}
+%license LICENSE Fedora-Legal-README.txt
 %config %attr(0644,root,root) /etc/os-release
 %config %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
@@ -132,18 +133,25 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
 
 %files standard
-%doc LICENSE
+%{!?_licensedir:%global license %%doc}
+%license LICENSE
 
 %files cloud
-%doc LICENSE
+%{!?_licensedir:%global license %%doc}
+%license LICENSE
 
 %files server
-%doc LICENSE
+%{!?_licensedir:%global license %%doc}
+%license LICENSE
 
 %files workstation
-%doc LICENSE
+%{!?_licensedir:%global license %%doc}
+%license LICENSE
 
 %changelog
+* Sat Jul 12 2014 Tom Callaway <spot@fedoraproject.org> 22-0.2
+- fix license handling
+
 * Tue Jul 08 2014 Dennis Gilmore <dennis@ausil.us> 22-0.1
 - setup for rawhide targetiing f22
 
