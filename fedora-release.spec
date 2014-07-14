@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        22
-Release:        0.2
+Release:        0.3
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -51,6 +51,8 @@ Summary:        Base package for Fedora Server-specific default configurations
 Provides:       system-release-server
 Provides:       system-release-server(%{version})
 Requires:       fedora-release = %{version}-%{release}
+Requires:       systemd
+Requires:       cockpit
 Conflicts:      fedora-release-cloud
 Conflicts:      fedora-release-standard
 Conflicts:      fedora-release-workstation
@@ -116,6 +118,11 @@ cat >> $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.dist << EOF
 %%fc%{dist_version}                1
 EOF
 
+# Add Product-specific presets
+mkdir -p %{buildroot}%{_prefix}/lib/systemd/system-preset/
+# Fedora Server
+install -m 0644 80-server.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -143,12 +150,17 @@ rm -rf $RPM_BUILD_ROOT
 %files server
 %{!?_licensedir:%global license %%doc}
 %license LICENSE
+%{_prefix}/lib/systemd/system-preset/80-server.preset
 
 %files workstation
 %{!?_licensedir:%global license %%doc}
 %license LICENSE
 
 %changelog
+* Mon Jul 14 2014 Stephen Gallagher <sgallagh@redhat.com> 22-0.3
+- Add systemd preset file for Fedora Server
+- Add requirement on Cockpit
+
 * Sat Jul 12 2014 Tom Callaway <spot@fedoraproject.org> 22-0.2
 - fix license handling
 
