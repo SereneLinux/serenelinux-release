@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        22
-Release:        0.3
+Release:        0.4
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -53,6 +53,7 @@ Provides:       system-release-server(%{version})
 Requires:       fedora-release = %{version}-%{release}
 Requires:       systemd
 Requires:       cockpit
+Requires:       rolekit
 Conflicts:      fedora-release-cloud
 Conflicts:      fedora-release-standard
 Conflicts:      fedora-release-workstation
@@ -157,6 +158,9 @@ rm -rf $RPM_BUILD_ROOT
 %license LICENSE
 
 %changelog
+* Wed Jul 23 2014 Dennis Gilmore <dennis@ausil.us> - 22-0.4
+- add patch from https://fedorahosted.org/rel-eng/ticket/5947 for server
+
 * Mon Jul 14 2014 Stephen Gallagher <sgallagh@redhat.com> 22-0.3
 - Add systemd preset file for Fedora Server
 - Add requirement on Cockpit
