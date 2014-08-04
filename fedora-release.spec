@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        21
-Release:        0.12
+Release:        0.13
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -54,6 +54,8 @@ Requires:       fedora-release = %{version}-%{release}
 Requires:       systemd
 Requires:       cockpit
 Requires:       rolekit
+Requires(post):	sed
+Requires(post):	systemd
 Conflicts:      fedora-release-cloud
 Conflicts:      fedora-release-standard
 Conflicts:      fedora-release-workstation
@@ -124,6 +126,15 @@ mkdir -p %{buildroot}%{_prefix}/lib/systemd/system-preset/
 # Fedora Server
 install -m 0644 80-server.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
 
+%post server
+if [ $1 -eq 1 ] ; then
+        # Initial installation; fix up after %%systemd_post in packages
+	# possibly installed before our preset file was added
+	units=$(sed -n 's/^enable//p' \
+		< %{_prefix}/lib/systemd/system-preset/80-server.preset)
+        /usr/bin/systemctl preset $units >/dev/null 2>&1 || :
+fi
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -158,6 +169,9 @@ rm -rf $RPM_BUILD_ROOT
 %license LICENSE
 
 %changelog
+* Mon Aug 04 2014 Dennis Gilmore <dennis@ausil.us> - 21.0-13
+- reapply presets after installing
+
 * Wed Jul 23 2014 Dennis Gilmore <dennis@ausil.us> - 21-0.12
 - add patch from https://fedorahosted.org/rel-eng/ticket/5947 for server
 
