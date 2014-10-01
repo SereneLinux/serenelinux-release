@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        21
-Release:        0.13
+Release:        0.14
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -72,6 +72,9 @@ Requires:       fedora-release = %{version}-%{release}
 Conflicts:      fedora-release-cloud
 Conflicts:      fedora-release-server
 Conflicts:      fedora-release-standard
+# needed for captive portal support
+Requires:       NetworkManager-config-connectivity-fedora
+
 
 %description workstation
 Provides a base package for Fedora Workstation-specific configuration files to
@@ -169,6 +172,9 @@ rm -rf $RPM_BUILD_ROOT
 %license LICENSE
 
 %changelog
+* Tue Sep 30 2014 Josh Boyer <jwboyer@fedoraproject.org> - 21-0.14
+- Add requires for captive portal to Workstation
+
 * Mon Aug 04 2014 Dennis Gilmore <dennis@ausil.us> - 21.0-13
 - reapply presets after installing
 
