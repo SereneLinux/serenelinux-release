@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        21
-Release:        0.14
+Release:        0.16
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -15,21 +15,26 @@ Provides:       redhat-release
 Provides:       system-release
 Provides:       system-release(%{version})
 Requires:       fedora-repos(%{version})
+Requires:       system-release-product
 BuildArch:      noarch
 
 %description
 Fedora release files such as various /etc/ files that define the release.
 
-%package standard
+%package nonproduct
 Summary:        Base package for non-product-specific default configurations
-Provides:       system-release-standard
-Provides:       system-release-standard(%{version})
+Provides:       system-release-nonproduct
+Provides:       system-release-nonproduct(%{version})
+Provides:       system-release-product
+# turned out to be a bad name
+Provides:       fedora-release-standard = 21-0.16
+Obsoletes:      fedora-release-standard < 21-0.16
 Requires:       fedora-release = %{version}-%{release}
 Conflicts:      fedora-release-cloud
 Conflicts:      fedora-release-server
 Conflicts:      fedora-release-workstation
 
-%description standard
+%description nonproduct
 Provides a base package for non-product-specific configuration files to
 depend on.
 
@@ -37,9 +42,10 @@ depend on.
 Summary:        Base package for Fedora Cloud-specific default configurations
 Provides:       system-release-cloud
 Provides:       system-release-cloud(%{version})
+Provides:       system-release-product
 Requires:       fedora-release = %{version}-%{release}
 Conflicts:      fedora-release-server
-Conflicts:      fedora-release-standard
+Conflicts:      fedora-release-nonproduct
 Conflicts:      fedora-release-workstation
 
 %description cloud
@@ -50,6 +56,7 @@ depend on.
 Summary:        Base package for Fedora Server-specific default configurations
 Provides:       system-release-server
 Provides:       system-release-server(%{version})
+Provides:       system-release-product
 Requires:       fedora-release = %{version}-%{release}
 Requires:       systemd
 Requires:       cockpit
@@ -57,7 +64,7 @@ Requires:       rolekit
 Requires(post):	sed
 Requires(post):	systemd
 Conflicts:      fedora-release-cloud
-Conflicts:      fedora-release-standard
+Conflicts:      fedora-release-nonproduct
 Conflicts:      fedora-release-workstation
 
 %description server
@@ -68,10 +75,11 @@ depend on.
 Summary:        Base package for Fedora Workstation-specific default configurations
 Provides:       system-release-workstation
 Provides:       system-release-workstation(%{version})
+Provides:       system-release-product
 Requires:       fedora-release = %{version}-%{release}
 Conflicts:      fedora-release-cloud
 Conflicts:      fedora-release-server
-Conflicts:      fedora-release-standard
+Conflicts:      fedora-release-nonproduct
 # needed for captive portal support
 Requires:       NetworkManager-config-connectivity-fedora
 
@@ -154,7 +162,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
 
-%files standard
+%files nonproduct
 %{!?_licensedir:%global license %%doc}
 %license LICENSE
 
@@ -172,6 +180,13 @@ rm -rf $RPM_BUILD_ROOT
 %license LICENSE
 
 %changelog
+* Mon Oct 06 2014 Ray Strode <rstrode@redhat.com> 21-0.16
+- Rename fedora-release-standard to fedora-release-nonproduct
+  following discussion on list and irc
+
+* Fri Oct 03 2014 Stephen Gallagher <sgallagh@redhat.com> 21-0.15
+- Add system-release-product virtual Provides and Requires
+
 * Tue Sep 30 2014 Josh Boyer <jwboyer@fedoraproject.org> - 21-0.14
 - Add requires for captive portal to Workstation
 
