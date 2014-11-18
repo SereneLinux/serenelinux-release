@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        21
-Release:        0.16
+Release:        1
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -15,7 +15,6 @@ Provides:       redhat-release
 Provides:       system-release
 Provides:       system-release(%{version})
 Requires:       fedora-repos(%{version})
-Requires:       system-release-product
 BuildArch:      noarch
 
 %description
@@ -180,6 +179,10 @@ rm -rf $RPM_BUILD_ROOT
 %license LICENSE
 
 %changelog
+* Tue Nov 18 2014 Dennis Gilmore <dennis@ausil.us> - 21-1
+- drop Require on system-release-product rhbz#1156198
+- prep for f21 GA
+
 * Mon Oct 06 2014 Ray Strode <rstrode@redhat.com> 21-0.16
 - Rename fedora-release-standard to fedora-release-nonproduct
   following discussion on list and irc
