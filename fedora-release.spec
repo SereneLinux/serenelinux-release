@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        21
-Release:        1
+Release:        2
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -81,7 +81,8 @@ Conflicts:      fedora-release-server
 Conflicts:      fedora-release-nonproduct
 # needed for captive portal support
 Requires:       NetworkManager-config-connectivity-fedora
-
+Requires(post): /usr/bin/glib-compile-schemas
+Requires(postun): /usr/bin/glib-compile-schemas
 
 %description workstation
 Provides a base package for Fedora Workstation-specific configuration files to
@@ -136,6 +137,10 @@ mkdir -p %{buildroot}%{_prefix}/lib/systemd/system-preset/
 # Fedora Server
 install -m 0644 80-server.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
 
+# Override the list of enabled gnome-shell extensions for Workstation
+mkdir -p %{buildroot}%{_datadir}/glib-2.0/schemas/
+install -m 0644 org.gnome.shell.gschema.override %{buildroot}%{_datadir}/glib-2.0/schemas/
+
 %post server
 if [ $1 -eq 1 ] ; then
         # Initial installation; fix up after %%systemd_post in packages
@@ -144,6 +149,14 @@ if [ $1 -eq 1 ] ; then
 		< %{_prefix}/lib/systemd/system-preset/80-server.preset)
         /usr/bin/systemctl preset $units >/dev/null 2>&1 || :
 fi
+
+%postun workstation
+if [ $1 -eq 0 ] ; then
+    glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+fi
+
+%posttrans workstation
+glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -177,8 +190,14 @@ rm -rf $RPM_BUILD_ROOT
 %files workstation
 %{!?_licensedir:%global license %%doc}
 %license LICENSE
+%{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 
 %changelog
+* Thu Nov 20 2014 Kalev Lember <kalevlember@gmail.com> - 21-2
+- Ship an override file to enable the gnome-shell background logo extension
+  in Workstation (#1161637)
+- fix up handling of schema file from inccorect initail handling - dennis
+
 * Tue Nov 18 2014 Dennis Gilmore <dennis@ausil.us> - 21-1
 - drop Require on system-release-product rhbz#1156198
 - prep for f21 GA
