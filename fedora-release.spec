@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        22
-Release:        0.11
+Release:        0.12
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -195,6 +195,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 
 %changelog
+* Tue Feb 10 2015 Peter Robinson <pbrobinson@fedoraproject.org> 22-0.12
+- bump
+
 * Tue Feb 10 2015 Peter Robinson <pbrobinson@fedoraproject.org> 22-0.11
 - Setup for f22 branch
 - Add PRIVACY_POLICY_URL to os-release (rhbz#1182635)
