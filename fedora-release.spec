@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        23
-Release:        0.1
+Release:        0.2
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -195,6 +195,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 
 %changelog
+i* Tue Feb 10 2015 Dennis Gilmore <dennis@ausil.us> 23-0.2
+- bump
+
 * Tue Feb 10 2015 Peter Robinson <pbrobinson@fedoraproject.org> 23-0.1
 - Setup for rawhide targetting f23
 - Add PRIVACY_POLICY_URL to os-release (rhbz#1182635)
