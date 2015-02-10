@@ -166,7 +166,8 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %defattr(-,root,root,-)
 %{!?_licensedir:%global license %%doc}
 %license LICENSE Fedora-Legal-README.txt
-%config %attr(0644,root,root) /etc/os-release
+%config %attr(0644,root,root) /usr/lib/os-release
+/etc/os-release
 %config %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
 /etc/system-release
