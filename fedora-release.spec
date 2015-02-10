@@ -1,11 +1,11 @@
 %define release_name Rawhide
-%define dist_version 22
+%define dist_version 23
 %define bug_version Rawhide
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        22
-Release:        0.10
+Version:        23
+Release:        0.1
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -95,7 +95,6 @@ sed -i 's|@@VERSION@@|%{dist_version}|g' Fedora-Legal-README.txt
 %build
 
 %install
-rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc
 echo "Fedora release %{version} (%{release_name})" > $RPM_BUILD_ROOT/etc/fedora-release
 echo "cpe:/o:fedoraproject:fedora:%{version}" > $RPM_BUILD_ROOT/etc/system-release-cpe
@@ -106,7 +105,8 @@ echo >> $RPM_BUILD_ROOT/etc/issue
 ln -s fedora-release $RPM_BUILD_ROOT/etc/redhat-release
 ln -s fedora-release $RPM_BUILD_ROOT/etc/system-release
 
-cat << EOF >>$RPM_BUILD_ROOT/etc/os-release
+install -d $RPM_BUILD_ROOT/usr/lib
+cat << EOF >>$RPM_BUILD_ROOT/usr/lib/os-release
 NAME=Fedora
 VERSION="%{dist_version} (%{release_name})"
 ID=fedora
@@ -120,7 +120,10 @@ REDHAT_BUGZILLA_PRODUCT="Fedora"
 REDHAT_BUGZILLA_PRODUCT_VERSION=%{bug_version}
 REDHAT_SUPPORT_PRODUCT="Fedora"
 REDHAT_SUPPORT_PRODUCT_VERSION=%{bug_version}
+PRIVACY_POLICY=https://fedoraproject.org/wiki/Legal:PrivacyPolicy
 EOF
+
+ln -s /usr/lib/os-release $RPM_BUILD_ROOT/etc/os-release
 
 # Set up the dist tag macros
 install -d -m 755 $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d
@@ -158,8 +161,6 @@ fi
 %posttrans workstation
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
@@ -193,6 +194,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 
 %changelog
+* Tue Feb 10 2015 Peter Robinson <pbrobinson@fedoraproject.org> 23-0.1
+- Setup for rawhide targetting f23
+- Add PRIVACY_POLICY_URL to os-release (rhbz#1182635)
+- Move os-release to /usr/lib and symlink to etc (rhbz#1149568)
+
 * Thu Nov 20 2014 Kalev Lember <kalevlember@gmail.com> - 22-0.10
 - Ship an override file to enable the gnome-shell background logo extension
   in Workstation (#1161637)
@@ -225,7 +231,7 @@ rm -rf $RPM_BUILD_ROOT
 - fix license handling
 
 * Tue Jul 08 2014 Dennis Gilmore <dennis@ausil.us> 22-0.1
-- setup for rawhide targetiing f22
+- setup for rawhide targeting f22
 
 * Tue Jul 08 2014 Stephen Gallagher <sgallagh@redhat.com> 21-0.8
 - Provide new release file metapackages for Fedora Products
