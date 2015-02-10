@@ -195,7 +195,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 
 %changelog
-i* Tue Feb 10 2015 Dennis Gilmore <dennis@ausil.us> 23-0.2
+* Tue Feb 10 2015 Dennis Gilmore <dennis@ausil.us> 23-0.2
 - bump
 
 * Tue Feb 10 2015 Peter Robinson <pbrobinson@fedoraproject.org> 23-0.1
