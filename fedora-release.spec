@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        22
-Release:        0.12
+Release:        0.13
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -123,7 +123,7 @@ REDHAT_SUPPORT_PRODUCT_VERSION=%{bug_version}
 PRIVACY_POLICY=https://fedoraproject.org/wiki/Legal:PrivacyPolicy
 EOF
 
-ln -s /usr/lib/os-release $RPM_BUILD_ROOT/etc/os-release
+ln -s ../usr/lib/os-release $RPM_BUILD_ROOT/etc/os-release
 
 # Set up the dist tag macros
 install -d -m 755 $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d
@@ -195,6 +195,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 
 %changelog
+* Tue Feb 24 2015 Dennis Gilmore <dennis@ausil.us> - 22-0.13
+- make the /etc/os-release symlink relative rhbz#1192276
+
 * Tue Feb 10 2015 Peter Robinson <pbrobinson@fedoraproject.org> 22-0.12
 - bump
 
