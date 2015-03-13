@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        23
-Release:        0.4
+Release:        0.5
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -123,10 +123,11 @@ cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=Workstation" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
 
 # Create the symlink for /etc/os-release
-# This will be dangling until %post[trans] when the
+# This will be standard until %post when the
 # release packages will link the appropriate one into
 # /usr/lib/os-release
 ln -s ../usr/lib/os-release $RPM_BUILD_ROOT/etc/os-release
+ln -s os.release.d/os-release-fedora $RPM_BUILD_ROOT/usr/lib/os-release
 
 # Set up the dist tag macros
 install -d -m 755 $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d
@@ -149,7 +150,6 @@ install -m 0644 80-workstation.preset %{buildroot}%{_prefix}/lib/systemd/system-
 mkdir -p %{buildroot}%{_datadir}/glib-2.0/schemas/
 install -m 0644 org.gnome.shell.gschema.override %{buildroot}%{_datadir}/glib-2.0/schemas/
 
-
 %posttrans
 # Only on installation
 if [ $1 = 0 ]; then
@@ -170,7 +170,7 @@ if [ $1 -eq 1 ] ; then
 
     # If the link exists but it points to a non-productized version,
     # replace it with this one
-    test \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" != "xos-release-fedora" ||
+    test \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" != "xos.release.d/os-release-fedora" ||
         ln -sf /usr/lib/os.release.d/os-release-cloud /usr/lib/os-release || :
 fi
 
@@ -195,7 +195,7 @@ if [ $1 -eq 1 ] ; then
 
     # If the link exists but it points to a non-productized version,
     # replace it with this one
-    test \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" != "xos-release-fedora" ||
+    test \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" != "xos.release.d/os-release-fedora" ||
         ln -sf /usr/lib/os.release.d/os-release-server /usr/lib/os-release || :
 
     # fix up after %%systemd_post in packages
@@ -225,7 +225,7 @@ if [ $1 -eq 1 ] ; then
 
     # If the link exists but it points to a non-productized version,
     # replace it with this one
-    test \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" != "xos-release-fedora" ||
+    test \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" != "xos.release.d/os-release-fedora" ||
         ln -sf /usr/lib/os.release.d/os-release-workstation /usr/lib/os-release || :
 
     # fix up after %%systemd_post in packages
@@ -255,7 +255,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %license LICENSE Fedora-Legal-README.txt
 %dir /usr/lib/os.release.d
 %config %attr(0644,root,root) /usr/lib/os.release.d/os-release-fedora
-%ghost /usr/lib/os-release
+/usr/lib/os-release
 /etc/os-release
 %config %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
@@ -285,6 +285,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
+* Fri Mar 13 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.4
+- unbreak installs getting a broken symlink at /etc/os-release
+
 * Fri Mar 13 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.4
 - add preset file for workstation to disable sshd
 
