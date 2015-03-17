@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        23
-Release:        0.5
+Release:        0.7
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -156,7 +156,7 @@ if [ $1 = 0 ]; then
     # If no fedora-release-$edition subpackage was installed,
     # make sure to link /etc/os-release to the standard version
     test -e /usr/lib/os-release || \
-        ln -sf /usr/lib/os-release.d/os-release-fedora /usr/lib/os-release
+        ln -sf ./os-release.d/os-release-fedora /usr/lib/os-release
 fi
 
 %post cloud
@@ -166,12 +166,13 @@ if [ $1 -eq 1 ] ; then
     # If there is no link to os-release yet from some other
     # release package, create it
     test -e /usr/lib/os-release || \
-        ln -sf /usr/lib/os.release.d/os-release-cloud /usr/lib/os-release
+        ln -sf ./os.release.d/os-release-cloud /usr/lib/os-release
 
-    # If the link exists but it points to a non-productized version,
-    # replace it with this one
-    test \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" != "xos.release.d/os-release-fedora" ||
-        ln -sf /usr/lib/os.release.d/os-release-cloud /usr/lib/os-release || :
+    # If os-release isn't a link or it exists but it points to a
+    # non-productized version, replace it with this one
+    if [ \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" = "xos.release.d/os-release-fedora" ]; then
+        ln -sf ./os.release.d/os-release-cloud /usr/lib/os-release || :
+    fi
 fi
 
 %postun cloud
@@ -180,7 +181,7 @@ if [ $1 = 0 ]; then
     # If os-release is now a broken symlink or missing replace it
     # with a symlink to basic version
     test -e /usr/lib/os-release || \
-        ln -sf /usr/lib/os.release.d/os-release-fedora /usr/lib/os-release || :
+        ln -sf ./os.release.d/os-release-fedora /usr/lib/os-release || :
 fi
 
 
@@ -191,12 +192,13 @@ if [ $1 -eq 1 ] ; then
     # If there is no link to os-release yet from some other
     # release package, create it
     test -e /usr/lib/os-release || \
-        ln -sf /usr/lib/os.release.d/os-release-server /usr/lib/os-release
+        ln -sf ./os.release.d/os-release-server /usr/lib/os-release
 
-    # If the link exists but it points to a non-productized version,
-    # replace it with this one
-    test \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" != "xos.release.d/os-release-fedora" ||
-        ln -sf /usr/lib/os.release.d/os-release-server /usr/lib/os-release || :
+    # If os-release isn't a link or it exists but it points to a
+    # non-productized version, replace it with this one
+    if [ \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" = "xos.release.d/os-release-fedora" ]; then
+        ln -sf ./os.release.d/os-release-server /usr/lib/os-release || :
+    fi
 
     # fix up after %%systemd_post in packages
     # possibly installed before our preset file was added
@@ -211,7 +213,7 @@ if [ $1 = 0 ]; then
     # If os-release is now a broken symlink or missing replace it
     # with a symlink to basic version
     test -e /usr/lib/os-release || \
-        ln -sf /usr/lib/os.release.d/os-release-fedora /usr/lib/os-release || :
+        ln -sf ./os.release.d/os-release-fedora /usr/lib/os-release || :
 fi
 
 %post workstation
@@ -221,12 +223,13 @@ if [ $1 -eq 1 ] ; then
     # If there is no link to os-release yet from some other
     # release package, create it
     test -e /usr/lib/os-release || \
-        ln -sf /usr/lib/os.release.d/os-release-workstation/usr/lib/os-release
+        ln -sf ./os.release.d/os-release-workstation /usr/lib/os-release
 
-    # If the link exists but it points to a non-productized version,
-    # replace it with this one
-    test \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" != "xos.release.d/os-release-fedora" ||
-        ln -sf /usr/lib/os.release.d/os-release-workstation /usr/lib/os-release || :
+    # If os-release isn't a link or it exists but it points to a
+    # non-productized version, replace it with this one
+    if [ \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" = "xos.release.d/os-release-fedora" ]; then
+        ln -sf ./os.release.d/os-release-workstation /usr/lib/os-release || :
+    fi
 
     # fix up after %%systemd_post in packages
     # possibly installed before our preset file was added
@@ -242,7 +245,7 @@ if [ $1 -eq 0 ] ; then
     # If os-release is now a broken symlink or missing replace it
     # with a symlink to basic version
     test -e /usr/lib/os-release || \
-        ln -sf /usr/lib/os.release.d/os-release-fedora /usr/lib/os-release || :
+        ln -sf ./os.release.d/os-release-fedora /usr/lib/os-release || :
 fi
 
 %posttrans workstation
@@ -285,6 +288,12 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
+* Tue Mar 17 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.7
+- make the os-release sysmlinks all relative
+
+* Fri Mar 13 2015 Stephen Gallagher <sgallagh@redhat.com> 23-0.6
+- Fix incorrect comparisons in fedora-release-* subpackages
+
 * Fri Mar 13 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.4
 - unbreak installs getting a broken symlink at /etc/os-release
 
