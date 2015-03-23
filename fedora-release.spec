@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        22
-Release:        0.13
+Release:        0.14
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -14,28 +14,18 @@ Obsoletes:      redhat-release
 Provides:       redhat-release
 Provides:       system-release
 Provides:       system-release(%{version})
+
+# Kill off the fedora-release-nonproduct package
+Provides:       fedora-release-nonproduct = %{version}
+Obsoletes:      fedora-release-nonproduct <= 23-0.3
+Provides:       fedora-release-standard = 22-0.8
+Obsoletes:      fedora-release-standard < 22-0.8
+
 Requires:       fedora-repos(%{version})
 BuildArch:      noarch
 
 %description
 Fedora release files such as various /etc/ files that define the release.
-
-%package nonproduct
-Summary:        Base package for non-product-specific default configurations
-Provides:       system-release-nonproduct
-Provides:       system-release-nonproduct(%{version})
-Provides:       system-release-product
-# turned out to be a bad name
-Provides:       fedora-release-standard = 22-0.8
-Obsoletes:      fedora-release-standard < 22-0.8
-Requires:       fedora-release = %{version}-%{release}
-Conflicts:      fedora-release-cloud
-Conflicts:      fedora-release-server
-Conflicts:      fedora-release-workstation
-
-%description nonproduct
-Provides a base package for non-product-specific configuration files to
-depend on.
 
 %package cloud
 Summary:        Base package for Fedora Cloud-specific default configurations
@@ -43,9 +33,6 @@ Provides:       system-release-cloud
 Provides:       system-release-cloud(%{version})
 Provides:       system-release-product
 Requires:       fedora-release = %{version}-%{release}
-Conflicts:      fedora-release-server
-Conflicts:      fedora-release-nonproduct
-Conflicts:      fedora-release-workstation
 
 %description cloud
 Provides a base package for Fedora Cloud-specific configuration files to
@@ -60,11 +47,8 @@ Requires:       fedora-release = %{version}-%{release}
 Requires:       systemd
 Requires:       cockpit
 Requires:       rolekit
-Requires(post):	sed
-Requires(post):	systemd
-Conflicts:      fedora-release-cloud
-Conflicts:      fedora-release-nonproduct
-Conflicts:      fedora-release-workstation
+Requires(post): sed
+Requires(post): systemd
 
 %description server
 Provides a base package for Fedora Server-specific configuration files to
@@ -76,9 +60,6 @@ Provides:       system-release-workstation
 Provides:       system-release-workstation(%{version})
 Provides:       system-release-product
 Requires:       fedora-release = %{version}-%{release}
-Conflicts:      fedora-release-cloud
-Conflicts:      fedora-release-server
-Conflicts:      fedora-release-nonproduct
 # needed for captive portal support
 Requires:       NetworkManager-config-connectivity-fedora
 Requires(post): /usr/bin/glib-compile-schemas
@@ -105,8 +86,9 @@ echo >> $RPM_BUILD_ROOT/etc/issue
 ln -s fedora-release $RPM_BUILD_ROOT/etc/redhat-release
 ln -s fedora-release $RPM_BUILD_ROOT/etc/system-release
 
-install -d $RPM_BUILD_ROOT/usr/lib
-cat << EOF >>$RPM_BUILD_ROOT/usr/lib/os-release
+# Create the common os-release file
+install -d $RPM_BUILD_ROOT/usr/lib/os.release.d/
+cat << EOF >>$RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora
 NAME=Fedora
 VERSION="%{dist_version} (%{release_name})"
 ID=fedora
@@ -123,7 +105,29 @@ REDHAT_SUPPORT_PRODUCT_VERSION=%{bug_version}
 PRIVACY_POLICY=https://fedoraproject.org/wiki/Legal:PrivacyPolicy
 EOF
 
+# Create os-release files for the different editions
+# Cloud
+cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
+      $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
+echo "VARIANT=Cloud" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
+
+# Server
+cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
+      $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
+echo "VARIANT=Server" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
+
+# Workstation
+cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
+      $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
+echo "VARIANT=Workstation" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
+
+# Create the symlink for /etc/os-release
+# This will be standard until %post when the
+# release packages will link the appropriate one into
+# /usr/lib/os-release
 ln -s ../usr/lib/os-release $RPM_BUILD_ROOT/etc/os-release
+ln -s os.release.d/os-release-fedora $RPM_BUILD_ROOT/usr/lib/os-release
+
 
 # Set up the dist tag macros
 install -d -m 755 $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d
@@ -139,23 +143,109 @@ EOF
 mkdir -p %{buildroot}%{_prefix}/lib/systemd/system-preset/
 # Fedora Server
 install -m 0644 80-server.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
+# Fedora Workstation
+install -m 0644 80-workstation.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
 
 # Override the list of enabled gnome-shell extensions for Workstation
 mkdir -p %{buildroot}%{_datadir}/glib-2.0/schemas/
 install -m 0644 org.gnome.shell.gschema.override %{buildroot}%{_datadir}/glib-2.0/schemas/
 
+%posttrans
+# Only on installation
+if [ $1 = 0 ]; then
+    # If no fedora-release-$edition subpackage was installed,
+    # make sure to link /etc/os-release to the standard version
+    test -e /usr/lib/os-release || \
+        ln -sf ./os-release.d/os-release-fedora /usr/lib/os-release
+fi
+
+%post cloud
+if [ $1 -eq 1 ] ; then
+    # Initial installation
+
+    # If there is no link to os-release yet from some other
+    # release package, create it
+    test -e /usr/lib/os-release || \
+        ln -sf ./os.release.d/os-release-cloud /usr/lib/os-release
+
+    # If os-release isn't a link or it exists but it points to a
+    # non-productized version, replace it with this one
+    if [ \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" = "xos.release.d/os-release-fedora" ]; then
+        ln -sf ./os.release.d/os-release-cloud /usr/lib/os-release || :
+    fi
+fi
+
+%postun cloud
+# Uninstall
+if [ $1 = 0 ]; then
+    # If os-release is now a broken symlink or missing replace it
+    # with a symlink to basic version
+    test -e /usr/lib/os-release || \
+        ln -sf ./os.release.d/os-release-fedora /usr/lib/os-release || :
+fi
+
+
 %post server
 if [ $1 -eq 1 ] ; then
-        # Initial installation; fix up after %%systemd_post in packages
-	# possibly installed before our preset file was added
-	units=$(sed -n 's/^enable//p' \
-		< %{_prefix}/lib/systemd/system-preset/80-server.preset)
+    # Initial installation
+
+    # If there is no link to os-release yet from some other
+    # release package, create it
+    test -e /usr/lib/os-release || \
+        ln -sf ./os.release.d/os-release-server /usr/lib/os-release
+
+    # If os-release isn't a link or it exists but it points to a
+    # non-productized version, replace it with this one
+    if [ \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" = "xos.release.d/os-release-fedora" ]; then
+        ln -sf ./os.release.d/os-release-server /usr/lib/os-release || :
+    fi
+
+    # fix up after %%systemd_post in packages
+    # possibly installed before our preset file was added
+    units=$(sed -n 's/^enable//p' \
+        < %{_prefix}/lib/systemd/system-preset/80-server.preset)
         /usr/bin/systemctl preset $units >/dev/null 2>&1 || :
+fi
+
+%postun server
+# Uninstall
+if [ $1 = 0 ]; then
+    # If os-release is now a broken symlink or missing replace it
+    # with a symlink to basic version
+    test -e /usr/lib/os-release || \
+        ln -sf ./os.release.d/os-release-fedora /usr/lib/os-release || :
+fi
+
+%post workstation
+if [ $1 -eq 1 ] ; then
+    # Initial installation
+
+    # If there is no link to os-release yet from some other
+    # release package, create it
+    test -e /usr/lib/os-release || \
+        ln -sf ./os.release.d/os-release-workstation /usr/lib/os-release
+
+    # If os-release isn't a link or it exists but it points to a
+    # non-productized version, replace it with this one
+    if [ \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" = "xos.release.d/os-release-fedora" ]; then
+        ln -sf ./os.release.d/os-release-workstation /usr/lib/os-release || :
+    fi
+
+    # fix up after %%systemd_post in packages
+    # possibly installed before our preset file was added
+    units=$(sed -n 's/^disable//p' \
+        < %{_prefix}/lib/systemd/system-preset/80-workstation.preset)
+    /usr/bin/systemctl preset $units >/dev/null 2>&1 || :
 fi
 
 %postun workstation
 if [ $1 -eq 0 ] ; then
     glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+
+    # If os-release is now a broken symlink or missing replace it
+    # with a symlink to basic version
+    test -e /usr/lib/os-release || \
+        ln -sf ./os.release.d/os-release-fedora /usr/lib/os-release || :
 fi
 
 %posttrans workstation
@@ -166,7 +256,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %defattr(-,root,root,-)
 %{!?_licensedir:%global license %%doc}
 %license LICENSE Fedora-Legal-README.txt
-%config %attr(0644,root,root) /usr/lib/os-release
+%dir /usr/lib/os.release.d
+%config %attr(0644,root,root) /usr/lib/os.release.d/os-release-fedora
+/usr/lib/os-release
 /etc/os-release
 %config %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
@@ -176,25 +268,32 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
 
-%files nonproduct
-%{!?_licensedir:%global license %%doc}
-%license LICENSE
-
 %files cloud
 %{!?_licensedir:%global license %%doc}
 %license LICENSE
+%config %attr(0644,root,root) /usr/lib/os.release.d/os-release-cloud
 
 %files server
 %{!?_licensedir:%global license %%doc}
 %license LICENSE
+%config %attr(0644,root,root) /usr/lib/os.release.d/os-release-server
 %{_prefix}/lib/systemd/system-preset/80-server.preset
 
 %files workstation
 %{!?_licensedir:%global license %%doc}
 %license LICENSE
+%config %attr(0644,root,root) /usr/lib/os.release.d/os-release-workstation
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
+%{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
+* Mon Mar 16 2015 Stephen Gallagher <sgallagh@redhat.com> 22-0.14
+- Generate os-release based on product subpackages
+- Remove the -nonproduct subpackage
+- Eliminate Conflicts between subpackages
+- Add preset file for workstation to disable sshd
+- make the os-release sysmlinks all relative
+
 * Tue Feb 24 2015 Dennis Gilmore <dennis@ausil.us> - 22-0.13
 - make the /etc/os-release symlink relative rhbz#1192276
 
