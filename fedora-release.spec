@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        22
-Release:        0.14
+Release:        0.15
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -160,9 +160,7 @@ if [ $1 = 0 ]; then
 fi
 
 %post cloud
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-
+# Run every time
     # If there is no link to os-release yet from some other
     # release package, create it
     test -e /usr/lib/os-release || \
@@ -173,7 +171,6 @@ if [ $1 -eq 1 ] ; then
     if [ \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" = "xos.release.d/os-release-fedora" ]; then
         ln -sf ./os.release.d/os-release-cloud /usr/lib/os-release || :
     fi
-fi
 
 %postun cloud
 # Uninstall
@@ -186,9 +183,7 @@ fi
 
 
 %post server
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-
+# Run every time
     # If there is no link to os-release yet from some other
     # release package, create it
     test -e /usr/lib/os-release || \
@@ -199,6 +194,9 @@ if [ $1 -eq 1 ] ; then
     if [ \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" = "xos.release.d/os-release-fedora" ]; then
         ln -sf ./os.release.d/os-release-server /usr/lib/os-release || :
     fi
+
+if [ $1 -eq 1 ] ; then
+    # Initial installation
 
     # fix up after %%systemd_post in packages
     # possibly installed before our preset file was added
@@ -217,9 +215,7 @@ if [ $1 = 0 ]; then
 fi
 
 %post workstation
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-
+# Run every time
     # If there is no link to os-release yet from some other
     # release package, create it
     test -e /usr/lib/os-release || \
@@ -230,6 +226,9 @@ if [ $1 -eq 1 ] ; then
     if [ \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" = "xos.release.d/os-release-fedora" ]; then
         ln -sf ./os.release.d/os-release-workstation /usr/lib/os-release || :
     fi
+
+if [ $1 -eq 1 ] ; then
+    # Initial installation
 
     # fix up after %%systemd_post in packages
     # possibly installed before our preset file was added
@@ -287,6 +286,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
+* Thu Apr 23 2015 Stephen Gallagher <sgallagh@redhat.com> 22-0.15
+- Handle os-release upgrades from existing productized installations
+
 * Mon Mar 16 2015 Stephen Gallagher <sgallagh@redhat.com> 22-0.14
 - Generate os-release based on product subpackages
 - Remove the -nonproduct subpackage
