@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        23
-Release:        0.10
+Release:        0.11
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -110,21 +110,21 @@ EOF
 # Cloud
 cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
       $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
-echo "VARIANT=Cloud Edition" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
+echo "VARIANT=\"Cloud Edition\"" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
 echo "VARIANT_ID=cloud" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
 sed -i -e "s|(%{release_name})|(Cloud Edition)|g" $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
 
 # Server
 cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
       $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
-echo "VARIANT=Server Edition" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
+echo "VARIANT=\"Server Edition\"" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
 echo "VARIANT_ID=server" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
 sed -i -e "s|(%{release_name})|(Server Edition)|g" $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
 
 # Workstation
 cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
       $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
-echo "VARIANT=Workstation Edition" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
+echo "VARIANT=\"Workstation Edition\"" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
 echo "VARIANT_ID=workstation" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
 sed -i -e "s|(%{release_name})|(Workstation Edition)|g" $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
 
@@ -293,6 +293,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
+* Fri May 08 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.11
+- make sure that the VARIANT is wrapped in ""
+
 * Fri May 08 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.10
 - use infor about the Edition instead of the release name in
 - os-release for productised installs
