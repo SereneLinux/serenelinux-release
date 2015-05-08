@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        22
-Release:        0.16
+Release:        0.17
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -109,19 +109,19 @@ EOF
 # Cloud
 cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
       $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
-echo "VARIANT=Cloud Edition" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
+echo "VARIANT=\"Cloud Edition\"" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
 echo "VARIANT_ID=cloud" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
 
 # Server
 cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
       $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
-echo "VARIANT=Server Edition" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
+echo "VARIANT=\"Server Edition\"" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
 echo "VARIANT_ID=server" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
 
 # Workstation
 cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
       $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
-echo "VARIANT=Workstation Edition" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
+echo "VARIANT=\"Workstation Edition\"" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
 echo "VARIANT_ID=workstation" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
 
 # Create the symlink for /etc/os-release
@@ -289,6 +289,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
+* Fri May 08 2015 Dennis Gilmore <dennis@ausil.us> - 22-0.17
+- make sure that the VARIANT is wrapped in ""
+
 * Tue May 05 2015 Stephen Gallagher <sgallagh@redhat.com> 22-0.16
 - Follow systemd upstream guidelines for VARIANT and VARIANT_ID
 
