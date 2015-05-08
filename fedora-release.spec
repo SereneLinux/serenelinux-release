@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        23
-Release:        0.9
+Release:        0.10
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
