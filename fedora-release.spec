@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        23
-Release:        0.11
+Release:        0.12
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -145,8 +145,12 @@ cat >> $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.dist << EOF
 %%fc%{dist_version}                1
 EOF
 
-# Add Product-specific presets
+# Add presets
 mkdir -p %{buildroot}%{_prefix}/lib/systemd/system-preset/
+# Default system wide
+install -m 0644 85-display-manager.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -m 0644 90-default.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -m 0644 99-default-disable.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
 # Fedora Server
 install -m 0644 80-server.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
 # Fedora Workstation
@@ -272,6 +276,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
+%{_prefix}/lib/systemd/system-preset/85-display-manager.preset
+%{_prefix}/lib/systemd/system-preset/90-default.preset
+%{_prefix}/lib/systemd/system-preset/99-default-disable.preset
 
 %files cloud
 %{!?_licensedir:%global license %%doc}
@@ -293,6 +300,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
+* Thu May 14 2015 Dennis Gilmore <dennis@ausil.us> - 23.0.12
+- install the default system wide presets rhbz#1221339
+
 * Fri May 08 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.11
 - make sure that the VARIANT is wrapped in ""
 
