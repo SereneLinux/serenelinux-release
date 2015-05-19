@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        22
-Release:        0.17
+Release:        1
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -102,7 +102,7 @@ REDHAT_BUGZILLA_PRODUCT="Fedora"
 REDHAT_BUGZILLA_PRODUCT_VERSION=%{bug_version}
 REDHAT_SUPPORT_PRODUCT="Fedora"
 REDHAT_SUPPORT_PRODUCT_VERSION=%{bug_version}
-PRIVACY_POLICY=https://fedoraproject.org/wiki/Legal:PrivacyPolicy
+PRIVACY_POLICY_URL=https://fedoraproject.org/wiki/Legal:PrivacyPolicy
 EOF
 
 # Create os-release files for the different editions
@@ -289,6 +289,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
+* Thu May 14 2015 Dennis Gilmore <dennis@ausil.us> - 22-1
+- prep for F22 Final release rhbz#1221726
+- change POLICY_POLICY to POLICY_POLICY_URL rhbz#1182635
+
 * Fri May 08 2015 Dennis Gilmore <dennis@ausil.us> - 22-0.17
 - make sure that the VARIANT is wrapped in ""
 
