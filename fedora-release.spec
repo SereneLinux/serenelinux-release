@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        23
-Release:        0.12
+Release:        0.13
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -103,7 +103,7 @@ REDHAT_BUGZILLA_PRODUCT="Fedora"
 REDHAT_BUGZILLA_PRODUCT_VERSION=%{bug_version}
 REDHAT_SUPPORT_PRODUCT="Fedora"
 REDHAT_SUPPORT_PRODUCT_VERSION=%{bug_version}
-PRIVACY_POLICY=https://fedoraproject.org/wiki/Legal:PrivacyPolicy
+PRIVACY_POLICY_URL=https://fedoraproject.org/wiki/Legal:PrivacyPolicy
 EOF
 
 # Create os-release files for the different editions
@@ -300,7 +300,12 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
-* Thu May 14 2015 Dennis Gilmore <dennis@ausil.us> - 23.0.12
+* Wed May 20 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.13
+- enable unbound-anchor.timer rhbz#1223199
+- enable lvm2-lvmpolld.*  rhbz#1222495
+- change PRIVACY_POLICY to PRIVACY_POLICY_URL in os-release
+
+* Thu May 14 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.12
 - install the default system wide presets rhbz#1221339
 
 * Fri May 08 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.11
