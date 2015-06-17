@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        23
-Release:        0.13
+Release:        0.14
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -300,6 +300,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 23-0.14
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Wed May 20 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.13
 - enable unbound-anchor.timer rhbz#1223199
 - enable lvm2-lvmpolld.*  rhbz#1222495
