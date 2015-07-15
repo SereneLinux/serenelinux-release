@@ -146,7 +146,7 @@ cat >> $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.dist << EOF
 EOF
 
 # Add presets
-mkdir -p $RPM_BUILD_ROOT%{pkgdir}/user-preset/
+mkdir -p $RPM_BUILD_ROOT/usr/lib/systemd/user-preset/
 mkdir -p $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 # Default system wide
 install -m 0644 85-display-manager.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
@@ -277,7 +277,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
-%dir %{pkgdir}/user-preset/
+%dir /usr/lib/systemd/user-preset/
 %dir %{_prefix}/lib/systemd/system-preset/
 %{_prefix}/lib/systemd/system-preset/85-display-manager.preset
 %{_prefix}/lib/systemd/system-preset/90-default.preset
