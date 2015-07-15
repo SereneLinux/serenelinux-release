@@ -1,6 +1,6 @@
-%define release_nameTwenty Three
+%define release_name Twenty Three
 %define dist_version 23
-%define bug_version 23e
+%define bug_version 23
 
 Summary:        Fedora release files
 Name:           fedora-release
