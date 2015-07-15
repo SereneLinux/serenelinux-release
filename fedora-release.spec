@@ -1,11 +1,11 @@
 %define release_name Rawhide
-%define dist_version 23
+%define dist_version 24
 %define bug_version Rawhide
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        23
-Release:        0.14
+Version:        24
+Release:        0.1
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -146,19 +146,20 @@ cat >> $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.dist << EOF
 EOF
 
 # Add presets
-mkdir -p %{buildroot}%{_prefix}/lib/systemd/system-preset/
+mkdir -p $RPM_BUILD_ROOT%{pkgdir}/user-preset/
+mkdir -p $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 # Default system wide
-install -m 0644 85-display-manager.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
-install -m 0644 90-default.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
-install -m 0644 99-default-disable.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -m 0644 85-display-manager.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+install -m 0644 90-default.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+install -m 0644 99-default-disable.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 # Fedora Server
-install -m 0644 80-server.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -m 0644 80-server.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 # Fedora Workstation
-install -m 0644 80-workstation.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -m 0644 80-workstation.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 
 # Override the list of enabled gnome-shell extensions for Workstation
-mkdir -p %{buildroot}%{_datadir}/glib-2.0/schemas/
-install -m 0644 org.gnome.shell.gschema.override %{buildroot}%{_datadir}/glib-2.0/schemas/
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
+install -m 0644 org.gnome.shell.gschema.override $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
 
 %posttrans
 # Only on installation
@@ -276,6 +277,8 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
+%dir %{pkgdir}/user-preset/
+%dir %{_prefix}/lib/systemd/system-preset/
 %{_prefix}/lib/systemd/system-preset/85-display-manager.preset
 %{_prefix}/lib/systemd/system-preset/90-default.preset
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
@@ -300,54 +303,5 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
-* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 23-0.14
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
-
-* Wed May 20 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.13
-- enable unbound-anchor.timer rhbz#1223199
-- enable lvm2-lvmpolld.*  rhbz#1222495
-- change PRIVACY_POLICY to PRIVACY_POLICY_URL in os-release
-
-* Thu May 14 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.12
-- install the default system wide presets rhbz#1221339
-
-* Fri May 08 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.11
-- make sure that the VARIANT is wrapped in ""
-
-* Fri May 08 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.10
-- use infor about the Edition instead of the release name in
-- os-release for productised installs
-
-* Tue May 05 2015 Stephen Gallagher <sgallagh@redhat.com> 23-0.9
-- Follow systemd upstream guidelines for VARIANT and VARIANT_ID
-
-* Thu Mar 19 2015 Stephen Gallagher <sgallagh@redhat.com> 23-0.8
-- Handle os-release upgrades from existing productized installations
-
-* Tue Mar 17 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.7
-- make the os-release sysmlinks all relative
-
-* Fri Mar 13 2015 Stephen Gallagher <sgallagh@redhat.com> 23-0.6
-- Fix incorrect comparisons in fedora-release-* subpackages
-
-* Fri Mar 13 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.4
-- unbreak installs getting a broken symlink at /etc/os-release
-
-* Fri Mar 13 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.4
-- add preset file for workstation to disable sshd
-
-* Thu Mar 12 2015 Stephen Gallagher <sgallagh@redhat.com> 23-0.3.1
-- Generate os-release based on product subpackages
-- Remove the -nonproduct subpackage
-- Eliminate Conflicts between subpackages
-
-* Tue Feb 24 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.3
-- make the /etc/os-release symlink relative rhbz#1192276 
-
-* Tue Feb 10 2015 Dennis Gilmore <dennis@ausil.us> 23-0.2
-- bump
-
-* Tue Feb 10 2015 Peter Robinson <pbrobinson@fedoraproject.org> 23-0.1
-- Setup for rawhide targetting f23
-- Add PRIVACY_POLICY_URL to os-release (rhbz#1182635)
-- Move os-release to /usr/lib and symlink to etc (rhbz#1149568)
+* Tue Jul 14 2015 Dennis Gilmore <dennis@ausil.us> - 24-0.1
+- setup for rawhide being f24
