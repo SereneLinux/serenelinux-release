@@ -1,11 +1,11 @@
-%define release_name Rawhide
+%define release_nameTwenty Three
 %define dist_version 23
-%define bug_version Rawhide
+%define bug_version 23e
 
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        23
-Release:        0.14
+Release:        0.15
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -146,19 +146,20 @@ cat >> $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.dist << EOF
 EOF
 
 # Add presets
-mkdir -p %{buildroot}%{_prefix}/lib/systemd/system-preset/
+mkdir -p $RPM_BUILD_ROOT%{pkgdir}/user-preset/
+mkdir -p $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 # Default system wide
-install -m 0644 85-display-manager.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
-install -m 0644 90-default.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
-install -m 0644 99-default-disable.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -m 0644 85-display-manager.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+install -m 0644 90-default.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+install -m 0644 99-default-disable.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 # Fedora Server
-install -m 0644 80-server.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -m 0644 80-server.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 # Fedora Workstation
-install -m 0644 80-workstation.preset %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -m 0644 80-workstation.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 
 # Override the list of enabled gnome-shell extensions for Workstation
-mkdir -p %{buildroot}%{_datadir}/glib-2.0/schemas/
-install -m 0644 org.gnome.shell.gschema.override %{buildroot}%{_datadir}/glib-2.0/schemas/
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
+install -m 0644 org.gnome.shell.gschema.override $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
 
 %posttrans
 # Only on installation
@@ -276,6 +277,8 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config(noreplace) %attr(0644,root,root) /etc/issue
 %config(noreplace) %attr(0644,root,root) /etc/issue.net
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
+%dir %{pkgdir}/user-preset/
+%dir %{_prefix}/lib/systemd/system-preset/
 %{_prefix}/lib/systemd/system-preset/85-display-manager.preset
 %{_prefix}/lib/systemd/system-preset/90-default.preset
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
@@ -300,8 +303,11 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
-* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 23-0.14
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+* Tue Jul 14 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.15
+- setup for f23 branching
+
+* Fri Jul 10 2015 Stephen Gallagher <sgallagh@redhat.com> 23-0.14
+- Enable mlocate-updatedb.timer rhbz#1231745
 
 * Wed May 20 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.13
 - enable unbound-anchor.timer rhbz#1223199
