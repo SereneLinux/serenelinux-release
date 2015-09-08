@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        23
-Release:        0.16
+Release:        0.17
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -336,6 +336,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
+* Tue Sep 08 2015 Dennis Gilmore <dennis@ausil.us> - 23-0.17
+- rebuild to drop timesysncd enabled from server
+
 * Mon Aug 24 2015 Stephen Gallagher <sgallagh@redhat.com> 23-0.16
 - Make /etc/issue configurable per-edition
 - Resolves: RHBZ#1239089
