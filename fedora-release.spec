@@ -1,11 +1,11 @@
 %define release_name Rawhide
 %define dist_version 24
-%define bug_version Rawhide
+%define bug_version rawhide
 
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        24
-Release:        0.2
+Release:        0.6
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -131,7 +131,7 @@ sed -i -e "s|(%{release_name})|(Server Edition)|g" $RPM_BUILD_ROOT/usr/lib/os.re
 
 cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/issue-fedora \
       $RPM_BUILD_ROOT/usr/lib/os.release.d/issue-server
-echo "Admin Console: https://\4:9090/ or https://\6:9090/" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/issue-server
+echo "Admin Console: https://\4:9090/ or https://[\6]:9090/" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/issue-server
 echo >> $RPM_BUILD_ROOT/usr/lib/os.release.d/issue-server
 
 # Workstation
@@ -305,9 +305,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config %attr(0644,root,root) /etc/system-release-cpe
 %config %attr(0644,root,root) /usr/lib/os.release.d/issue-fedora
 /usr/lib/issue
-/etc/issue
+%config(noreplace) /etc/issue
 %config %attr(0644,root,root) /usr/lib/issue.net
-/etc/issue.net
+%config(noreplace) /etc/issue.net
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
 %dir /usr/lib/systemd/user-preset/
 %dir %{_prefix}/lib/systemd/system-preset/
@@ -336,7 +336,20 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
-* Mon Aug 24 2015 Stephen Gallagher <sgallagh@redhat.com> 24-0.2
+* Mon Sep 28 2015 Dennis Gilmore <dennis@ausil.us> - 24-0.6
+- set bug_version to be rawhide rhbz#1259287
+
+* Tue Sep 15 2015 Stephen Gallagher <sgallagh@redhat.com> - 24-0.5
+- Do not clobber /etc/issue[.net] customizations
+
+* Wed Sep 09 2015 Stephen Gallagher <sgallagh@redhat.com> - 24-0.4
+- Update preset file with FESCo decisions
+- https://fedorahosted.org/fesco/ticket/1472
+
+* Wed Sep 09 2015 Stephen Gallagher <sgallagh@redhat.com> - 24-0.3
+- Enclose IPv6 addresses in square brackets in /etc/issue
+
+* Mon Aug 24 2015 Stephen Gallagher <sgallagh@redhat.com> - 24-0.2
 - Make /etc/issue configurable per-edition
 - Resolves: RHBZ#1239089
 
