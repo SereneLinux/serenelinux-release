@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        24
-Release:        0.6
+Release:        0.7
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -336,6 +336,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 
 %changelog
+* Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 24-0.7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
 * Mon Sep 28 2015 Dennis Gilmore <dennis@ausil.us> - 24-0.6
 - set bug_version to be rawhide rhbz#1259287
 
