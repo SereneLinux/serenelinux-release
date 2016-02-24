@@ -1,11 +1,11 @@
 %define release_name Rawhide
-%define dist_version 24
+%define dist_version 25
 %define bug_version rawhide
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        24
-Release:        0.7
+Version:        25
+Release:        0.1
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -142,18 +142,14 @@ echo "VARIANT_ID=workstation" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release
 sed -i -e "s|(%{release_name})|(Workstation Edition)|g" $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
 
 # Create the symlink for /etc/os-release
-# This will be standard until %post when the
-# release packages will link the appropriate one into
-# /usr/lib/os-release
+# We don't create the /usr/lib/os-release symlink until %%post
+# so that we can ensure that the right one is referenced.
 ln -s ../usr/lib/os-release $RPM_BUILD_ROOT/etc/os-release
-ln -s os.release.d/os-release-fedora $RPM_BUILD_ROOT/usr/lib/os-release
 
 # Create the symlink for /etc/issue
-# This will be standard until %post when the
-# release packages will link the appropriate one into
-# /usr/lib/os-release
+# We don't create the /usr/lib/os-release symlink until %%post
+# so that we can ensure that the right one is referenced.
 ln -s ../usr/lib/issue $RPM_BUILD_ROOT/etc/issue
-ln -s os.release.d/issue-fedora $RPM_BUILD_ROOT/usr/lib/issue
 
 # Set up the dist tag macros
 install -d -m 755 $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d
@@ -168,123 +164,167 @@ EOF
 # Add presets
 mkdir -p $RPM_BUILD_ROOT/usr/lib/systemd/user-preset/
 mkdir -p $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+mkdir -p $RPM_BUILD_ROOT/usr/lib/os.release.d/presets
+
 # Default system wide
 install -m 0644 85-display-manager.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 install -m 0644 90-default.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 install -m 0644 99-default-disable.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 # Fedora Server
-install -m 0644 80-server.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+install -m 0644 80-server.preset $RPM_BUILD_ROOT%{_prefix}/lib/os.release.d/presets/
 # Fedora Workstation
-install -m 0644 80-workstation.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+install -m 0644 80-workstation.preset $RPM_BUILD_ROOT%{_prefix}/lib/os.release.d/presets/
 
 # Override the list of enabled gnome-shell extensions for Workstation
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
 install -m 0644 org.gnome.shell.gschema.override $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
 
-%posttrans
-# Only on installation
+# Copy the make_edition script to /usr/sbin
+mkdir -p $RPM_BUILD_ROOT/%{_prefix}/sbin/
+install -m 0744 convert-to-edition $RPM_BUILD_ROOT/%{_prefix}/sbin/
+
+%post
+# On initial installation, we'll at least temporarily put the non-product
+# symlinks in place. It will be overridden by fedora-release-$EDITION
+# %%post sections because we don't write the /usr/lib/variant file until
+# %%posttrans to avoid trumping the fedora-release-$EDITION packages.
+# This is necessary to avoid breaking systemctl scripts since they rely on
+# /usr/lib/os-release being valid. We can't wait until %%posttrans to default
+# to os-release-fedora.
 if [ $1 = 0 ]; then
-    # If no fedora-release-$edition subpackage was installed,
-    # make sure to link /etc/os-release to the standard version
-    test -e /usr/lib/os-release || \
-        ln -sf ./os-release.d/os-release-fedora /usr/lib/os-release
+    ln -sf ./os.release.d/os-release-fedora $RPM_BUILD_ROOT/usr/lib/os-release || :
+    ln -sf ./os.release.d/issue-fedora $RPM_BUILD_ROOT/usr/lib/issue || :
+fi
+
+# We also want to forcibly set these paths on upgrade if we are explicitly
+# set to "nonproduct"
+if [ -e /usr/lib/variant ]; then
+    . /usr/lib/variant || :
+    if [ "x$VARIANT_ID" = "xnonproduct" ]; then
+        # Run the convert-to-edition script.
+        %{_prefix}/sbin/convert-to-edition -ie non-edition
+    fi
+fi
+
+%posttrans
+# If we get to %%posttrans and nothing created /usr/lib/variant, set it to
+# nonproduct
+if [ \! -e /usr/lib/variant ]; then
+    %{_prefix}/sbin/convert-to-edition -ipe non-edition
 fi
 
 %post cloud
-# Run every time
-    # If there is no link to os-release yet from some other
-    # release package, create it
-    test -e /usr/lib/os-release || \
-        ln -sf ./os.release.d/os-release-cloud /usr/lib/os-release
+# == Run every time ==
+# Create the variant file if it does not already exist. This needs to be done
+# on both installation and upgrade, to ensure that we upgrade from F23
+# and earlier properly.
+if [ \! -e /usr/lib/variant ]; then
+    echo "VARIANT_ID=cloud" > /usr/lib/variant || :
+fi
 
-    # If os-release isn't a link or it exists but it points to a
-    # non-productized version, replace it with this one
-    if [ \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" = "xos.release.d/os-release-fedora" ]; then
-        ln -sf ./os.release.d/os-release-cloud /usr/lib/os-release || :
+. /usr/lib/variant || :
+if [ "x$VARIANT_ID" = "xcloud" ]; then
+    if [ $1 -eq 1 ] ; then
+        # (On initial installation only), fix up after %%systemd_post in packages
+        # possibly installed before our preset file was added
+        %{_prefix}/sbin/convert-to-edition -ipe cloud
+    else
+        # On upgrades, do not enable or disable presets to avoid surprising
+        # the user
+        %{_prefix}/sbin/convert-to-edition -ip cloud
     fi
+fi
 
-%postun cloud
-# Uninstall
+%preun cloud
+# If we are uninstalling, we need to reset the variant file and force
+# the os-release file back to os-release-fedora.
+# We do this in %%preun so that we don't have any time where the os-release
+# symlink is dangling (since in %%postun, the os-release-$EDITION file
+# will have already been removed)
 if [ $1 = 0 ]; then
-    # If os-release is now a broken symlink or missing replace it
-    # with a symlink to basic version
-    test -e /usr/lib/os-release || \
-        ln -sf ./os.release.d/os-release-fedora /usr/lib/os-release || :
+    . /usr/lib/variant || :
+    if [ "x$VARIANT_ID" = "xcloud" ]; then
+        # Do not enable or disable presets when uninstalling
+        %{_prefix}/sbin/convert-to-edition -ie non-edition
+    fi
 fi
 
 
 %post server
-# Run every time
-    # If there is no link to os-release yet from some other
-    # release package, create it
-    test -e /usr/lib/os-release || \
-        ln -sf ./os.release.d/os-release-server /usr/lib/os-release
-
-    # If os-release isn't a link or it exists but it points to a
-    # non-productized version, replace it with this one
-    if [ \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" = "xos.release.d/os-release-fedora" ]; then
-        ln -sf ./os.release.d/os-release-server /usr/lib/os-release || :
-    fi
-
-    # If issue isn't a link or it exists but it points to a
-    # non-productized version, replace it with this one
-    if [ \! -h /usr/lib/issue -o "x$(readlink /usr/lib/issue)" = "xos.release.d/issue-fedora" ]; then
-        ln -sf ./os.release.d/issue-server /usr/lib/issue || :
-    fi
-
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-
-    # fix up after %%systemd_post in packages
-    # possibly installed before our preset file was added
-    units=$(sed -n 's/^enable//p' \
-        < %{_prefix}/lib/systemd/system-preset/80-server.preset)
-        /usr/bin/systemctl preset $units >/dev/null 2>&1 || :
+# == Run every time ==
+# Create the variant file if it does not already exist. This needs to be done
+# on both installation and upgrade, to ensure that we upgrade from F23
+# and earlier properly.
+if [ \! -e /usr/lib/variant ]; then
+    echo "VARIANT_ID=server" > /usr/lib/variant || :
 fi
 
-%postun server
-# Uninstall
-if [ $1 = 0 ]; then
-    # If os-release is now a broken symlink or missing replace it
-    # with a symlink to basic version
-    test -e /usr/lib/os-release || \
-        ln -sf ./os.release.d/os-release-fedora /usr/lib/os-release || :
+. /usr/lib/variant || :
+if [ "x$VARIANT_ID" = "xserver" ]; then
+    if [ $1 -eq 1 ] ; then
+        # (On initial installation only), fix up after %%systemd_post in packages
+        # possibly installed before our preset file was added
+        %{_prefix}/sbin/convert-to-edition -ipe server
+    else
+        # On upgrades, do not enable or disable presets to avoid surprising
+        # the user
+        %{_prefix}/sbin/convert-to-edition -ie server
+    fi
+fi
 
-    test -e /usr/lib/issue || \
-        ln -sf ./os.release.d/issue-fedora /usr/lib/issue || :
+%preun server
+# If we are uninstalling, we need to delete the variant file and
+# force the os-release file back to os-release-fedora.
+# We do this in %%preun so that we don't have any time where the os-release
+# symlink is dangling (since in %%postun, the os-release-$EDITION file
+# will have already been removed)
+if [ $1 = 0 ]; then
+    . /usr/lib/variant || :
+    if [ "x$VARIANT_ID" = "xserver" ]; then
+        # Do not enable or disable presets when uninstalling
+        %{_prefix}/sbin/convert-to-edition -ie non-edition
+    fi
 fi
 
 %post workstation
-# Run every time
-    # If there is no link to os-release yet from some other
-    # release package, create it
-    test -e /usr/lib/os-release || \
-        ln -sf ./os.release.d/os-release-workstation /usr/lib/os-release
+# == Run every time ==
+# Create the variant file if it does not already exist. This needs to be done
+# on both installation and upgrade, to ensure that we upgrade from F23
+# and earlier properly.
+if [ \! -e /usr/lib/variant ]; then
+    echo "VARIANT_ID=workstation" > /usr/lib/variant || :
+fi
 
-    # If os-release isn't a link or it exists but it points to a
-    # non-productized version, replace it with this one
-    if [ \! -h /usr/lib/os-release -o "x$(readlink /usr/lib/os-release)" = "xos.release.d/os-release-fedora" ]; then
-        ln -sf ./os.release.d/os-release-workstation /usr/lib/os-release || :
+. /usr/lib/variant || :
+if [ "x$VARIANT_ID" = "xworkstation" ]; then
+    if [ $1 -eq 1 ] ; then
+        # (On initial installation only), fix up after %%systemd_post in packages
+        # possibly installed before our preset file was added
+        %{_prefix}/sbin/convert-to-edition -ipe workstation
+    else
+        # On upgrades, do not enable or disable presets to avoid surprising
+        # the user
+        %{_prefix}/sbin/convert-to-edition -ip workstation
     fi
+fi
 
-if [ $1 -eq 1 ] ; then
-    # Initial installation
-
-    # fix up after %%systemd_post in packages
-    # possibly installed before our preset file was added
-    units=$(sed -n 's/^disable//p' \
-        < %{_prefix}/lib/systemd/system-preset/80-workstation.preset)
-    /usr/bin/systemctl preset $units >/dev/null 2>&1 || :
+%preun workstation
+# If we are uninstalling, we need to delete the variant file and
+# force the os-release file back to os-release-fedora.
+# We do this in %%preun so that we don't have any time where the os-release
+# symlink is dangling (since in %%postun, the os-release-$EDITION file
+# will have already been removed)
+if [ $1 = 0 ]; then
+    . /usr/lib/variant || :
+    if [ "x$VARIANT_ID" = "xworkstation" ]; then
+        # Do not enable or disable presets when uninstalling
+        %{_prefix}/sbin/convert-to-edition -ie non-edition
+    fi
 fi
 
 %postun workstation
 if [ $1 -eq 0 ] ; then
     glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
-
-    # If os-release is now a broken symlink or missing replace it
-    # with a symlink to basic version
-    test -e /usr/lib/os-release || \
-        ln -sf ./os.release.d/os-release-fedora /usr/lib/os-release || :
 fi
 
 %posttrans workstation
@@ -295,16 +335,18 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %defattr(-,root,root,-)
 %{!?_licensedir:%global license %%doc}
 %license LICENSE Fedora-Legal-README.txt
+%ghost /usr/lib/variant
 %dir /usr/lib/os.release.d
+%dir /usr/lib/os.release.d/presets
 %config %attr(0644,root,root) /usr/lib/os.release.d/os-release-fedora
-/usr/lib/os-release
+%ghost /usr/lib/os-release
 /etc/os-release
 %config %attr(0644,root,root) /etc/fedora-release
 /etc/redhat-release
 /etc/system-release
 %config %attr(0644,root,root) /etc/system-release-cpe
 %config %attr(0644,root,root) /usr/lib/os.release.d/issue-fedora
-/usr/lib/issue
+%ghost /usr/lib/issue
 %config(noreplace) /etc/issue
 %config %attr(0644,root,root) /usr/lib/issue.net
 %config(noreplace) /etc/issue.net
@@ -314,6 +356,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/85-display-manager.preset
 %{_prefix}/lib/systemd/system-preset/90-default.preset
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
+/usr/sbin/convert-to-edition
 
 %files cloud
 %{!?_licensedir:%global license %%doc}
@@ -326,35 +369,17 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %license LICENSE
 %config %attr(0644,root,root) /usr/lib/os.release.d/os-release-server
 %config %attr(0644,root,root) /usr/lib/os.release.d/issue-server
-%{_prefix}/lib/systemd/system-preset/80-server.preset
+%ghost %{_prefix}/lib/systemd/system-preset/80-server.preset
+%config %attr(0644,root,root) /usr/lib/os.release.d/presets/80-server.preset
 
 %files workstation
 %{!?_licensedir:%global license %%doc}
 %license LICENSE
 %config %attr(0644,root,root) /usr/lib/os.release.d/os-release-workstation
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
-%{_prefix}/lib/systemd/system-preset/80-workstation.preset
+%ghost %{_prefix}/lib/systemd/system-preset/80-workstation.preset
+%config %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
 
 %changelog
-* Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 24-0.7
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
-
-* Mon Sep 28 2015 Dennis Gilmore <dennis@ausil.us> - 24-0.6
-- set bug_version to be rawhide rhbz#1259287
-
-* Tue Sep 15 2015 Stephen Gallagher <sgallagh@redhat.com> - 24-0.5
-- Do not clobber /etc/issue[.net] customizations
-
-* Wed Sep 09 2015 Stephen Gallagher <sgallagh@redhat.com> - 24-0.4
-- Update preset file with FESCo decisions
-- https://fedorahosted.org/fesco/ticket/1472
-
-* Wed Sep 09 2015 Stephen Gallagher <sgallagh@redhat.com> - 24-0.3
-- Enclose IPv6 addresses in square brackets in /etc/issue
-
-* Mon Aug 24 2015 Stephen Gallagher <sgallagh@redhat.com> - 24-0.2
-- Make /etc/issue configurable per-edition
-- Resolves: RHBZ#1239089
-
-* Tue Jul 14 2015 Dennis Gilmore <dennis@ausil.us> - 24-0.1
-- setup for rawhide being f24
+* Tue Feb 23 2016 Dennis Gilmore <dennis@ausil.us> - 25-0.1
+- setup for rawhide being f25
