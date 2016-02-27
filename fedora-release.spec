@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        24
-Release:        0.10
+Release:        0.11
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -231,7 +231,7 @@ if [ "x$VARIANT_ID" = "xcloud" ]; then
     else
         # On upgrades, do not enable or disable presets to avoid surprising
         # the user
-        %{_prefix}/sbin/convert-to-edition -ip cloud
+        %{_prefix}/sbin/convert-to-edition -ie cloud
     fi
 fi
 
@@ -304,7 +304,7 @@ if [ "x$VARIANT_ID" = "xworkstation" ]; then
     else
         # On upgrades, do not enable or disable presets to avoid surprising
         # the user
-        %{_prefix}/sbin/convert-to-edition -ip workstation
+        %{_prefix}/sbin/convert-to-edition -ie workstation
     fi
 fi
 
@@ -381,6 +381,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
 
 %changelog
+* Fri Feb 26 2016 Stephen Gallagher <sgallagh@redhat.com> - 24-0.11
+- Fix upgrade bug in Workstation and Cloud
+
 * Tue Feb 23 2016 Dennis Gilmore <dennis@ausil.us> - 24-0.10
 - setup for f24 being branched
 
