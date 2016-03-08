@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        24
-Release:        0.11
+Release:        0.14
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -28,6 +28,17 @@ BuildArch:      noarch
 %description
 Fedora release files such as various /etc/ files that define the release.
 
+%package atomichost
+Summary:        Base package for Fedora Atomic-specific default configurations
+Provides:       system-release-atomichost
+Provides:       system-release-atomichost(%{version})
+Provides:       system-release-product
+Requires:       fedora-release = %{version}-%{release}
+
+%description atomichost
+Provides a base package for Fedora Atomic Host-specific configuration files to
+depend on.
+
 %package cloud
 Summary:        Base package for Fedora Cloud-specific default configurations
 Provides:       system-release-cloud
@@ -46,7 +57,12 @@ Provides:       system-release-server(%{version})
 Provides:       system-release-product
 Requires:       fedora-release = %{version}-%{release}
 Requires:       systemd
-Requires:       cockpit
+Requires:       cockpit-bridge
+Requires:       cockpit-networkmanager
+Requires:       cockpit-shell
+Requires:       cockpit-storaged
+Requires:       cockpit-ws
+Requires:       openssh-server
 Requires:       rolekit
 Requires(post):	sed
 Requires(post):	systemd
@@ -115,6 +131,14 @@ echo "Kernel \r on an \m (\l)" >> $RPM_BUILD_ROOT/usr/lib/issue.net
 ln -s ../usr/lib/issue.net $RPM_BUILD_ROOT/etc/issue.net
 
 # Create os-release and issue files for the different editions
+
+# Atomic Host - https://bugzilla.redhat.com/show_bug.cgi?id=1200122
+cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
+      $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-atomichost
+echo "VARIANT=\"Atomic Host\"" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-atomichost
+echo "VARIANT_ID=atomic.host" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-atomichost
+sed -i -e "s|(%{release_name})|(Atomic Host)|g" $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-atomichost
+
 # Cloud
 cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
       $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
@@ -183,144 +207,65 @@ install -m 0644 org.gnome.shell.gschema.override $RPM_BUILD_ROOT%{_datadir}/glib
 mkdir -p $RPM_BUILD_ROOT/%{_prefix}/sbin/
 install -m 0744 convert-to-edition $RPM_BUILD_ROOT/%{_prefix}/sbin/
 
-%post
-# On initial installation, we'll at least temporarily put the non-product
-# symlinks in place. It will be overridden by fedora-release-$EDITION
-# %%post sections because we don't write the /usr/lib/variant file until
-# %%posttrans to avoid trumping the fedora-release-$EDITION packages.
-# This is necessary to avoid breaking systemctl scripts since they rely on
-# /usr/lib/os-release being valid. We can't wait until %%posttrans to default
-# to os-release-fedora.
-if [ $1 = 0 ]; then
-    ln -sf ./os.release.d/os-release-fedora $RPM_BUILD_ROOT/usr/lib/os-release || :
-    ln -sf ./os.release.d/issue-fedora $RPM_BUILD_ROOT/usr/lib/issue || :
-fi
+%post -p <lua>
+%include convert-to-edition.lua
+-- On initial installation, we'll at least temporarily put the non-product
+-- symlinks in place. It will be overridden by fedora-release-$EDITION
+-- %%post sections because we don't write the /usr/lib/variant file until
+-- %%posttrans to avoid trumping the fedora-release-$EDITION packages.
+-- This is necessary to avoid breaking systemctl scripts since they rely on
+-- /usr/lib/os-release being valid. We can't wait until %%posttrans to default
+-- to os-release-fedora.
+if arg[2] == "0" then
+    set_release(fedora)
+    set_issue(fedora)
+end
 
-# We also want to forcibly set these paths on upgrade if we are explicitly
-# set to "nonproduct"
-if [ -e /usr/lib/variant ]; then
-    . /usr/lib/variant || :
-    if [ "x$VARIANT_ID" = "xnonproduct" ]; then
-        # Run the convert-to-edition script.
-        %{_prefix}/sbin/convert-to-edition -ie non-edition
-    fi
-fi
+-- We also want to forcibly set these paths on upgrade if we are explicitly
+-- set to "nonproduct"
+if read_variant() == "nonproduct" then
+    convert_to_edition("nonproduct", false)
+end
 
-%posttrans
-# If we get to %%posttrans and nothing created /usr/lib/variant, set it to
-# nonproduct
-if [ \! -e /usr/lib/variant ]; then
-    %{_prefix}/sbin/convert-to-edition -ipe non-edition
-fi
+%posttrans -p <lua>
+%include convert-to-edition.lua
+-- If we get to %%posttrans and nothing created /usr/lib/variant, set it to
+-- nonproduct.
+if posix.stat(VARIANT_FILE) == nil then
+    convert_to_edition("nonproduct", true)
+end
 
-%post cloud
-# == Run every time ==
-# Create the variant file if it does not already exist. This needs to be done
-# on both installation and upgrade, to ensure that we upgrade from F23
-# and earlier properly.
-if [ \! -e /usr/lib/variant ]; then
-    echo "VARIANT_ID=cloud" > /usr/lib/variant || :
-fi
+%post atomichost -p <lua>
+%include convert-to-edition.lua
+install_edition("atomichost")
 
-. /usr/lib/variant || :
-if [ "x$VARIANT_ID" = "xcloud" ]; then
-    if [ $1 -eq 1 ] ; then
-        # (On initial installation only), fix up after %%systemd_post in packages
-        # possibly installed before our preset file was added
-        %{_prefix}/sbin/convert-to-edition -ipe cloud
-    else
-        # On upgrades, do not enable or disable presets to avoid surprising
-        # the user
-        %{_prefix}/sbin/convert-to-edition -ie cloud
-    fi
-fi
+%preun atomichost -p <lua>
+%include convert-to-edition.lua
+uninstall_edition("atomichost")
 
-%preun cloud
-# If we are uninstalling, we need to reset the variant file and force
-# the os-release file back to os-release-fedora.
-# We do this in %%preun so that we don't have any time where the os-release
-# symlink is dangling (since in %%postun, the os-release-$EDITION file
-# will have already been removed)
-if [ $1 = 0 ]; then
-    . /usr/lib/variant || :
-    if [ "x$VARIANT_ID" = "xcloud" ]; then
-        # Do not enable or disable presets when uninstalling
-        %{_prefix}/sbin/convert-to-edition -ie non-edition
-    fi
-fi
+%post cloud -p <lua>
+%include convert-to-edition.lua
+install_edition("cloud")
 
+%preun cloud -p <lua>
+%include convert-to-edition.lua
+uninstall_edition("cloud")
 
-%post server
-# == Run every time ==
-# Create the variant file if it does not already exist. This needs to be done
-# on both installation and upgrade, to ensure that we upgrade from F23
-# and earlier properly.
-if [ \! -e /usr/lib/variant ]; then
-    echo "VARIANT_ID=server" > /usr/lib/variant || :
-fi
+%post server -p <lua>
+%include convert-to-edition.lua
+install_edition("server")
 
-. /usr/lib/variant || :
-if [ "x$VARIANT_ID" = "xserver" ]; then
-    if [ $1 -eq 1 ] ; then
-        # (On initial installation only), fix up after %%systemd_post in packages
-        # possibly installed before our preset file was added
-        %{_prefix}/sbin/convert-to-edition -ipe server
-    else
-        # On upgrades, do not enable or disable presets to avoid surprising
-        # the user
-        %{_prefix}/sbin/convert-to-edition -ie server
-    fi
-fi
+%preun server -p <lua>
+%include convert-to-edition.lua
+uninstall_edition("server")
 
-%preun server
-# If we are uninstalling, we need to delete the variant file and
-# force the os-release file back to os-release-fedora.
-# We do this in %%preun so that we don't have any time where the os-release
-# symlink is dangling (since in %%postun, the os-release-$EDITION file
-# will have already been removed)
-if [ $1 = 0 ]; then
-    . /usr/lib/variant || :
-    if [ "x$VARIANT_ID" = "xserver" ]; then
-        # Do not enable or disable presets when uninstalling
-        %{_prefix}/sbin/convert-to-edition -ie non-edition
-    fi
-fi
+%post workstation -p <lua>
+%include convert-to-edition.lua
+install_edition("workstation")
 
-%post workstation
-# == Run every time ==
-# Create the variant file if it does not already exist. This needs to be done
-# on both installation and upgrade, to ensure that we upgrade from F23
-# and earlier properly.
-if [ \! -e /usr/lib/variant ]; then
-    echo "VARIANT_ID=workstation" > /usr/lib/variant || :
-fi
-
-. /usr/lib/variant || :
-if [ "x$VARIANT_ID" = "xworkstation" ]; then
-    if [ $1 -eq 1 ] ; then
-        # (On initial installation only), fix up after %%systemd_post in packages
-        # possibly installed before our preset file was added
-        %{_prefix}/sbin/convert-to-edition -ipe workstation
-    else
-        # On upgrades, do not enable or disable presets to avoid surprising
-        # the user
-        %{_prefix}/sbin/convert-to-edition -ie workstation
-    fi
-fi
-
-%preun workstation
-# If we are uninstalling, we need to delete the variant file and
-# force the os-release file back to os-release-fedora.
-# We do this in %%preun so that we don't have any time where the os-release
-# symlink is dangling (since in %%postun, the os-release-$EDITION file
-# will have already been removed)
-if [ $1 = 0 ]; then
-    . /usr/lib/variant || :
-    if [ "x$VARIANT_ID" = "xworkstation" ]; then
-        # Do not enable or disable presets when uninstalling
-        %{_prefix}/sbin/convert-to-edition -ie non-edition
-    fi
-fi
+%preun workstation -p <lua>
+%include convert-to-edition.lua
+uninstall_edition("workstation")
 
 %postun workstation
 if [ $1 -eq 0 ] ; then
@@ -358,6 +303,12 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
 /usr/sbin/convert-to-edition
 
+%files atomichost
+%{!?_licensedir:%global license %%doc}
+%license LICENSE
+%config %attr(0644,root,root) /usr/lib/os.release.d/os-release-atomichost
+
+
 %files cloud
 %{!?_licensedir:%global license %%doc}
 %license LICENSE
@@ -381,6 +332,18 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
 
 %changelog
+* Tue Mar 08 2016 Stephen Gallagher <sgallagh@redhat.com> - 24-0.14
+- Add a subpackage for Atomic Host to provide /usr/lib/os-release differences
+
+* Thu Mar 03 2016 Stephen Gallagher <sgallagh@redhat.com> - 24-0.13
+- Rewrite scriptlets in Lua to avoid a circular dependency on coreutils
+- Be more specific with fedora-release-server's Cockpit requirement
+  (Do not pull in all of the optional Cockpit components as mandatory)
+
+* Mon Feb 29 2016 Stephen Gallagher <sgallagh@redhat.com> - 24-0.12
+- Only run grub2-mkconfig for platforms that support it
+- Remove erroneous RPM_BUILD_ROOT variables in convert-to-edition
+
 * Fri Feb 26 2016 Stephen Gallagher <sgallagh@redhat.com> - 24-0.11
 - Fix upgrade bug in Workstation and Cloud
 
