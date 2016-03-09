@@ -10,6 +10,7 @@ License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
 Source:         %{name}-%{version}.tar.bz2
+Source1:        convert-to-edition.lua
 Obsoletes:      redhat-release
 Provides:       redhat-release
 Provides:       system-release
@@ -208,7 +209,7 @@ mkdir -p $RPM_BUILD_ROOT/%{_prefix}/sbin/
 install -m 0744 convert-to-edition $RPM_BUILD_ROOT/%{_prefix}/sbin/
 
 %post -p <lua>
-%include convert-to-edition.lua
+%include %{_sourcedir}/convert-to-edition.lua
 -- On initial installation, we'll at least temporarily put the non-product
 -- symlinks in place. It will be overridden by fedora-release-$EDITION
 -- %%post sections because we don't write the /usr/lib/variant file until
@@ -228,7 +229,7 @@ if read_variant() == "nonproduct" then
 end
 
 %posttrans -p <lua>
-%include convert-to-edition.lua
+%include %{_sourcedir}/convert-to-edition.lua
 -- If we get to %%posttrans and nothing created /usr/lib/variant, set it to
 -- nonproduct.
 if posix.stat(VARIANT_FILE) == nil then
@@ -236,35 +237,35 @@ if posix.stat(VARIANT_FILE) == nil then
 end
 
 %post atomichost -p <lua>
-%include convert-to-edition.lua
+%include %{_sourcedir}/convert-to-edition.lua
 install_edition("atomichost")
 
 %preun atomichost -p <lua>
-%include convert-to-edition.lua
+%include %{_sourcedir}/convert-to-edition.lua
 uninstall_edition("atomichost")
 
 %post cloud -p <lua>
-%include convert-to-edition.lua
+%include %{_sourcedir}/convert-to-edition.lua
 install_edition("cloud")
 
 %preun cloud -p <lua>
-%include convert-to-edition.lua
+%include %{_sourcedir}/convert-to-edition.lua
 uninstall_edition("cloud")
 
 %post server -p <lua>
-%include convert-to-edition.lua
+%include %{_sourcedir}/convert-to-edition.lua
 install_edition("server")
 
 %preun server -p <lua>
-%include convert-to-edition.lua
+%include %{_sourcedir}/convert-to-edition.lua
 uninstall_edition("server")
 
 %post workstation -p <lua>
-%include convert-to-edition.lua
+%include %{_sourcedir}/convert-to-edition.lua
 install_edition("workstation")
 
 %preun workstation -p <lua>
-%include convert-to-edition.lua
+%include %{_sourcedir}/convert-to-edition.lua
 uninstall_edition("workstation")
 
 %postun workstation
