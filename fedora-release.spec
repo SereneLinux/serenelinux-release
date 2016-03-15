@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        25
-Release:        0.5
+Release:        0.6
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -334,6 +334,11 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
 
 %changelog
+* Tue Mar 15 2016 Dennis Gilmore <dennis@ausil.us> - 25-0.6
+- Properly handle systemd presets in Lua scripts
+- enable opal-prd.service
+- Remove call to grub2-mkconfig
+
 * Tue Mar 08 2016 Stephen Gallagher <sgallagh@redhat.com> - 25-0.5
 - Add a subpackage for Atomic Host to provide /usr/lib/os-release differences
 

@@ -7,7 +7,7 @@ local VARIANT_FILE = "/usr/lib/variant"
 -- Read in /usr/lib/variant and determine the edition
 local function read_variant()
   local variant
-  local f = io.open("/usr/lib/variant", "r")
+  local f = io.open(VARIANT_FILE, "r")
   if f ~= nil then
     while true do
       local line = f:read()
@@ -19,6 +19,7 @@ local function read_variant()
         variant = m
       end
     end
+    f:close()
   end
   return variant
 end
@@ -85,8 +86,8 @@ local function read_presets(path)
       if cmd == "enable" or cmd == "disable" then
         result[#result + 1] = arg
       end
-      f:close()
     end
+    f:close()
   end
   return result
 end
@@ -115,20 +116,23 @@ local variants = {
 }
 
 -- Call out to systemctl to enable or disable presets
-local function set_presets(edition)
+local function set_presets(edition, apply_presets)
   if variants[edition].presets then
     local target = "/usr/lib/systemd/system-preset/80-" .. edition .. ".preset"
-    symlink("../../os.edition.d/presets/80-" .. edition .. ".preset", target)
-    local presets = read_presets(target)
-	local systemctl = "/usr/bin/systemctl"
-	if posix.access(systemctl, "x") then
-      os.execute(systemctl, "preset", "-q",
-                 table.unpack(presets))
-	end
+    symlink("../../os.release.d/presets/80-" .. edition .. ".preset", target)
+
+    if apply_presets then
+      local presets = read_presets(target)
+      local systemctl = "/usr/bin/systemctl"
+      if posix.access(systemctl, "x") then
+        os.execute(systemctl, "preset", "-q",
+                   table.unpack(presets))
+      end
+    end
   end
 end
 
-local function convert_to_edition(edition, do_presets)
+local function convert_to_edition(edition, apply_presets)
   local variant = variants[edition]
   if variant == nil then
     error("undefined edition: " .. edition)
@@ -137,14 +141,7 @@ local function convert_to_edition(edition, do_presets)
   set_issue(variant.issue)
   clear_presets()
 
-  if do_presets then
-    set_presets(edition)
-  end
-
-  local grub = "/usr/sbin/grub2-mkconfig"
-  if posix.access(grub, "x") then
-    execute(grub, "-o", "/boot/grub2/grub.cfg")
-  end
+  set_presets(edition, apply_presets)
 end
 
 local function install_edition(edition)
@@ -160,7 +157,7 @@ local function install_edition(edition)
     -- added
     -- On upgrades, do not enable or disable presets to avoid
     -- surprising the user
-    local initial_install = arg[2] == "1"
+    local initial_install = arg[2] == 1
     convert_to_edition(edition, initial_install)
   end
 end
@@ -171,8 +168,9 @@ local function uninstall_edition(edition)
   -- in %%preun so that we don't have any time where the os-release
   -- symlink is dangling (since in %%postun, the os-release-$EDITION
   -- file will have already been removed)
-  if arg[2] == "0" then
+  if arg[2] == 0 then
     if read_variant() == edition then
+      set_variant("nonproduct")
       convert_to_edition("nonproduct", false)
     end
   end
