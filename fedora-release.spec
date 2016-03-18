@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        24
-Release:        0.15
+Release:        0.16
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -333,6 +333,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
 
 %changelog
+* Fri Mar 18 2016 Dennis Gilmore <dennis@ausil.us> - 24-0.16
+- Fork to execute systemctl calls
+
 * Tue Mar 15 2016 Dennis Gilmore <dennis@ausil.us> - 24-0.15
 - Properly handle systemd presets in Lua scripts
 - convert-to-edition: Remove call to grub2-mkconfig
