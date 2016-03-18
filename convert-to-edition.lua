@@ -125,8 +125,17 @@ local function set_presets(edition, apply_presets)
       local presets = read_presets(target)
       local systemctl = "/usr/bin/systemctl"
       if posix.access(systemctl, "x") then
-        os.execute(systemctl, "preset", "-q",
-                   table.unpack(presets))
+        --fork off a systemctl call
+        local pid = assert(posix.fork())
+        if pid == 0 then
+          -- Child
+          posix.exec(systemctl, "preset", "-q", table.unpack(presets))
+          -- In case exec() fails
+          os.exit(17)
+        else
+          -- RPM
+          assert(posix.wait(pid))
+        end
       end
     end
   end
