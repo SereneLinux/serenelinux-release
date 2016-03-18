@@ -65,7 +65,6 @@ Requires:       cockpit-storaged
 Requires:       cockpit-ws
 Requires:       openssh-server
 Requires:       rolekit
-Requires(post):	sed
 Requires(post):	systemd
 
 %description server
