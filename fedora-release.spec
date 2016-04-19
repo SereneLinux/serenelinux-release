@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        25
-Release:        0.7
+Release:        0.8
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -333,6 +333,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
 
 %changelog
+* Tue Apr 19 2016 Dennis Gilmore <dennis@ausil.us> - 25-0.8
+- enable virtlogd.socket
+
 * Fri Mar 18 2016 Dennis Gilmor <dennis@ausil.us> - 25-0.7
 - drop Requires(post): sed
 - Fork to execute systemctl calls
