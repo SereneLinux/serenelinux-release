@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        24
-Release:        0.17
+Release:        1
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -23,7 +23,7 @@ Provides:       fedora-release-standard = 22-0.8
 Obsoletes:      fedora-release-standard < 22-0.8
 
 
-Requires:       fedora-repos(%{version})
+Requires:       fedora-repos(%{version}) >= 1
 BuildArch:      noarch
 
 %description
@@ -232,9 +232,7 @@ end
 %include %{_sourcedir}/convert-to-edition.lua
 -- If we get to %%posttrans and nothing created /usr/lib/variant, set it to
 -- nonproduct.
-if posix.stat(VARIANT_FILE) == nil then
-    convert_to_edition("nonproduct", true)
-end
+install_edition("nonproduct")
 
 %post atomichost -p <lua>
 %include %{_sourcedir}/convert-to-edition.lua
@@ -333,6 +331,12 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
 
 %changelog
+* Tue Jun 01 2016 Dennis Gilmore <dennis@ausil.us> - 24-1
+- setup for f24 final
+
+* Thu May 19 2016 Stephen Gallagher <sgallagh@redhat.com> - 24-0.18
+- Fix %%posttrans to properly write /usr/lib/variant for nonproduct
+
 * Tue Apr 19 2016 Dennis Gilmore <dennis@ausil.us> - 24-0.17
 - enable virtlogd.socket
 
