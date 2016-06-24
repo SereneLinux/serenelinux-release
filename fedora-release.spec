@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        25
-Release:        0.8
+Release:        0.10
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -231,9 +231,7 @@ end
 %include %{_sourcedir}/convert-to-edition.lua
 -- If we get to %%posttrans and nothing created /usr/lib/variant, set it to
 -- nonproduct.
-if posix.stat(VARIANT_FILE) == nil then
-    convert_to_edition("nonproduct", true)
-end
+install_edition("nonproduct")
 
 %post atomichost -p <lua>
 %include %{_sourcedir}/convert-to-edition.lua
@@ -333,6 +331,12 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
 
 %changelog
+* Fri Jun 24 2016 Dennis Gilmore <dennis@ausil.us> - 25-0.10
+- apply fix from adamw for lua globbing bug rhbz#1349664
+
+* Thu May 19 2016 Stephen Gallagher <sgallagh@redhat.com> - 25-0.9
+- Fix %%posttrans to properly write /usr/lib/variant for nonproduct
+
 * Tue Apr 19 2016 Dennis Gilmore <dennis@ausil.us> - 25-0.8
 - enable virtlogd.socket
 
