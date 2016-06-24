@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        24
-Release:        1
+Release:        2
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -331,6 +331,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
 
 %changelog
+* Fri Jun 24 2016 Dennis Gilmore <dennis@ausil.us> - 24-2
+- apply fix from adamw for lua globbing bug rhbz#1349664
+- enable lircd.socket rhbz#1340061
+
 * Tue Jun 01 2016 Dennis Gilmore <dennis@ausil.us> - 24-1
 - setup for f24 final
 
