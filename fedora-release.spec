@@ -1,11 +1,11 @@
 %define release_name Rawhide
-%define dist_version 25
+%define dist_version 26
 %define bug_version rawhide
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        25
-Release:        0.10
+Version:        26
+Release:        0.1
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -331,38 +331,5 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
 
 %changelog
-* Fri Jun 24 2016 Dennis Gilmore <dennis@ausil.us> - 25-0.10
-- apply fix from adamw for lua globbing bug rhbz#1349664
-
-* Thu May 19 2016 Stephen Gallagher <sgallagh@redhat.com> - 25-0.9
-- Fix %%posttrans to properly write /usr/lib/variant for nonproduct
-
-* Tue Apr 19 2016 Dennis Gilmore <dennis@ausil.us> - 25-0.8
-- enable virtlogd.socket
-
-* Fri Mar 18 2016 Dennis Gilmor <dennis@ausil.us> - 25-0.7
-- drop Requires(post): sed
-- Fork to execute systemctl calls
-
-* Tue Mar 15 2016 Dennis Gilmore <dennis@ausil.us> - 25-0.6
-- Properly handle systemd presets in Lua scripts
-- enable opal-prd.service
-- Remove call to grub2-mkconfig
-
-* Tue Mar 08 2016 Stephen Gallagher <sgallagh@redhat.com> - 25-0.5
-- Add a subpackage for Atomic Host to provide /usr/lib/os-release differences
-
-* Thu Mar 03 2016 Stephen Gallagher <sgallagh@redhat.com> - 25-0.4
-- Rewrite scriptlets in Lua to avoid a circular dependency on coreutils
-- Be more specific with fedora-release-server's Cockpit requirement
-  (Do not pull in all of the optional Cockpit components as mandatory)
-
-* Mon Feb 29 2016 Stephen Gallagher <sgallagh@redhat.com> - 25-0.3
-- Only run grub2-mkconfig for platforms that support it
-- Remove erroneous RPM_BUILD_ROOT variables in convert-to-edition
-
-* Fri Feb 26 2016 Stephen Gallagher <sgallagh@redhat.com> - 25-0.2
-- Fix typo that breaks %post on upgrades of Workstation and Cloud
-
-* Tue Feb 23 2016 Dennis Gilmore <dennis@ausil.us> - 25-0.1
-- setup for rawhide being f25
+* Fri Jul 22 2016 Mohan Boddu <mboddu@redhat.com> - 26-0.1
+- setup for rawhide being f26
