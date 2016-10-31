@@ -212,7 +212,7 @@ install -m 0644 org.gnome.shell.gschema.override $RPM_BUILD_ROOT%{_datadir}/glib
 
 # Copy the make_edition script to /usr/sbin
 mkdir -p $RPM_BUILD_ROOT/%{_prefix}/sbin/
-install -m 0744 convert-to-edition $RPM_BUILD_ROOT/%{_prefix}/sbin/
+install -m 0755 convert-to-edition $RPM_BUILD_ROOT/%{_prefix}/sbin/
 
 %post -p <lua>
 %include %{_sourcedir}/convert-to-edition.lua
