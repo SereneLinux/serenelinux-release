@@ -5,7 +5,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        25
-Release:        0.12
+Release:        0.13
 License:        MIT
 Group:          System Environment/Base
 URL:            http://fedoraproject.org
@@ -88,7 +88,7 @@ depend on.
 
 %package -n convert-to-edition
 Summary: Script for converting between Fedora Editions
-Requires: fedora-release = %{version}-{release}
+Requires: fedora-release = %{version}-%{release}
 
 %description -n convert-to-edition
 Provides a script to convert the running system between Fedora Editions
@@ -340,6 +340,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Mon Oct 31 2016 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 25-0.13
+- Fix mangled Release tag
+
 * Fri Oct 28 2016 Stephen Gallagher <sgallagh@redhat.com> - 25-0.12
 - Move convert-to-edition to its own subpackage
 - Eliminate circular dependency on bash from the base package
