@@ -86,6 +86,13 @@ Requires(postun): /usr/bin/glib-compile-schemas
 Provides a base package for Fedora Workstation-specific configuration files to
 depend on.
 
+%package -n convert-to-edition
+Summary: Script for converting between Fedora Editions
+Requires: fedora-release = %{version}-{release}
+
+%description -n convert-to-edition
+Provides a script to convert the running system between Fedora Editions
+
 %prep
 %setup -q
 sed -i 's|@@VERSION@@|%{dist_version}|g' Fedora-Legal-README.txt
@@ -299,7 +306,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_prefix}/lib/systemd/system-preset/85-display-manager.preset
 %{_prefix}/lib/systemd/system-preset/90-default.preset
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
-/usr/sbin/convert-to-edition
 
 
 %files atomichost
@@ -330,6 +336,14 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %ghost %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 %config %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
 
+%files -n convert-to-edition
+/usr/sbin/convert-to-edition
+
 %changelog
+* Fri Oct 28 2016 Stephen Gallagher <sgallagh@redhat.com> - 26-0.2
+- Move convert-to-edition to its own subpackage
+- Eliminate circular dependency on bash from the base package
+- Enable switcheroo-control.service
+
 * Fri Jul 22 2016 Mohan Boddu <mboddu@redhat.com> - 26-0.1
 - setup for rawhide being f26
