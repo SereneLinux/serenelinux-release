@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        25
-Release:        0.13
+Release:        0.14
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
