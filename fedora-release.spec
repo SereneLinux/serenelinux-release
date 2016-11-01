@@ -2,13 +2,17 @@
 %define dist_version 25
 %define bug_version 25
 
+# All changes need to be submitted as pull requests in pagure
+# The package can only be built by a very small number of people
+# if you are not sure you can build it do not attempt to
+
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        25
 Release:        0.13
 License:        MIT
 Group:          System Environment/Base
-URL:            http://fedoraproject.org
+URL:            https://pagure.io/fedora-release
 Source:         %{name}-%{version}.tar.bz2
 Source1:        convert-to-edition.lua
 Obsoletes:      redhat-release
@@ -340,6 +344,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Mon Oct 31 2016 Dennis Gilmore <dennis@ausil.us> - 25-0.14
+- bump for needed rebuild
+- add note on how to contribute
+
 * Mon Oct 31 2016 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 25-0.13
 - Fix mangled Release tag
 
