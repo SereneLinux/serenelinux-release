@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        25
-Release:        0.14
+Release:        1
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -344,6 +344,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Wed Nov 2 2016 Mohan Boddu <mboddu@redhat.com> - 25-1
+- Setup for f25 final
+- snapd timers are enabled by default 
+
 * Mon Oct 31 2016 Dennis Gilmore <dennis@ausil.us> - 25-0.14
 - bump for needed rebuild
 - add note on how to contribute
