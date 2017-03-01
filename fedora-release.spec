@@ -1,6 +1,6 @@
-%define release_name Rawhide
+%define release_name Twenty Six
 %define dist_version 26
-%define bug_version rawhide
+%define bug_version 26
 
 # All changes need to be submitted as pull requests in pagure
 # The package can only be built by a very small number of people
@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        26
-Release:        0.4
+Release:        0.5
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -344,6 +344,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Tue Feb 28 2017 Dennis Gilmore <dennis@ausil.us> - 26-0.5
+- update for branching
+
 * Mon Oct 31 2016 Dennis Gilmore <dennis@ausil.us> - 26-0.4
 - bump for needed rebuild
 
