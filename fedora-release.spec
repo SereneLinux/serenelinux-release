@@ -1,5 +1,5 @@
 %define release_name Rawhide
-%define dist_version 26
+%define dist_version 27
 %define bug_version rawhide
 
 # All changes need to be submitted as pull requests in pagure
@@ -8,8 +8,8 @@
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        26
-Release:        0.4
+Version:        27
+Release:        0.1
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -344,16 +344,5 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
-* Mon Oct 31 2016 Dennis Gilmore <dennis@ausil.us> - 26-0.4
-- bump for needed rebuild
-
-* Mon Oct 31 2016 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 26-0.3
-- Fix mangled Release tag
-
-* Fri Oct 28 2016 Stephen Gallagher <sgallagh@redhat.com> - 26-0.2
-- Move convert-to-edition to its own subpackage
-- Eliminate circular dependency on bash from the base package
-- Enable switcheroo-control.service
-
-* Fri Jul 22 2016 Mohan Boddu <mboddu@redhat.com> - 26-0.1
-- setup for rawhide being f26
+* Fri Feb 24 2017 Mohan Boddu <mboddu@redhat.com> - 27-0.1
+- setup for rawhide being f27
