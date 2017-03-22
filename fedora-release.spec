@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        26
-Release:        0.5
+Release:        0.6
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -344,6 +344,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Wed Mar 22 2017 Mohan Boddu <mboddu@redhat.com> - 26-0.6
+- Disable systemd-networkd-wait-online.service
+
 * Tue Feb 28 2017 Dennis Gilmore <dennis@ausil.us> - 26-0.5
 - update for branching
 
