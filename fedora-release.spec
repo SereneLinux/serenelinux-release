@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        25
-Release:        1
+Release:        2
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -123,6 +123,7 @@ PRETTY_NAME="Fedora %{dist_version} (%{release_name})"
 ANSI_COLOR="0;34"
 CPE_NAME="cpe:/o:fedoraproject:fedora:%{dist_version}"
 HOME_URL="https://fedoraproject.org/"
+SUPPORT_URL="https://fedoraproject.org/wiki/Communicating_and_getting_help"
 BUG_REPORT_URL="https://bugzilla.redhat.com/"
 REDHAT_BUGZILLA_PRODUCT="Fedora"
 REDHAT_BUGZILLA_PRODUCT_VERSION=%{bug_version}
@@ -344,6 +345,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Wed May 17 2017 Mohan Boddu <mboddu@redhat.com> - 25-2
+- Support for the DRBD link-cleaning service
+- Add SUPPORT_URL definition to os-release
+
 * Wed Nov 2 2016 Mohan Boddu <mboddu@redhat.com> - 25-1
 - Setup for f25 final
 - snapd timers are enabled by default 
