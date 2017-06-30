@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        26
-Release:        0.7
+Release:        1
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -27,7 +27,7 @@ Provides:       fedora-release-standard = 22-0.8
 Obsoletes:      fedora-release-standard < 22-0.8
 
 
-Requires:       fedora-repos(%{version})
+Requires:       fedora-repos(%{version}) >= 1
 BuildArch:      noarch
 
 %description
@@ -344,6 +344,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Fri Jun 30 2017 Mohan Boddu <mboddu@redhat.com> - 26-0.8
+- Setup for F26 Final
+- Enable NetworkManager-wait-online.service to match NetworkManager.service
+
 * Wed May 17 2017 Mohan Boddu <mboddu@redhat.com> - 26-0.7
 - Enable cups on-demand socket activation
 - Enable ostree-remount on ostree-based systems
