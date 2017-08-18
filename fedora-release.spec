@@ -1,6 +1,6 @@
-%define release_name Rawhide
+%define release_name Twenty Seven
 %define dist_version 27
-%define bug_version rawhide
+%define bug_version 27
 
 # All changes need to be submitted as pull requests in pagure
 # The package can only be built by a very small number of people
@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        27
-Release:        0.2
+Release:        0.3
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -345,6 +345,12 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Tue Aug 15 2017 Mohan Boddu <mboddu@redhat.com> - 27-0.3
+- Update for Branching
+- Enable NetworkManager-wait-online.service to match NetworkManager.service rawpatchtreeparent
+- Enable Performance Co-Pilot services
+- Enable SSSD Kerberos Credential Cache Server
+
 * Wed May 17 2017 Mohan Boddu <mboddu@redhat.com> - 27-0.2
 - Enable the System Security Services Daemon
 - Disable systemd-networkd-wait-online.service
