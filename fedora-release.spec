@@ -1,5 +1,5 @@
 %define release_name Rawhide
-%define dist_version 28
+%define dist_version 29
 %define bug_version rawhide
 
 # All changes need to be submitted as pull requests in pagure
@@ -8,8 +8,8 @@
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        28
-Release:        0.2
+Version:        29
+Release:        0.1
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -345,8 +345,5 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
-* Thu Oct 26 2017 Stephen Gallagher <sgallagh@redhat.com> - 28-0.2
-- Drop %%config from files in /usr
-
-* Tue Aug 15 2017 Mohan Boddu <mboddu@redhat.com> - 28-0.1
-- Setup for rawhide being f28
+* Mon Feb 19 2018 Mohan Boddu <mboddu@redhat.com> - 29-0.1
+- Setup for rawhide being f29
