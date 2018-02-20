@@ -1,6 +1,6 @@
-%define release_name Rawhide
+%define release_name Twenty Eight 
 %define dist_version 28
-%define bug_version rawhide
+%define bug_version 28
 
 # All changes need to be submitted as pull requests in pagure
 # The package can only be built by a very small number of people
@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        28
-Release:        0.2
+Release:        0.3
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -345,6 +345,12 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Sat Feb 17 2018 Mohan Boddu <mboddu@redhat.com> - 28-0.3
+- Update for branching
+- Enable akmods.service in presets
+- Fix pattern-match in convert-to-edition.lua
+- Add %{?distprefix} to %{dist}
+
 * Thu Oct 26 2017 Stephen Gallagher <sgallagh@redhat.com> - 28-0.2
 - Drop %%config from files in /usr
 
