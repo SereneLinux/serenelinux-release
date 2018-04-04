@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        0.1
+Release:        0.2
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -214,6 +214,8 @@ install -m 0644 80-workstation.preset $RPM_BUILD_ROOT%{_prefix}/lib/os.release.d
 # Override the list of enabled gnome-shell extensions for Workstation
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
 install -m 0644 org.gnome.shell.gschema.override $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/polkit-1/rules.d/
+install -m 0644 org.projectatomic.rpmostree1.rules $RPM_BUILD_ROOT%{_datadir}/polkit-1/rules.d/
 
 # Copy the make_edition script to /usr/sbin
 mkdir -p $RPM_BUILD_ROOT/%{_prefix}/sbin/
@@ -340,10 +342,14 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %ghost %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
+%attr(0644,root,root) /usr/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
 
 %files -n convert-to-edition
 /usr/sbin/convert-to-edition
 
 %changelog
+* Thu Feb 22 2018 Matthias Clasen <mclasen@redhat.com> - 29-0.2
+- Add polkit rules to let gnome-software update Atomic Workstation
+
 * Mon Feb 19 2018 Mohan Boddu <mboddu@redhat.com> - 29-0.1
 - Setup for rawhide being f29
