@@ -1,10 +1,18 @@
 %define release_name Rawhide
+%define is_rawhide 1
+
 %define dist_version 35
 %define rhel_dist_version 9
-%define bug_version rawhide
 
-# Change this when branching to fNN
+%if %{is_rawhide}
+%define bug_version rawhide
+%define releasever rawhide
 %define doc_version rawhide
+%else
+%define bug_version %{dist_version}
+%define releasever %{dist_version}
+%define doc_version f%{dist_version}
+%endif
 
 %if 0%{?eln}
 %bcond_with basic
@@ -50,7 +58,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        35
-Release:        0.1%{?eln:.eln%{eln}}
+Release:        0.10%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -106,6 +114,12 @@ Suggests:   fedora-release
 
 Requires:   fedora-repos(%{version})
 Requires:   fedora-release-identity = %{version}-%{release}
+
+%if %{is_rawhide}
+# Make $releasever return "rawhide" on Rawhide
+# https://pagure.io/releng/issue/7445
+Provides:       system-release(releasever) = %{releasever}
+%endif
 
 # Fedora ships a generic-release package to make the creation of Remixes
 # easier, but it cannot coexist with the fedora-release[-*] packages, so we
