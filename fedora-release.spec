@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        28
-Release:        0.4
+Release:        1 
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -27,7 +27,7 @@ Provides:       fedora-release-standard = 22-0.8
 Obsoletes:      fedora-release-standard < 22-0.8
 
 
-Requires:       fedora-repos(%{version})
+Requires:       fedora-repos(%{version}) >= 1
 BuildArch:      noarch
 
 %description
@@ -119,6 +119,7 @@ NAME=Fedora
 VERSION="%{dist_version} (%{release_name})"
 ID=fedora
 VERSION_ID=%{dist_version}
+PLATFORM_ID="platform:f%{dist_version}"
 PRETTY_NAME="Fedora %{dist_version} (%{release_name})"
 ANSI_COLOR="0;34"
 CPE_NAME="cpe:/o:fedoraproject:fedora:%{dist_version}"
@@ -348,6 +349,11 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Wed Apr 18 2018 Mohan Boddu <mboddu@redhat.com> - 28-1
+- Setup for F28 Final
+- Add PLATFORM_ID to /etc/os-release
+- Enable the virtualbox-guest-additions service (vboxservice.service)
+
 * Thu Feb 22 2018 Matthias Clasen <mclasen@redhat.com> - 28-0.4
 - Add polkit rules to let gnome-software update Atomic Workstation
 
