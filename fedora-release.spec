@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        28
-Release:        1 
+Release:        2
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -69,6 +69,8 @@ Requires:       cockpit-storaged
 Requires:       cockpit-ws
 Requires:       openssh-server
 Requires:       rolekit
+Recommends:     fedora-repos-modular
+
 Requires(post):	systemd
 
 %description server
@@ -349,6 +351,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Fri May 25 2018 Stephen Gallagher <sgallagh@redhat.com> - 28-2
+- Add fedora-repos-modular to Fedora Server installs
+
 * Wed Apr 18 2018 Mohan Boddu <mboddu@redhat.com> - 28-1
 - Setup for F28 Final
 - Add PLATFORM_ID to /etc/os-release
