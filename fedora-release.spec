@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        0.4
+Release:        0.5
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -206,6 +206,7 @@ mkdir -p $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 mkdir -p $RPM_BUILD_ROOT/usr/lib/os.release.d/presets
 
 # Default system wide
+install -m 0644 90-default-user.preset $RPM_BUILD_ROOT/usr/lib/systemd/user-preset/
 install -m 0644 85-display-manager.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 install -m 0644 90-default.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 install -m 0644 99-default-disable.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
@@ -312,6 +313,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config(noreplace) /etc/issue.net
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
 %dir /usr/lib/systemd/user-preset/
+%{_prefix}/lib/systemd/user-preset/90-default-user.preset
 %dir %{_prefix}/lib/systemd/system-preset/
 %{_prefix}/lib/systemd/system-preset/85-display-manager.preset
 %{_prefix}/lib/systemd/system-preset/90-default.preset
@@ -351,6 +353,12 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Fri Jun 22 2018 Mohan Boddu <mboddu@bhujji.com> - 29-0.5
+- Add selinux-autorelabel-mark.service to default presets
+- Enable the pipewire service for user sessions
+- fedora-* renamed to OS independent names
+- Fix pattern-match in convert-to-edition.lua
+
 * Fri May 25 2018 Stephen Gallagher <sgallagh@redhat.com> - 29-0.4
 - Add fedora-repos-modular to Fedora Server installs
 
