@@ -2,9 +2,11 @@
 %define dist_version 29
 %define bug_version rawhide
 
-# All changes must to be submitted as pull requests in pagure
-# The package should only be built by a very small number of people
-# if you are not sure please file and issue to allow for review
+# Changes should be submitted as pull requests under
+#     https://src.fedoraproject.org/rpms/fedora-release
+#
+# The package can only be built by a very small number of people
+# if you are not sure you can build it do not attempt to
 
 Summary:        Fedora release files
 Name:           fedora-release
@@ -36,7 +38,9 @@ Requires:       fedora-repos(%{version})
 BuildArch:      noarch
 
 %description
-Fedora release files such as various /etc/ files that define the release.
+Fedora release files such as various /etc/ files that define the release
+and systemd preset files that determine which services are enabled by default.
+# See https://fedoraproject.org/wiki/Packaging:DefaultServices for details.
 
 %package atomichost
 Summary:        Base package for Fedora Atomic-specific default configurations
