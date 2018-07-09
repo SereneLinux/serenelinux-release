@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        0.5
+Release:        0.6
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -68,7 +68,6 @@ Requires:       cockpit-shell
 Requires:       cockpit-storaged
 Requires:       cockpit-ws
 Requires:       openssh-server
-Requires:       rolekit
 Recommends:     fedora-repos-modular
 
 Requires(post):	systemd
@@ -353,6 +352,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Mon Jul 09 2018 Adam Williamson <awilliam@redhat.com> - 29-0.6
+- Server: don't require rolekit (not installable, soon to be retired)
+
 * Fri Jun 22 2018 Mohan Boddu <mboddu@bhujji.com> - 29-0.5
 - Add selinux-autorelabel-mark.service to default presets
 - Enable the pipewire service for user sessions
