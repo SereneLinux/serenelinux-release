@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        0.6
+Release:        0.7
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -352,6 +352,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Tue Jul 10 2018 Adam Williamson <awilliam@redhat.com> - 29-0.7
+- Drop rolekit from Server presets too
+
 * Mon Jul 09 2018 Adam Williamson <awilliam@redhat.com> - 29-0.6
 - Server: don't require rolekit (not installable, soon to be retired)
 
