@@ -20,13 +20,6 @@ Provides:       redhat-release
 Provides:       system-release
 Provides:       system-release(%{version})
 
-# Kill off the fedora-release-nonproduct package
-Provides:       fedora-release-nonproduct = %{version}
-Obsoletes:      fedora-release-nonproduct <= 23-0.3
-Provides:       fedora-release-standard = 22-0.8
-Obsoletes:      fedora-release-standard < 22-0.8
-
-
 Requires:       fedora-repos(%{version})
 BuildArch:      noarch
 
