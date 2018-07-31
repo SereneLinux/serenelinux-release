@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        0.7
+Release:        0.8
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -68,7 +68,6 @@ Requires:       cockpit-shell
 Requires:       cockpit-storaged
 Requires:       cockpit-ws
 Requires:       openssh-server
-Recommends:     fedora-repos-modular
 
 Requires(post):	systemd
 
@@ -352,6 +351,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Tue Jul 31 2018 Stephen Gallagher <sgallagh@redhat.com> - 29-0.8
+- Drop Recommends: fedora-repos-modular from Server Edition since it has been
+  merged into fedora-repos.
+
 * Tue Jul 10 2018 Adam Williamson <awilliam@redhat.com> - 29-0.7
 - Drop rolekit from Server presets too
 
