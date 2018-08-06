@@ -2,16 +2,16 @@
 %define dist_version 29
 %define bug_version rawhide
 
-# All changes need to be submitted as pull requests in pagure
-# The package can only be built by a very small number of people
-# if you are not sure you can build it do not attempt to
+# All changes must to be submitted as pull requests in pagure
+# The package should only be built by a very small number of people
+# if you are not sure please file and issue to allow for review
 
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        0.8
+Release:        0.9
 License:        MIT
-URL:            https://pagure.io/fedora-release
+URL:            https://fedoraproject.org/
 
 Source1:        LICENSE
 Source2:        Fedora-Legal-README.txt
@@ -350,6 +350,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Mon Aug  6 2018 Peter Robinson <pbrobinson@fedoraproject.org> 29-0.9
+- Increment and build for source merge change
+
 * Tue Jul 31 2018 Stephen Gallagher <sgallagh@redhat.com> - 29-0.8
 - Drop Recommends: fedora-repos-modular from Server Edition since it has been
   merged into fedora-repos.
