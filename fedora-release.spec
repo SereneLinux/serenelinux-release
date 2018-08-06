@@ -13,8 +13,20 @@ Release:        0.8
 License:        MIT
 URL:            https://pagure.io/fedora-release
 
-Source:         %{name}-%{version}.tar.bz2
-Source1:        convert-to-edition.lua
+Source1:        LICENSE
+Source2:        Fedora-Legal-README.txt
+Source3:        convert-to-edition
+Source4:        convert-to-edition.lua
+
+Source10:       85-display-manager.preset
+Source11:       90-default.preset
+Source12:       90-default-user.preset
+Source13:       99-default-disable.preset
+Source14:       80-server.preset
+Source15:       80-workstation.preset
+Source16:       org.gnome.shell.gschema.override
+Source17:       org.projectatomic.rpmostree1.rules
+
 Obsoletes:      redhat-release
 Provides:       redhat-release
 Provides:       system-release
@@ -91,8 +103,7 @@ Requires: fedora-release = %{version}-%{release}
 Provides a script to convert the running system between Fedora Editions
 
 %prep
-%setup -q
-sed -i 's|@@VERSION@@|%{dist_version}|g' Fedora-Legal-README.txt
+sed -i 's|@@VERSION@@|%{dist_version}|g' %{SOURCE2}
 
 %build
 
@@ -191,33 +202,38 @@ cat >> $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.dist << EOF
 %%fc%{dist_version}                1
 EOF
 
+# Install licenses
+install -d $RPM_BUILD_ROOT%{_datadir}/licenses/%{name}/
+install -pm 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/licenses/%{name}/LICENSE
+install -pm 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/licenses/%{name}/Fedora-Legal-README.txt
+
 # Add presets
 mkdir -p $RPM_BUILD_ROOT/usr/lib/systemd/user-preset/
 mkdir -p $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 mkdir -p $RPM_BUILD_ROOT/usr/lib/os.release.d/presets
 
 # Default system wide
-install -m 0644 90-default-user.preset $RPM_BUILD_ROOT/usr/lib/systemd/user-preset/
-install -m 0644 85-display-manager.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
-install -m 0644 90-default.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
-install -m 0644 99-default-disable.preset $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+install -m 0644 %{SOURCE10} $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+install -m 0644 %{SOURCE11} $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+install -m 0644 %{SOURCE12} $RPM_BUILD_ROOT/usr/lib/systemd/user-preset/
+install -m 0644 %{SOURCE13} $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
 # Fedora Server
-install -m 0644 80-server.preset $RPM_BUILD_ROOT%{_prefix}/lib/os.release.d/presets/
+install -m 0644 %{SOURCE14} $RPM_BUILD_ROOT%{_prefix}/lib/os.release.d/presets/
 # Fedora Workstation
-install -m 0644 80-workstation.preset $RPM_BUILD_ROOT%{_prefix}/lib/os.release.d/presets/
+install -m 0644 %{SOURCE15} $RPM_BUILD_ROOT%{_prefix}/lib/os.release.d/presets/
 
 # Override the list of enabled gnome-shell extensions for Workstation
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
-install -m 0644 org.gnome.shell.gschema.override $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
+install -m 0644 %{SOURCE16} $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/polkit-1/rules.d/
-install -m 0644 org.projectatomic.rpmostree1.rules $RPM_BUILD_ROOT%{_datadir}/polkit-1/rules.d/
+install -m 0644 %{SOURCE17} $RPM_BUILD_ROOT%{_datadir}/polkit-1/rules.d/
 
 # Copy the make_edition script to /usr/sbin
 mkdir -p $RPM_BUILD_ROOT/%{_prefix}/sbin/
-install -m 0755 convert-to-edition $RPM_BUILD_ROOT/%{_prefix}/sbin/
+install -m 0755 %{SOURCE3} $RPM_BUILD_ROOT/%{_prefix}/sbin/
 
 %post -p <lua>
-%include %{_sourcedir}/convert-to-edition.lua
+%include %{SOURCE4}
 -- On initial installation, we'll at least temporarily put the non-product
 -- symlinks in place. It will be overridden by fedora-release-$EDITION
 -- %%post sections because we don't write the /usr/lib/variant file until
@@ -237,41 +253,41 @@ if read_variant() == "nonproduct" then
 end
 
 %posttrans -p <lua>
-%include %{_sourcedir}/convert-to-edition.lua
+%include %{SOURCE4}
 -- If we get to %%posttrans and nothing created /usr/lib/variant, set it to
 -- nonproduct.
 install_edition("nonproduct")
 
 %post atomichost -p <lua>
-%include %{_sourcedir}/convert-to-edition.lua
+%include %{SOURCE4}
 install_edition("atomichost")
 
 %preun atomichost -p <lua>
-%include %{_sourcedir}/convert-to-edition.lua
+%include %{SOURCE4}
 uninstall_edition("atomichost")
 
 %post cloud -p <lua>
-%include %{_sourcedir}/convert-to-edition.lua
+%include %{SOURCE4}
 install_edition("cloud")
 
 %preun cloud -p <lua>
-%include %{_sourcedir}/convert-to-edition.lua
+%include %{SOURCE4}
 uninstall_edition("cloud")
 
 %post server -p <lua>
-%include %{_sourcedir}/convert-to-edition.lua
+%include %{SOURCE4}
 install_edition("server")
 
 %preun server -p <lua>
-%include %{_sourcedir}/convert-to-edition.lua
+%include %{SOURCE4}
 uninstall_edition("server")
 
 %post workstation -p <lua>
-%include %{_sourcedir}/convert-to-edition.lua
+%include %{SOURCE4}
 install_edition("workstation")
 
 %preun workstation -p <lua>
-%include %{_sourcedir}/convert-to-edition.lua
+%include %{SOURCE4}
 uninstall_edition("workstation")
 
 %postun workstation
@@ -310,24 +326,20 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
 %files atomichost
-%license LICENSE
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-atomichost
 
 
 %files cloud
-%license LICENSE
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-cloud
 
 
 %files server
-%license LICENSE
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-server
 %attr(0644,root,root) /usr/lib/os.release.d/issue-server
 %ghost %{_prefix}/lib/systemd/system-preset/80-server.preset
 %attr(0644,root,root) /usr/lib/os.release.d/presets/80-server.preset
 
 %files workstation
-%license LICENSE
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-workstation
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %ghost %{_prefix}/lib/systemd/system-preset/80-workstation.preset

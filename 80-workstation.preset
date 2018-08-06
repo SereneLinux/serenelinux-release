@@ -1,0 +1,15 @@
+#
+# Fedora Workstation
+#
+
+# disable sshd socket by default on workstation
+disable sshd.socket
+
+# disable sshd service by default on workstation
+disable sshd.service
+
+# enable cups on-demand socket activation by default on workstation
+# https://pagure.io/fedora-workstation/issue/8
+enable cups.socket
+enable cups.path
+disable cups.service
