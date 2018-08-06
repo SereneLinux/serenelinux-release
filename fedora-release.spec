@@ -11,8 +11,8 @@ Name:           fedora-release
 Version:        29
 Release:        0.8
 License:        MIT
-Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
+
 Source:         %{name}-%{version}.tar.bz2
 Source1:        convert-to-edition.lua
 Obsoletes:      redhat-release
@@ -291,8 +291,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
 %files
-%defattr(-,root,root,-)
-%{!?_licensedir:%global license %%doc}
 %license LICENSE Fedora-Legal-README.txt
 %ghost /usr/lib/variant
 %dir /usr/lib/os.release.d
@@ -319,19 +317,16 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
 %files atomichost
-%{!?_licensedir:%global license %%doc}
 %license LICENSE
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-atomichost
 
 
 %files cloud
-%{!?_licensedir:%global license %%doc}
 %license LICENSE
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-cloud
 
 
 %files server
-%{!?_licensedir:%global license %%doc}
 %license LICENSE
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-server
 %attr(0644,root,root) /usr/lib/os.release.d/issue-server
@@ -339,7 +334,6 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %attr(0644,root,root) /usr/lib/os.release.d/presets/80-server.preset
 
 %files workstation
-%{!?_licensedir:%global license %%doc}
 %license LICENSE
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-workstation
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
