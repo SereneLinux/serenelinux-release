@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        0.9
+Release:        0.10
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -350,6 +350,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Thu Aug  9 2018 Peter Robinson <pbrobinson@fedoraproject.org> 29-0.10
+- Enable dbus units explicitly
+
 * Mon Aug  6 2018 Peter Robinson <pbrobinson@fedoraproject.org> 29-0.9
 - Increment and build for source merge change
 

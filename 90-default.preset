@@ -12,6 +12,8 @@ disable systemd-resolved.service
 
 # System stuff
 # https://fedoraproject.org/w/index.php?title=Starting_services_by_default&oldid=377748
+enable dbus.socket
+enable dbus-daemon.service
 enable sshd.service
 
 # Locally-running services
