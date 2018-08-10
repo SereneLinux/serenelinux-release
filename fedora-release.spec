@@ -202,7 +202,7 @@ cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 # dist macros.
 
 %%fedora                %{dist_version}
-%%dist                %{?distprefix}.fc%{dist_version}
+%%dist                %%{?distprefix}.fc%{dist_version}
 %%fc%{dist_version}                1
 EOF
 
@@ -347,7 +347,11 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
-* Wed Aug 15 2018 David Herrmann <dh.herrmann@gmail.com> - 30-0.2
+* Sat Aug 18 2018 Jason L Tibbitts III <tibbs@math.uh.edu> - 29-0.12
+- Escape use of the distprefix macro, so it makes it into the macro
+  file instead of being expanded in the spec.
+
+* Wed Aug 15 2018 David Herrmann <dh.herrmann@gmail.com> - 29-0.12
 - Enable dbus user units explicitly
 
 * Tue Aug 14 2018 Mohan Boddu <mboddu@bhujji.com> 29-0.11
