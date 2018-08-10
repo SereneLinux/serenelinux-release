@@ -11,7 +11,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.2
+Release:        0.3
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -202,7 +202,7 @@ cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 # dist macros.
 
 %%fedora                %{dist_version}
-%%dist                %{?distprefix}.fc%{dist_version}
+%%dist                %%{?distprefix}.fc%{dist_version}
 %%fc%{dist_version}                1
 EOF
 
@@ -347,6 +347,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Fri Aug 18 2018 Jason L Tibbitts III <tibbs@math.uh.edu> - 30-0.3
+- Escape use of the distprefix macro, so it makes it into the macro
+  file instead of being expanded in the spec.
+
 * Wed Aug 15 2018 David Herrmann <dh.herrmann@gmail.com> - 30-0.2
 - Enable dbus user units explicitly
 
