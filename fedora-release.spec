@@ -207,30 +207,23 @@ install -d $RPM_BUILD_ROOT%{_datadir}/licenses/%{name}/
 install -pm 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/licenses/%{name}/LICENSE
 install -pm 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/licenses/%{name}/Fedora-Legal-README.txt
 
-# Add presets
-mkdir -p $RPM_BUILD_ROOT/usr/lib/systemd/user-preset/
-mkdir -p $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
-mkdir -p $RPM_BUILD_ROOT/usr/lib/os.release.d/presets
-
 # Default system wide
-install -m 0644 %{SOURCE10} $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
-install -m 0644 %{SOURCE11} $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
-install -m 0644 %{SOURCE12} $RPM_BUILD_ROOT/usr/lib/systemd/user-preset/
-install -m 0644 %{SOURCE13} $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %{SOURCE10} -t $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %{SOURCE11} -t $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %{SOURCE12} -t $RPM_BUILD_ROOT/usr/lib/systemd/user-preset/
+install -Dm0644 %{SOURCE13} -t $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+
 # Fedora Server
-install -m 0644 %{SOURCE14} $RPM_BUILD_ROOT%{_prefix}/lib/os.release.d/presets/
+install -Dm0644 %{SOURCE14} -t $RPM_BUILD_ROOT%{_prefix}/lib/os.release.d/presets/
 # Fedora Workstation
-install -m 0644 %{SOURCE15} $RPM_BUILD_ROOT%{_prefix}/lib/os.release.d/presets/
+install -Dm0644 %{SOURCE15} -t $RPM_BUILD_ROOT%{_prefix}/lib/os.release.d/presets/
 
 # Override the list of enabled gnome-shell extensions for Workstation
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
-install -m 0644 %{SOURCE16} $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/polkit-1/rules.d/
-install -m 0644 %{SOURCE17} $RPM_BUILD_ROOT%{_datadir}/polkit-1/rules.d/
+install -Dm0644 %{SOURCE16} -t $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
+install -Dm0644 %{SOURCE17} -t $RPM_BUILD_ROOT%{_datadir}/polkit-1/rules.d/
 
 # Copy the make_edition script to /usr/sbin
-mkdir -p $RPM_BUILD_ROOT/%{_prefix}/sbin/
-install -m 0755 %{SOURCE3} $RPM_BUILD_ROOT/%{_prefix}/sbin/
+install -Dm0755 %{SOURCE3} -t $RPM_BUILD_ROOT/%{_prefix}/sbin/
 
 %post -p <lua>
 %include %{SOURCE4}
