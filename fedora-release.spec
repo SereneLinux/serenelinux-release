@@ -11,7 +11,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        0.11
+Release:        0.12
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -347,6 +347,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Wed Aug 15 2018 David Herrmann <dh.herrmann@gmail.com> - 30-0.2
+- Enable dbus user units explicitly
+
 * Tue Aug 14 2018 Mohan Boddu <mboddu@bhujji.com> 29-0.11
 - Branching F29 from rawhide
 
