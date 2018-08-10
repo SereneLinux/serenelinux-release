@@ -108,17 +108,17 @@ sed -i 's|@@VERSION@@|%{dist_version}|g' %{SOURCE2}
 %build
 
 %install
-install -d $RPM_BUILD_ROOT/etc
-echo "Fedora release %{version} (%{release_name})" > $RPM_BUILD_ROOT/etc/fedora-release
-echo "cpe:/o:fedoraproject:fedora:%{version}" > $RPM_BUILD_ROOT/etc/system-release-cpe
+install -d %{buildroot}/etc
+echo "Fedora release %{version} (%{release_name})" > %{buildroot}/etc/fedora-release
+echo "cpe:/o:fedoraproject:fedora:%{version}" > %{buildroot}/etc/system-release-cpe
 
 # Symlink the -release files
-ln -s fedora-release $RPM_BUILD_ROOT/etc/redhat-release
-ln -s fedora-release $RPM_BUILD_ROOT/etc/system-release
+ln -s fedora-release %{buildroot}/etc/redhat-release
+ln -s fedora-release %{buildroot}/etc/system-release
 
 # Create the common os-release file
-install -d $RPM_BUILD_ROOT/usr/lib/os.release.d/
-cat << EOF >>$RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora
+install -d %{buildroot}/usr/lib/os.release.d/
+cat << EOF >>%{buildroot}/usr/lib/os.release.d/os-release-fedora
 NAME=Fedora
 VERSION="%{dist_version} (%{release_name})"
 ID=fedora
@@ -138,63 +138,63 @@ PRIVACY_POLICY_URL="https://fedoraproject.org/wiki/Legal:PrivacyPolicy"
 EOF
 
 # Create the common /etc/issue
-echo "\S" > $RPM_BUILD_ROOT/usr/lib/os.release.d/issue-fedora
-echo "Kernel \r on an \m (\l)" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/issue-fedora
-echo >> $RPM_BUILD_ROOT/usr/lib/os.release.d/issue-fedora
+echo "\S" > %{buildroot}/usr/lib/os.release.d/issue-fedora
+echo "Kernel \r on an \m (\l)" >> %{buildroot}/usr/lib/os.release.d/issue-fedora
+echo >> %{buildroot}/usr/lib/os.release.d/issue-fedora
 
 # Create /etc/issue.net
-echo "\S" > $RPM_BUILD_ROOT/usr/lib/issue.net
-echo "Kernel \r on an \m (\l)" >> $RPM_BUILD_ROOT/usr/lib/issue.net
-ln -s ../usr/lib/issue.net $RPM_BUILD_ROOT/etc/issue.net
+echo "\S" > %{buildroot}/usr/lib/issue.net
+echo "Kernel \r on an \m (\l)" >> %{buildroot}/usr/lib/issue.net
+ln -s ../usr/lib/issue.net %{buildroot}/etc/issue.net
 
 # Create os-release and issue files for the different editions
 
 # Atomic Host - https://bugzilla.redhat.com/show_bug.cgi?id=1200122
-cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
-      $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-atomichost
-echo "VARIANT=\"Atomic Host\"" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-atomichost
-echo "VARIANT_ID=atomic.host" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-atomichost
-sed -i -e "s|(%{release_name})|(Atomic Host)|g" $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-atomichost
+cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
+      %{buildroot}/usr/lib/os.release.d/os-release-atomichost
+echo "VARIANT=\"Atomic Host\"" >> %{buildroot}/usr/lib/os.release.d/os-release-atomichost
+echo "VARIANT_ID=atomic.host" >> %{buildroot}/usr/lib/os.release.d/os-release-atomichost
+sed -i -e "s|(%{release_name})|(Atomic Host)|g" %{buildroot}/usr/lib/os.release.d/os-release-atomichost
 
 # Cloud
-cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
-      $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
-echo "VARIANT=\"Cloud Edition\"" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
-echo "VARIANT_ID=cloud" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
-sed -i -e "s|(%{release_name})|(Cloud Edition)|g" $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-cloud
+cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
+      %{buildroot}/usr/lib/os.release.d/os-release-cloud
+echo "VARIANT=\"Cloud Edition\"" >> %{buildroot}/usr/lib/os.release.d/os-release-cloud
+echo "VARIANT_ID=cloud" >> %{buildroot}/usr/lib/os.release.d/os-release-cloud
+sed -i -e "s|(%{release_name})|(Cloud Edition)|g" %{buildroot}/usr/lib/os.release.d/os-release-cloud
 
 # Server
-cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
-      $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
-echo "VARIANT=\"Server Edition\"" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
-echo "VARIANT_ID=server" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
-sed -i -e "s|(%{release_name})|(Server Edition)|g" $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-server
+cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
+      %{buildroot}/usr/lib/os.release.d/os-release-server
+echo "VARIANT=\"Server Edition\"" >> %{buildroot}/usr/lib/os.release.d/os-release-server
+echo "VARIANT_ID=server" >> %{buildroot}/usr/lib/os.release.d/os-release-server
+sed -i -e "s|(%{release_name})|(Server Edition)|g" %{buildroot}/usr/lib/os.release.d/os-release-server
 
-cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/issue-fedora \
-      $RPM_BUILD_ROOT/usr/lib/os.release.d/issue-server
-echo "Admin Console: https://\4:9090/ or https://[\6]:9090/" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/issue-server
-echo >> $RPM_BUILD_ROOT/usr/lib/os.release.d/issue-server
+cp -p %{buildroot}/usr/lib/os.release.d/issue-fedora \
+      %{buildroot}/usr/lib/os.release.d/issue-server
+echo "Admin Console: https://\4:9090/ or https://[\6]:9090/" >> %{buildroot}/usr/lib/os.release.d/issue-server
+echo >> %{buildroot}/usr/lib/os.release.d/issue-server
 
 # Workstation
-cp -p $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-fedora \
-      $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
-echo "VARIANT=\"Workstation Edition\"" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
-echo "VARIANT_ID=workstation" >> $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
-sed -i -e "s|(%{release_name})|(Workstation Edition)|g" $RPM_BUILD_ROOT/usr/lib/os.release.d/os-release-workstation
+cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
+      %{buildroot}/usr/lib/os.release.d/os-release-workstation
+echo "VARIANT=\"Workstation Edition\"" >> %{buildroot}/usr/lib/os.release.d/os-release-workstation
+echo "VARIANT_ID=workstation" >> %{buildroot}/usr/lib/os.release.d/os-release-workstation
+sed -i -e "s|(%{release_name})|(Workstation Edition)|g" %{buildroot}/usr/lib/os.release.d/os-release-workstation
 
 # Create the symlink for /etc/os-release
 # We don't create the /usr/lib/os-release symlink until %%post
 # so that we can ensure that the right one is referenced.
-ln -s ../usr/lib/os-release $RPM_BUILD_ROOT/etc/os-release
+ln -s ../usr/lib/os-release %{buildroot}/etc/os-release
 
 # Create the symlink for /etc/issue
 # We don't create the /usr/lib/os-release symlink until %%post
 # so that we can ensure that the right one is referenced.
-ln -s ../usr/lib/issue $RPM_BUILD_ROOT/etc/issue
+ln -s ../usr/lib/issue %{buildroot}/etc/issue
 
 # Set up the dist tag macros
-install -d -m 755 $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d
-cat >> $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.dist << EOF
+install -d -m 755 %{buildroot}%{_rpmconfigdir}/macros.d
+cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 # dist macros.
 
 %%fedora                %{dist_version}
@@ -203,27 +203,27 @@ cat >> $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.dist << EOF
 EOF
 
 # Install licenses
-install -d $RPM_BUILD_ROOT%{_datadir}/licenses/%{name}/
-install -pm 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/licenses/%{name}/LICENSE
-install -pm 0644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/licenses/%{name}/Fedora-Legal-README.txt
+install -d %{buildroot}%{_datadir}/licenses/%{name}/
+install -pm 0644 %{SOURCE1} %{buildroot}%{_datadir}/licenses/%{name}/LICENSE
+install -pm 0644 %{SOURCE2} %{buildroot}%{_datadir}/licenses/%{name}/Fedora-Legal-README.txt
 
 # Default system wide
-install -Dm0644 %{SOURCE10} -t $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
-install -Dm0644 %{SOURCE11} -t $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
-install -Dm0644 %{SOURCE12} -t $RPM_BUILD_ROOT/usr/lib/systemd/user-preset/
-install -Dm0644 %{SOURCE13} -t $RPM_BUILD_ROOT%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %{SOURCE10} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %{SOURCE11} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %{SOURCE12} -t %{buildroot}/usr/lib/systemd/user-preset/
+install -Dm0644 %{SOURCE13} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 
 # Fedora Server
-install -Dm0644 %{SOURCE14} -t $RPM_BUILD_ROOT%{_prefix}/lib/os.release.d/presets/
+install -Dm0644 %{SOURCE14} -t %{buildroot}%{_prefix}/lib/os.release.d/presets/
 # Fedora Workstation
-install -Dm0644 %{SOURCE15} -t $RPM_BUILD_ROOT%{_prefix}/lib/os.release.d/presets/
+install -Dm0644 %{SOURCE15} -t %{buildroot}%{_prefix}/lib/os.release.d/presets/
 
 # Override the list of enabled gnome-shell extensions for Workstation
-install -Dm0644 %{SOURCE16} -t $RPM_BUILD_ROOT%{_datadir}/glib-2.0/schemas/
-install -Dm0644 %{SOURCE17} -t $RPM_BUILD_ROOT%{_datadir}/polkit-1/rules.d/
+install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
+install -Dm0644 %{SOURCE17} -t %{buildroot}%{_datadir}/polkit-1/rules.d/
 
 # Copy the make_edition script to /usr/sbin
-install -Dm0755 %{SOURCE3} -t $RPM_BUILD_ROOT/%{_prefix}/sbin/
+install -Dm0755 %{SOURCE3} -t %{buildroot}/%{_prefix}/sbin/
 
 %post -p <lua>
 %include %{SOURCE4}
