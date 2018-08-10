@@ -1,3 +1,10 @@
+# Enable the D-Bus service (including its socket for socket activation)
+# unconditionally. It is used throughout Fedora and required on all machines.
+# https://src.fedoraproject.org/rpms/fedora-release/pull-request/4
+# https://fedoraproject.org/w/index.php?title=Starting_services_by_default&oldid=377748
+enable dbus.socket
+enable dbus-daemon.service
+
 # This enables the pipewire service to be socket-activated for
 # individual user sessions.
 # https://bugzilla.redhat.com/show_bug.cgi?id=1592434

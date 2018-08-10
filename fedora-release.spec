@@ -11,7 +11,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.1
+Release:        0.2
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -347,5 +347,8 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Wed Aug 15 2018 David Herrmann <dh.herrmann@gmail.com> - 30-0.2
+- Enable dbus user units explicitly
+
 * Tue Aug 14 2018 Mohan Boddu <mboddu@bhujji.com> - 30-0.1
 - Setup for rawhide being f30
