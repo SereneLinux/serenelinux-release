@@ -1,6 +1,6 @@
-%define release_name Rawhide
+%define release_name Twenty Nine
 %define dist_version 29
-%define bug_version rawhide
+%define bug_version 29
 
 # Changes should be submitted as pull requests under
 #     https://src.fedoraproject.org/rpms/fedora-release
@@ -11,7 +11,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        0.10
+Release:        0.11
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -347,6 +347,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Tue Aug 14 2018 Mohan Boddu <mboddu@bhujji.com> 29-0.11
+- Branching F29 from rawhide
+
 * Thu Aug  9 2018 Peter Robinson <pbrobinson@fedoraproject.org> 29-0.10
 - Enable dbus units explicitly
 
