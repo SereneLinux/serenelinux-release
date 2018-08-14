@@ -1,5 +1,5 @@
 %define release_name Rawhide
-%define dist_version 29
+%define dist_version 30
 %define bug_version rawhide
 
 # Changes should be submitted as pull requests under
@@ -10,8 +10,8 @@
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        29
-Release:        0.10
+Version:        30
+Release:        0.1
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -347,37 +347,5 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
-* Thu Aug  9 2018 Peter Robinson <pbrobinson@fedoraproject.org> 29-0.10
-- Enable dbus units explicitly
-
-* Mon Aug  6 2018 Peter Robinson <pbrobinson@fedoraproject.org> 29-0.9
-- Increment and build for source merge change
-
-* Tue Jul 31 2018 Stephen Gallagher <sgallagh@redhat.com> - 29-0.8
-- Drop Recommends: fedora-repos-modular from Server Edition since it has been
-  merged into fedora-repos.
-
-* Tue Jul 10 2018 Adam Williamson <awilliam@redhat.com> - 29-0.7
-- Drop rolekit from Server presets too
-
-* Mon Jul 09 2018 Adam Williamson <awilliam@redhat.com> - 29-0.6
-- Server: don't require rolekit (not installable, soon to be retired)
-
-* Fri Jun 22 2018 Mohan Boddu <mboddu@bhujji.com> - 29-0.5
-- Add selinux-autorelabel-mark.service to default presets
-- Enable the pipewire service for user sessions
-- fedora-* renamed to OS independent names
-- Fix pattern-match in convert-to-edition.lua
-
-* Fri May 25 2018 Stephen Gallagher <sgallagh@redhat.com> - 29-0.4
-- Add fedora-repos-modular to Fedora Server installs
-
-* Thu Apr 19 2018 Hans de Goede <hdegoede@redhat.com> - 29-0.3
-- Enable the virtualbox-guest-additions service (vboxservice.service)
-- Add PLATFORM_ID to /etc/os-release
-
-* Thu Feb 22 2018 Matthias Clasen <mclasen@redhat.com> - 29-0.2
-- Add polkit rules to let gnome-software update Atomic Workstation
-
-* Mon Feb 19 2018 Mohan Boddu <mboddu@redhat.com> - 29-0.1
-- Setup for rawhide being f29
+* Tue Aug 14 2018 Mohan Boddu <mboddu@bhujji.com> - 30-0.1
+- Setup for rawhide being f30
