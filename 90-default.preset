@@ -233,7 +233,10 @@ enable pmie.service
 # Enable SSSD Kerberos Credential Cache Server
 # https://bugzilla.redhat.com/show_bug.cgi?id=1475999
 enable sssd-kcm.socket
-enable sssd-secrets.socket
+
+# sssd-secrets.socket was previously enabled, but as of
+# SSSD 2.0 it is not longer needed
+# https://bugzilla.redhat.com/show_bug.cgi?id=1615584
 
 # A mechanism to transfer state between the initramfs and the real
 # system. Obsolete since /run was introduced, but still used by some
