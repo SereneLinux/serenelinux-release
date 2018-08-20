@@ -347,7 +347,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
-* Fri Aug 18 2018 Jason L Tibbitts III <tibbs@math.uh.edu> - 30-0.3
+* Sat Aug 18 2018 Jason L Tibbitts III <tibbs@math.uh.edu> - 30-0.3
 - Escape use of the distprefix macro, so it makes it into the macro
   file instead of being expanded in the spec.
 
