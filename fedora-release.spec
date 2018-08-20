@@ -11,7 +11,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.3
+Release:        0.4
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -202,7 +202,7 @@ cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 # dist macros.
 
 %%fedora                %{dist_version}
-%%dist                %%{?distprefix}.fc%{dist_version}
+%%dist                %%{?distprefix}.fc%{dist_version}%%{?with_bootstrap:~bootstrap}
 %%fc%{dist_version}                1
 EOF
 
@@ -347,6 +347,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Mon Aug 20 2018 Jun Aruga <jaruga@redhat.com> - 30-0.4
+- Update dist macro to consider bootstrapping.
+
 * Sat Aug 18 2018 Jason L Tibbitts III <tibbs@math.uh.edu> - 30-0.3
 - Escape use of the distprefix macro, so it makes it into the macro
   file instead of being expanded in the spec.
