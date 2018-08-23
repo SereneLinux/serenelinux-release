@@ -110,6 +110,7 @@ end
 local variants = {
   atomichost = {release = "atomichost", issue = "fedora", presets = false},
   cloud = {release = "cloud", issue = "fedora", presets = false},
+  iot = {release = "iot", issue = "fedora", presets = true},
   nonproduct = {release = "fedora", issue = "fedora", presets = false},
   server = {release = "server", issue = "server", presets = true},
   workstation = {release = "workstation", issue = "fedora", presets = true},
