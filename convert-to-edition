@@ -65,9 +65,6 @@ case $EDITION in
     # Ensure that the os-release file is pointing to the correct version
     ln -sf ./os.release.d/os-release-atomichost /usr/lib/os-release || :
 
-    # Ensure that the issue file is pointing to the correct version
-    ln -sf ./os.release.d/issue-fedora /usr/lib/issue
-
     # Remove any presets from other Editions.
     rm -f /usr/lib/systemd/system-preset/80-*.preset
     ;;
@@ -83,9 +80,6 @@ case $EDITION in
     # Ensure that the os-release file is pointing to the correct version
     ln -sf ./os.release.d/os-release-cloud /usr/lib/os-release || :
 
-    # Ensure that the issue file is pointing to the correct version
-    ln -sf ./os.release.d/issue-fedora /usr/lib/issue
-
     # Remove any presets from other Editions.
     rm -f /usr/lib/systemd/system-preset/80-*.preset
     ;;
@@ -95,9 +89,6 @@ case $EDITION in
 
     # Ensure that the os-release file is pointing to the correct version
     ln -sf ./os.release.d/os-release-fedora /usr/lib/os-release || :
-
-    # Ensure that the issue file is pointing to the correct version
-    ln -sf ./os.release.d/issue-fedora /usr/lib/issue
 
     # Remove any presets from other Editions.
     rm -f /usr/lib/systemd/system-preset/80-*.preset
@@ -111,10 +102,8 @@ case $EDITION in
 
     echo "VARIANT_ID=server" > $VARIANT_FILE
 
-    # Ensure that the os-release and issue files are pointing to the correct
-    # version
+    # Ensure that the os-release file is pointing to the correct version
     ln -sf ./os.release.d/os-release-server /usr/lib/os-release
-    ln -sf ./os.release.d/issue-server /usr/lib/issue
 
     # Remove any presets from other Editions. This should always be a no-op,
     # but it's good to be explicit.
@@ -145,10 +134,8 @@ case $EDITION in
     fi
 
     echo "VARIANT_ID=workstation" > $VARIANT_FILE
-    # Ensure that the os-release and issue files are pointing to the correct
-    # version
+    # Ensure that the os-release files is pointing to the correct version
     ln -sf ./os.release.d/os-release-workstation /usr/lib/os-release
-    ln -sf ./os.release.d/issue-fedora /usr/lib/issue
 
     # Remove any presets from other Editions. This should always be a no-op,
     # but it's good to be explicit.

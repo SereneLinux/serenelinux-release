@@ -100,28 +100,24 @@ local function set_release(release)
   symlink("./os.release.d/os-release-" .. release, "/usr/lib/os-release")
 end
 
-local function set_issue(release)
-  symlink("./os.release.d/issue-" .. release, "/usr/lib/issue")
-end
 -- release: the VARIANT_ID for os-release
--- issue: which /etc/issue file to install
 -- presets: whether this edition has extra presets beyond the
 --          defaults to enable or disable
 local variants = {
-  atomichost = {release = "atomichost", issue = "fedora", presets = false},
-  cloud = {release = "cloud", issue = "fedora", presets = false},
-  cinnamon = {release = "cinnamon", issue = "fedora", presets = false},
-  container = {release = "container", issue = "fedora", presets = false},
-  coreos = {release = "coreos", issue = "fedora", presets = false},
-  iot = {release = "iot", issue = "fedora", presets = true},
-  kde = {release = "kde", issue = "fedora", presets = false},
-  matecompiz = {release = "matecompiz", issue = "fedora", presets = false},
-  nonproduct = {release = "fedora", issue = "fedora", presets = false},
-  server = {release = "server", issue = "server", presets = true},
-  silverblue = {release = "silverblue", issue = "fedora", presets = false},
-  soas = {release = "soas", issue = "fedora", presets = false},
-  workstation = {release = "workstation", issue = "fedora", presets = true},
-  xfce = {release = "xfce", issue = "fedora", presets = false},
+  atomichost = {release = "atomichost", presets = false},
+  cloud = {release = "cloud", presets = false},
+  cinnamon = {release = "cinnamon", presets = false},
+  container = {release = "container", presets = false},
+  coreos = {release = "coreos", presets = false},
+  iot = {release = "iot", presets = true},
+  kde = {release = "kde", presets = false},
+  matecompiz = {release = "matecompiz", presets = false},
+  nonproduct = {release = "fedora", presets = false},
+  server = {release = "server", presets = true},
+  silverblue = {release = "silverblue", presets = false},
+  soas = {release = "soas", presets = false},
+  workstation = {release = "workstation", presets = true},
+  xfce = {release = "xfce", presets = false},
 }
 
 -- Call out to systemctl to enable or disable presets
@@ -156,7 +152,6 @@ local function convert_to_edition(edition, apply_presets)
     error("undefined edition: " .. edition)
   end
   set_release(variant.release)
-  set_issue(variant.issue)
   clear_presets()
 
   set_presets(edition, apply_presets)
