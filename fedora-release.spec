@@ -11,7 +11,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        0.12
+Release:        0.13
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -28,6 +28,7 @@ Source14:       80-server.preset
 Source15:       80-workstation.preset
 Source16:       org.gnome.shell.gschema.override
 Source17:       org.projectatomic.rpmostree1.rules
+Source18:       80-iot.preset
 
 Obsoletes:      redhat-release
 Provides:       redhat-release
@@ -63,6 +64,17 @@ Requires:       fedora-release = %{version}-%{release}
 %description cloud
 Provides a base package for Fedora Cloud-specific configuration files to
 depend on.
+
+%package iot
+Summary:        Base package for Fedora IoT specific default configurations
+Provides:       system-release-iot
+Provides:       system-release-iot(%{version})
+Provides:       system-release-product
+Requires:       fedora-release = %{version}-%{release}
+
+%description iot
+Provides a base package for Fedora IoT specific configuration files to
+depend on as well as IoT system defaults.
 
 %package server
 Summary:        Base package for Fedora Server-specific default configurations
@@ -167,6 +179,13 @@ echo "VARIANT=\"Cloud Edition\"" >> %{buildroot}/usr/lib/os.release.d/os-release
 echo "VARIANT_ID=cloud" >> %{buildroot}/usr/lib/os.release.d/os-release-cloud
 sed -i -e "s|(%{release_name})|(Cloud Edition)|g" %{buildroot}/usr/lib/os.release.d/os-release-cloud
 
+# IoT
+cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
+      %{buildroot}/usr/lib/os.release.d/os-release-iot
+echo "VARIANT=\"IoT Edition\"" >> %{buildroot}/usr/lib/os.release.d/os-release-iot
+echo "VARIANT_ID=iot" >> %{buildroot}/usr/lib/os.release.d/os-release-iot
+sed -i -e "s|(%{release_name})|(IoT Edition)|g" %{buildroot}/usr/lib/os.release.d/os-release-iot
+
 # Server
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
       %{buildroot}/usr/lib/os.release.d/os-release-server
@@ -216,6 +235,9 @@ install -Dm0644 %{SOURCE10} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %{SOURCE11} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %{SOURCE12} -t %{buildroot}/usr/lib/systemd/user-preset/
 install -Dm0644 %{SOURCE13} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+
+# Fedora IoT
+install -Dm0644 %{SOURCE18} -t %{buildroot}%{_prefix}/lib/os.release.d/presets/
 
 # Fedora Server
 install -Dm0644 %{SOURCE14} -t %{buildroot}%{_prefix}/lib/os.release.d/presets/
@@ -271,6 +293,14 @@ install_edition("cloud")
 %include %{SOURCE4}
 uninstall_edition("cloud")
 
+%post iot -p <lua>
+%include %{SOURCE4}
+install_edition("iot")
+
+%preun iot -p <lua>
+%include %{SOURCE4}
+uninstall_edition("iot")
+
 %post server -p <lua>
 %include %{SOURCE4}
 install_edition("server")
@@ -325,10 +355,13 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %files atomichost
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-atomichost
 
-
 %files cloud
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-cloud
 
+%files iot
+%attr(0644,root,root) /usr/lib/os.release.d/os-release-iot
+%ghost %{_prefix}/lib/systemd/system-preset/80-iot.preset
+%attr(0644,root,root) /usr/lib/os.release.d/presets/80-iot.preset
 
 %files server
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-server
@@ -347,6 +380,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Thu Aug 23 2018 Peter Robinson <pbrobinson@fedoraproject.org> 29-0.13
+- Add Fedora IoT edition components
+
 * Sat Aug 18 2018 Jason L Tibbitts III <tibbs@math.uh.edu> - 29-0.12
 - Escape use of the distprefix macro, so it makes it into the macro
   file instead of being expanded in the spec.
