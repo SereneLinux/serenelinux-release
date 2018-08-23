@@ -238,16 +238,17 @@ PRIVACY_POLICY_URL="https://fedoraproject.org/wiki/Legal:PrivacyPolicy"
 EOF
 
 # Create the common /etc/issue
-echo "\S" > %{buildroot}/usr/lib/os.release.d/issue-fedora
-echo "Kernel \r on an \m (\l)" >> %{buildroot}/usr/lib/os.release.d/issue-fedora
-echo >> %{buildroot}/usr/lib/os.release.d/issue-fedora
+echo "\S" > %{buildroot}/usr/lib/issue
+echo "Kernel \r on an \m (\l)" >> %{buildroot}/usr/lib/issue
+echo >> %{buildroot}/usr/lib/issue
+ln -s ../usr/lib/issue %{buildroot}/etc/issue
 
 # Create /etc/issue.net
 echo "\S" > %{buildroot}/usr/lib/issue.net
 echo "Kernel \r on an \m (\l)" >> %{buildroot}/usr/lib/issue.net
 ln -s ../usr/lib/issue.net %{buildroot}/etc/issue.net
 
-# Create os-release and issue files for the different editions
+# Create os-release files for the different editions
 
 # Atomic Host - https://bugzilla.redhat.com/show_bug.cgi?id=1200122
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -312,11 +313,6 @@ echo "VARIANT=\"Server Edition\"" >> %{buildroot}/usr/lib/os.release.d/os-releas
 echo "VARIANT_ID=server" >> %{buildroot}/usr/lib/os.release.d/os-release-server
 sed -i -e "s|(%{release_name})|(Server Edition)|g" %{buildroot}/usr/lib/os.release.d/os-release-server
 
-cp -p %{buildroot}/usr/lib/os.release.d/issue-fedora \
-      %{buildroot}/usr/lib/os.release.d/issue-server
-echo "Admin Console: https://\4:9090/ or https://[\6]:9090/" >> %{buildroot}/usr/lib/os.release.d/issue-server
-echo >> %{buildroot}/usr/lib/os.release.d/issue-server
-
 # Silverblue
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
       %{buildroot}/usr/lib/os.release.d/os-release-silverblue
@@ -349,11 +345,6 @@ sed -i -e "s|(%{release_name})|(Xfce)|g" %{buildroot}/usr/lib/os.release.d/os-re
 # We don't create the /usr/lib/os-release symlink until %%post
 # so that we can ensure that the right one is referenced.
 ln -s ../usr/lib/os-release %{buildroot}/etc/os-release
-
-# Create the symlink for /etc/issue
-# We don't create the /usr/lib/os-release symlink until %%post
-# so that we can ensure that the right one is referenced.
-ln -s ../usr/lib/issue %{buildroot}/etc/issue
 
 # Set up the dist tag macros
 install -d -m 755 %{buildroot}%{_rpmconfigdir}/macros.d
@@ -402,7 +393,6 @@ install -Dm0755 %{SOURCE3} -t %{buildroot}/%{_prefix}/sbin/
 -- to os-release-fedora.
 if arg[2] == "0" then
     set_release(fedora)
-    set_issue(fedora)
 end
 
 -- We also want to forcibly set these paths on upgrade if we are explicitly
@@ -542,8 +532,7 @@ uninstall_edition("xfce")
 /etc/redhat-release
 /etc/system-release
 %config %attr(0644,root,root) /etc/system-release-cpe
-%attr(0644,root,root) /usr/lib/os.release.d/issue-fedora
-%ghost /usr/lib/issue
+%attr(0644,root,root) /usr/lib/issue
 %config(noreplace) /etc/issue
 %attr(0644,root,root) /usr/lib/issue.net
 %config(noreplace) /etc/issue.net
@@ -584,7 +573,6 @@ uninstall_edition("xfce")
 
 %files server
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-server
-%attr(0644,root,root) /usr/lib/os.release.d/issue-server
 %ghost %{_prefix}/lib/systemd/system-preset/80-server.preset
 %attr(0644,root,root) /usr/lib/os.release.d/presets/80-server.preset
 
