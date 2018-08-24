@@ -11,7 +11,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.5
+Release:        0.6
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -54,6 +54,17 @@ Requires:       fedora-release = %{version}-%{release}
 Provides a base package for Fedora Atomic Host-specific configuration files to
 depend on.
 
+%package cinnamon
+Summary:        Base package for Fedora Cinnamon-specific default configurations
+Provides:       system-release-cinnamon
+Provides:       system-release-cinnamon(%{version})
+Requires:       fedora-release = %{version}-%{release}
+
+%description cinnamon
+Provides a base package for Fedora Cinnamon-specific configuration files to
+depend on as well as Cinnamon system defaults.
+
+
 %package cloud
 Summary:        Base package for Fedora Cloud-specific default configurations
 Provides:       system-release-cloud
@@ -65,6 +76,27 @@ Requires:       fedora-release = %{version}-%{release}
 Provides a base package for Fedora Cloud-specific configuration files to
 depend on.
 
+%package container
+Summary:        Base package for Fedora container specific default configurations
+Provides:       system-release-container
+Provides:       system-release-container(%{version})
+Requires:       fedora-release = %{version}-%{release}
+
+%description container
+Provides a base package for Fedora container specific configuration files to
+depend on as well as container system defaults.
+
+%package coreos
+Summary:        Base package for Fedora CoreOS-specific default configurations
+Provides:       system-release-coreos
+Provides:       system-release-coreos(%{version})
+Provides:       system-release-product
+Requires:       fedora-release = %{version}-%{release}
+
+%description coreos
+Provides a base package for Fedora CoreOS Host-specific configuration files to
+depend.
+
 %package iot
 Summary:        Base package for Fedora IoT specific default configurations
 Provides:       system-release-iot
@@ -75,6 +107,26 @@ Requires:       fedora-release = %{version}-%{release}
 %description iot
 Provides a base package for Fedora IoT specific configuration files to
 depend on as well as IoT system defaults.
+
+%package kde
+Summary:        Base package for Fedora KDE Plasma-specific default configurations
+Provides:       system-release-kde
+Provides:       system-release-kde(%{version})
+Requires:       fedora-release = %{version}-%{release}
+
+%description kde
+Provides a base package for Fedora KDE Plasma-specific configuration files to
+depend on as well as KDE Plasma system defaults.
+
+%package matecompiz
+Summary:        Base package for Fedora MATE-Compiz-specific default configurations
+Provides:       system-release-matecompiz
+Provides:       system-release-matecompiz(%{version})
+Requires:       fedora-release = %{version}-%{release}
+
+%description matecompiz
+Provides a base package for Fedora MATE-compiz-specific configuration files to
+depend on as well as MATE-Compiz system defaults.
 
 %package server
 Summary:        Base package for Fedora Server-specific default configurations
@@ -96,6 +148,27 @@ Requires(post):	systemd
 Provides a base package for Fedora Server-specific configuration files to
 depend on.
 
+%package silverblue
+Summary:        Base package for Fedora Silverblue-specific default configurations
+Provides:       system-release-silverblue
+Provides:       system-release-silverblue(%{version})
+Requires:       fedora-release = %{version}-%{release}
+
+%description silverblue
+Provides a base package for Fedora Silverblue-specific configuration files to
+depend on as well as Silverblue system defaults.
+
+
+%package soas
+Summary:        Base package for Fedora Sugar on a Stick-specific default configurations
+Provides:       system-release-soas
+Provides:       system-release-soas(%{version})
+Requires:       fedora-release = %{version}-%{release}
+
+%description soas
+Provides a base package for Fedora Sugar on a Stick-specific configuration files to
+depend on as well as SoaS system defaults.
+
 %package workstation
 Summary:        Base package for Fedora Workstation-specific default configurations
 Provides:       system-release-workstation
@@ -110,6 +183,17 @@ Requires(postun): /usr/bin/glib-compile-schemas
 %description workstation
 Provides a base package for Fedora Workstation-specific configuration files to
 depend on.
+
+%package xfce
+Summary:        Base package for Fedora Xfce specific default configurations
+Provides:       system-release-xfce
+Provides:       system-release-xfce(%{version})
+Requires:       fedora-release = %{version}-%{release}
+
+%description xfce
+Provides a base package for Fedora Xfce specific configuration files to
+depend on as well as Xfce system defaults.
+
 
 %package -n convert-to-edition
 Summary: Script for converting between Fedora Editions
@@ -172,6 +256,13 @@ echo "VARIANT=\"Atomic Host\"" >> %{buildroot}/usr/lib/os.release.d/os-release-a
 echo "VARIANT_ID=atomic.host" >> %{buildroot}/usr/lib/os.release.d/os-release-atomichost
 sed -i -e "s|(%{release_name})|(Atomic Host)|g" %{buildroot}/usr/lib/os.release.d/os-release-atomichost
 
+# Cinnamon
+cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
+      %{buildroot}/usr/lib/os.release.d/os-release-cinnamon
+echo "VARIANT=\"Cinnamon\"" >> %{buildroot}/usr/lib/os.release.d/os-release-cinnamon
+echo "VARIANT_ID=cinnamon" >> %{buildroot}/usr/lib/os.release.d/os-release-cinnamon
+sed -i -e "s|(%{release_name})|(Cinnamon)|g" %{buildroot}/usr/lib/os.release.d/os-release-cinnamon
+
 # Cloud
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
       %{buildroot}/usr/lib/os.release.d/os-release-cloud
@@ -179,12 +270,40 @@ echo "VARIANT=\"Cloud Edition\"" >> %{buildroot}/usr/lib/os.release.d/os-release
 echo "VARIANT_ID=cloud" >> %{buildroot}/usr/lib/os.release.d/os-release-cloud
 sed -i -e "s|(%{release_name})|(Cloud Edition)|g" %{buildroot}/usr/lib/os.release.d/os-release-cloud
 
+# Container
+cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
+      %{buildroot}/usr/lib/os.release.d/os-release-container
+echo "VARIANT=\"Container Image\"" >> %{buildroot}/usr/lib/os.release.d/os-release-container
+echo "VARIANT_ID=container" >> %{buildroot}/usr/lib/os.release.d/os-release-container
+sed -i -e "s|(%{release_name})|(Container Image)|g" %{buildroot}/usr/lib/os.release.d/os-release-container
+
+# CoreOS
+cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
+      %{buildroot}/usr/lib/os.release.d/os-release-coreos
+echo "VARIANT=\"CoreOS\"" >> %{buildroot}/usr/lib/os.release.d/os-release-coreos
+echo "VARIANT_ID=coreos" >> %{buildroot}/usr/lib/os.release.d/os-release-coreos
+sed -i -e "s|(%{release_name})|(CoreOS)|g" %{buildroot}/usr/lib/os.release.d/os-release-coreos
+
 # IoT
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
       %{buildroot}/usr/lib/os.release.d/os-release-iot
 echo "VARIANT=\"IoT Edition\"" >> %{buildroot}/usr/lib/os.release.d/os-release-iot
 echo "VARIANT_ID=iot" >> %{buildroot}/usr/lib/os.release.d/os-release-iot
 sed -i -e "s|(%{release_name})|(IoT Edition)|g" %{buildroot}/usr/lib/os.release.d/os-release-iot
+
+# KDE Plasma
+cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
+      %{buildroot}/usr/lib/os.release.d/os-release-kde
+echo "VARIANT=\"KDE Plasma\"" >> %{buildroot}/usr/lib/os.release.d/os-release-kde
+echo "VARIANT_ID=kde" >> %{buildroot}/usr/lib/os.release.d/os-release-kde
+sed -i -e "s|(%{release_name})|(KDE Plasma)|g" %{buildroot}/usr/lib/os.release.d/os-release-kde
+
+# MATE-Compiz
+cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
+      %{buildroot}/usr/lib/os.release.d/os-release-matecompiz
+echo "VARIANT=\"MATE-Compiz\"" >> %{buildroot}/usr/lib/os.release.d/os-release-matecompiz
+echo "VARIANT_ID=matecompiz" >> %{buildroot}/usr/lib/os.release.d/os-release-matecompiz
+sed -i -e "s|(%{release_name})|(MATE-Compiz)|g" %{buildroot}/usr/lib/os.release.d/os-release-matecompiz
 
 # Server
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -198,12 +317,33 @@ cp -p %{buildroot}/usr/lib/os.release.d/issue-fedora \
 echo "Admin Console: https://\4:9090/ or https://[\6]:9090/" >> %{buildroot}/usr/lib/os.release.d/issue-server
 echo >> %{buildroot}/usr/lib/os.release.d/issue-server
 
+# Silverblue
+cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
+      %{buildroot}/usr/lib/os.release.d/os-release-silverblue
+echo "VARIANT=\"Silverblue\"" >> %{buildroot}/usr/lib/os.release.d/os-release-silverblue
+echo "VARIANT_ID=silverblue" >> %{buildroot}/usr/lib/os.release.d/os-release-silverblue
+sed -i -e "s|(%{release_name})|(Silverblue)|g" %{buildroot}/usr/lib/os.release.d/os-release-silverblue
+
+# Sugar on a Stick
+cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
+      %{buildroot}/usr/lib/os.release.d/os-release-soas
+echo "VARIANT=\"Sugar on a Stick\"" >> %{buildroot}/usr/lib/os.release.d/os-release-soas
+echo "VARIANT_ID=soas" >> %{buildroot}/usr/lib/os.release.d/os-release-soas
+sed -i -e "s|(%{release_name})|(Sugar on a Stick)|g" %{buildroot}/usr/lib/os.release.d/os-release-soas
+
 # Workstation
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
       %{buildroot}/usr/lib/os.release.d/os-release-workstation
 echo "VARIANT=\"Workstation Edition\"" >> %{buildroot}/usr/lib/os.release.d/os-release-workstation
 echo "VARIANT_ID=workstation" >> %{buildroot}/usr/lib/os.release.d/os-release-workstation
 sed -i -e "s|(%{release_name})|(Workstation Edition)|g" %{buildroot}/usr/lib/os.release.d/os-release-workstation
+
+# Xfce
+cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
+      %{buildroot}/usr/lib/os.release.d/os-release-xfce
+echo "VARIANT=\"Xfce\"" >> %{buildroot}/usr/lib/os.release.d/os-release-xfce
+echo "VARIANT_ID=xfce" >> %{buildroot}/usr/lib/os.release.d/os-release-xfce
+sed -i -e "s|(%{release_name})|(Xfce)|g" %{buildroot}/usr/lib/os.release.d/os-release-xfce
 
 # Create the symlink for /etc/os-release
 # We don't create the /usr/lib/os-release symlink until %%post
@@ -285,6 +425,14 @@ install_edition("atomichost")
 %include %{SOURCE4}
 uninstall_edition("atomichost")
 
+%post cinnamon -p <lua>
+%include %{SOURCE4}
+install_edition("cinnamon")
+
+%preun cinnamon -p <lua>
+%include %{SOURCE4}
+uninstall_edition("cinnamon")
+
 %post cloud -p <lua>
 %include %{SOURCE4}
 install_edition("cloud")
@@ -292,6 +440,22 @@ install_edition("cloud")
 %preun cloud -p <lua>
 %include %{SOURCE4}
 uninstall_edition("cloud")
+
+%post container -p <lua>
+%include %{SOURCE4}
+install_edition("container")
+
+%preun container -p <lua>
+%include %{SOURCE4}
+uninstall_edition("container")
+
+%post coreos -p <lua>
+%include %{SOURCE4}
+install_edition("coreos")
+
+%preun coreos -p <lua>
+%include %{SOURCE4}
+uninstall_edition("coreos")
 
 %post iot -p <lua>
 %include %{SOURCE4}
@@ -301,6 +465,22 @@ install_edition("iot")
 %include %{SOURCE4}
 uninstall_edition("iot")
 
+%post kde -p <lua>
+%include %{SOURCE4}
+install_edition("kde")
+
+%preun kde -p <lua>
+%include %{SOURCE4}
+uninstall_edition("kde")
+
+%post matecompiz -p <lua>
+%include %{SOURCE4}
+install_edition("matecompiz")
+
+%preun matecompiz -p <lua>
+%include %{SOURCE4}
+uninstall_edition("matecompiz")
+
 %post server -p <lua>
 %include %{SOURCE4}
 install_edition("server")
@@ -308,6 +488,22 @@ install_edition("server")
 %preun server -p <lua>
 %include %{SOURCE4}
 uninstall_edition("server")
+
+%post silverblue -p <lua>
+%include %{SOURCE4}
+install_edition("silverblue")
+
+%preun silverblue -p <lua>
+%include %{SOURCE4}
+uninstall_edition("silverblue")
+
+%post soas -p <lua>
+%include %{SOURCE4}
+install_edition("soas")
+
+%preun soas -p <lua>
+%include %{SOURCE4}
+uninstall_edition("soas")
 
 %post workstation -p <lua>
 %include %{SOURCE4}
@@ -324,6 +520,14 @@ fi
 
 %posttrans workstation
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
+
+%post xfce -p <lua>
+%include %{SOURCE4}
+install_edition("xfce")
+
+%preun xfce -p <lua>
+%include %{SOURCE4}
+uninstall_edition("xfce")
 
 
 %files
@@ -358,16 +562,37 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %files cloud
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-cloud
 
+%files cinnamon
+%attr(0644,root,root) /usr/lib/os.release.d/os-release-cinnamon
+
+%files container
+%attr(0644,root,root) /usr/lib/os.release.d/os-release-container
+
+%files coreos
+%attr(0644,root,root) /usr/lib/os.release.d/os-release-coreos
+
 %files iot
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-iot
 %ghost %{_prefix}/lib/systemd/system-preset/80-iot.preset
 %attr(0644,root,root) /usr/lib/os.release.d/presets/80-iot.preset
+
+%files kde
+%attr(0644,root,root) /usr/lib/os.release.d/os-release-kde
+
+%files matecompiz
+%attr(0644,root,root) /usr/lib/os.release.d/os-release-matecompiz
 
 %files server
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-server
 %attr(0644,root,root) /usr/lib/os.release.d/issue-server
 %ghost %{_prefix}/lib/systemd/system-preset/80-server.preset
 %attr(0644,root,root) /usr/lib/os.release.d/presets/80-server.preset
+
+%files silverblue
+%attr(0644,root,root) /usr/lib/os.release.d/os-release-silverblue
+
+%files soas
+%attr(0644,root,root) /usr/lib/os.release.d/os-release-soas
 
 %files workstation
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-workstation
@@ -376,10 +601,18 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
 %attr(0644,root,root) /usr/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
 
+%files xfce
+%attr(0644,root,root) /usr/lib/os.release.d/os-release-xfce
+
 %files -n convert-to-edition
 /usr/sbin/convert-to-edition
 
 %changelog
+* Fri Aug 24 2018 Matthew Miller <mattdm@fedoraproject.org> - 30-0.6
+- add container
+- add coreos
+- add desktop spins
+
 * Thu Aug 23 2018 Peter Robinson <pbrobinson@fedoraproject.org> 30-0.5
 - Add Fedora IoT edition components
 
