@@ -11,7 +11,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.6
+Release:        0.7
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -584,6 +584,10 @@ uninstall_edition("xfce")
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-xfce
 
 %changelog
+* Mon Aug 27 2018 Stephen Gallagher <sgallagh@redhat.com> - 30-0.7
+- Remove specialized handling for /etc/issue.
+- Drop convert-to-edition script
+
 * Fri Aug 24 2018 Matthew Miller <mattdm@fedoraproject.org> - 30-0.6
 - add container
 - add coreos
