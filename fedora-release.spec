@@ -17,7 +17,6 @@ URL:            https://fedoraproject.org/
 
 Source1:        LICENSE
 Source2:        Fedora-Legal-README.txt
-Source3:        convert-to-edition
 Source4:        convert-to-edition.lua
 
 Source10:       85-display-manager.preset
@@ -31,6 +30,7 @@ Source17:       org.projectatomic.rpmostree1.rules
 Source18:       80-iot.preset
 
 Obsoletes:      redhat-release
+Obsoletes:      convert-to-edition < 30-0.7
 Provides:       redhat-release
 Provides:       system-release
 Provides:       system-release(%{version})
@@ -194,13 +194,6 @@ Requires:       fedora-release = %{version}-%{release}
 Provides a base package for Fedora Xfce specific configuration files to
 depend on as well as Xfce system defaults.
 
-
-%package -n convert-to-edition
-Summary: Script for converting between Fedora Editions
-Requires: fedora-release = %{version}-%{release}
-
-%description -n convert-to-edition
-Provides a script to convert the running system between Fedora Editions
 
 %prep
 sed -i 's|@@VERSION@@|%{dist_version}|g' %{SOURCE2}
@@ -379,8 +372,6 @@ install -Dm0644 %{SOURCE15} -t %{buildroot}%{_prefix}/lib/os.release.d/presets/
 install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 install -Dm0644 %{SOURCE17} -t %{buildroot}%{_datadir}/polkit-1/rules.d/
 
-# Copy the make_edition script to /usr/sbin
-install -Dm0755 %{SOURCE3} -t %{buildroot}/%{_prefix}/sbin/
 
 %post -p <lua>
 %include %{SOURCE4}
@@ -591,9 +582,6 @@ uninstall_edition("xfce")
 
 %files xfce
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-xfce
-
-%files -n convert-to-edition
-/usr/sbin/convert-to-edition
 
 %changelog
 * Fri Aug 24 2018 Matthew Miller <mattdm@fedoraproject.org> - 30-0.6
