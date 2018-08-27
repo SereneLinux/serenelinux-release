@@ -110,10 +110,18 @@ end
 local variants = {
   atomichost = {release = "atomichost", issue = "fedora", presets = false},
   cloud = {release = "cloud", issue = "fedora", presets = false},
+  cinnamon = {release = "cinnamon", issue = "fedora", presets = false},
+  container = {release = "container", issue = "fedora", presets = false},
+  coreos = {release = "coreos", issue = "fedora", presets = false},
   iot = {release = "iot", issue = "fedora", presets = true},
+  kde = {release = "kde", issue = "fedora", presets = false},
+  matecompiz = {release = "matecompiz", issue = "fedora", presets = false},
   nonproduct = {release = "fedora", issue = "fedora", presets = false},
   server = {release = "server", issue = "server", presets = true},
+  silverblue = {release = "silverblue", issue = "fedora", presets = false},
+  soas = {release = "soas", issue = "fedora", presets = false},
   workstation = {release = "workstation", issue = "fedora", presets = true},
+  xfce = {release = "xfce", issue = "fedora", presets = false},
 }
 
 -- Call out to systemctl to enable or disable presets
