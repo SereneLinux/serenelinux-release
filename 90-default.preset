@@ -264,3 +264,6 @@ enable vboxservice.service
 # Mark the system for SELinux autorelabel when appropriate
 # https://bugzilla.redhat.com/show_bug.cgi?id=1589720
 enable selinux-autorelabel-mark.service
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1623901
+enable cpi.service
