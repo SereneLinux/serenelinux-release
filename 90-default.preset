@@ -267,3 +267,6 @@ enable selinux-autorelabel-mark.service
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1623901
 enable cpi.service
+
+# Initialize persistent devices on s390x
+enable device_cio_free.service
