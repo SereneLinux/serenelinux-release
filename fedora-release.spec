@@ -479,9 +479,9 @@ install -d -m 755 %{buildroot}%{_rpmconfigdir}/macros.d
 cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 # dist macros.
 
-%%fedora                %{dist_version}
+%%fedora              %{dist_version}
 %%__bootstrap         ~bootstrap
-%%dist                %%{?distprefix}.fc%{dist_version}%%{?with_bootstrap:%{__bootstrap}}
+%%dist                %%{!?distprefix0:%%{?distprefix}}%%{expand:%%{lua:for i=0,9999 do print("%%{?distprefix" .. i .."}") end}}.fc%{dist_version}%%{?with_bootstrap:%{__bootstrap}}
 %%fc%{dist_version}                1
 EOF
 
