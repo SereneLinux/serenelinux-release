@@ -11,7 +11,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        0.15
+Release:        0.16
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -580,6 +580,10 @@ uninstall_edition("xfce")
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-xfce
 
 %changelog
+* Fri Sep 14 2018 Mohan Boddu <mboddu@bhujji.com> 29-0.16
+- Set cpi.service as enabled in the systemd presets
+- Set device_cio_free service as enabled
+
 * Mon Aug 27 2018 Stephen Gallagher <sgallagh@redhat.com> - 29-0.15
 - Drop special issue handling and convert-to-edition script
 
