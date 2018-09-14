@@ -11,7 +11,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.7
+Release:        0.8
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -584,6 +584,10 @@ uninstall_edition("xfce")
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-xfce
 
 %changelog
+* Fri Sep 14 2018 Mohan Boddu <mboddu@bhujji.com> 30-0.8
+- Set cpi.service as enabled in the systemd presets
+- Set device_cio_free service as enabled
+
 * Mon Aug 27 2018 Stephen Gallagher <sgallagh@redhat.com> - 30-0.7
 - Remove specialized handling for /etc/issue.
 - Drop convert-to-edition script
