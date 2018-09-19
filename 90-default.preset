@@ -270,3 +270,6 @@ enable cpi.service
 
 # Initialize persistent devices on s390x
 enable device_cio_free.service
+
+# Enable the stratis daemon for managing stratis storage
+enable stratisd.service
