@@ -11,7 +11,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.8
+Release:        0.9
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -584,6 +584,9 @@ uninstall_edition("xfce")
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-xfce
 
 %changelog
+* Mon Sep 24 2018 Mohan Boddu <mboddu@bhujji.com> 30-0.9
+- Enable the stratis daemon for managing stratis storage
+
 * Fri Sep 14 2018 Mohan Boddu <mboddu@bhujji.com> 30-0.8
 - Set cpi.service as enabled in the systemd presets
 - Set device_cio_free service as enabled
