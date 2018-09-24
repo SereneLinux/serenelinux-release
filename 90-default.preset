@@ -272,4 +272,5 @@ enable cpi.service
 enable device_cio_free.service
 
 # Enable the stratis daemon for managing stratis storage
+# https://bugzilla.redhat.com/show_bug.cgi?id=1630514
 enable stratisd.service
