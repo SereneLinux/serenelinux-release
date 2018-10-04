@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        28
-Release:        2
+Release:        3
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -351,6 +351,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Mon Sep 24 2018 Mohan Boddu <mboddu@bhujji.com> - 28-3
+- Enable the stratis daemon for managing stratis storage
+
 * Fri May 25 2018 Stephen Gallagher <sgallagh@redhat.com> - 28-2
 - Add fedora-repos-modular to Fedora Server installs
 
