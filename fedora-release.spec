@@ -2,6 +2,9 @@
 %define dist_version 29
 %define bug_version 29
 
+# Change this when branching to fNN
+%define doc_version f29
+
 # Changes should be submitted as pull requests under
 #     https://src.fedoraproject.org/rpms/fedora-release
 #
@@ -218,6 +221,7 @@ PRETTY_NAME="Fedora %{dist_version} (%{release_name})"
 ANSI_COLOR="0;34"
 CPE_NAME="cpe:/o:fedoraproject:fedora:%{dist_version}"
 HOME_URL="https://fedoraproject.org/"
+DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora/%{doc_version}/system-administrators-guide/"
 SUPPORT_URL="https://fedoraproject.org/wiki/Communicating_and_getting_help"
 BUG_REPORT_URL="https://bugzilla.redhat.com/"
 REDHAT_BUGZILLA_PRODUCT="Fedora"
@@ -309,6 +313,7 @@ cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=\"Silverblue\"" >> %{buildroot}/usr/lib/os.release.d/os-release-silverblue
 echo "VARIANT_ID=silverblue" >> %{buildroot}/usr/lib/os.release.d/os-release-silverblue
 sed -i -e "s|(%{release_name})|(Silverblue)|g" %{buildroot}/usr/lib/os.release.d/os-release-silverblue
+sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-silverblue/"|' %{buildroot}/usr/lib/os.release.d/os-release-silverblue
 
 # Sugar on a Stick
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
