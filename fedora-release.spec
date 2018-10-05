@@ -1,6 +1,7 @@
 %define release_name Rawhide
 %define dist_version 30
 %define bug_version rawhide
+%{!?_swidtagdir: %define _swidtagdir %{_prefix}/lib/swidtag/fedoraproject.org}
 
 # Change this when branching to fNN
 %define doc_version rawhide
@@ -14,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.9
+Release:        0.10
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -31,6 +32,7 @@ Source15:       80-workstation.preset
 Source16:       org.gnome.shell.gschema.override
 Source17:       org.projectatomic.rpmostree1.rules
 Source18:       80-iot.preset
+Source19:       distro-template.swidtag
 
 Obsoletes:      redhat-release
 Obsoletes:      convert-to-edition < 30-0.7
@@ -377,6 +379,9 @@ install -Dm0644 %{SOURCE15} -t %{buildroot}%{_prefix}/lib/os.release.d/presets/
 install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 install -Dm0644 %{SOURCE17} -t %{buildroot}%{_datadir}/polkit-1/rules.d/
 
+# Create distro-level SWID tag file
+install -d %{buildroot}%{_swidtagdir}
+sed -e "s#\$version#%{bug_version}#g" -e 's/<!--.*-->//;/^$/d' %{SOURCE19} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-%{bug_version}.swidtag
 
 %post -p <lua>
 %include %{SOURCE4}
@@ -539,6 +544,8 @@ uninstall_edition("xfce")
 %{_prefix}/lib/systemd/system-preset/85-display-manager.preset
 %{_prefix}/lib/systemd/system-preset/90-default.preset
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
+%dir %{_swidtagdir}
+%{_swidtagdir}/org.fedoraproject.Fedora-%{bug_version}.swidtag
 
 
 %files atomichost
@@ -589,6 +596,9 @@ uninstall_edition("xfce")
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-xfce
 
 %changelog
+* Thu Oct 11 2018 Jan Pazdziora <jpazdziora@redhat.com> 30-0.10
+- Produce distro-level SWID tag in /usr/lib/swidtag/fedoraproject.org.
+
 * Mon Sep 24 2018 Mohan Boddu <mboddu@bhujji.com> 30-0.9
 - Enable the stratis daemon for managing stratis storage
 
