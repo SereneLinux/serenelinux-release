@@ -1,6 +1,7 @@
 %define release_name Twenty Nine
 %define dist_version 29
 %define bug_version 29
+%{!?_swidtagdir: %define _swidtagdir %{_prefix}/lib/swidtag/fedoraproject.org}
 
 # Change this when branching to fNN
 %define doc_version f29
@@ -14,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        2
+Release:        3
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -31,6 +32,7 @@ Source15:       80-workstation.preset
 Source16:       org.gnome.shell.gschema.override
 Source17:       org.projectatomic.rpmostree1.rules
 Source18:       80-iot.preset
+Source19:       distro-template.swidtag
 
 Obsoletes:      redhat-release
 Obsoletes:      convert-to-edition < 29-0.15
@@ -374,6 +376,9 @@ install -Dm0644 %{SOURCE15} -t %{buildroot}%{_prefix}/lib/os.release.d/presets/
 install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 install -Dm0644 %{SOURCE17} -t %{buildroot}%{_datadir}/polkit-1/rules.d/
 
+# Create distro-level SWID tag file
+install -d %{buildroot}%{_swidtagdir}
+sed -e "s#\$version#%{bug_version}#g" -e 's/<!--.*-->//;/^$/d' %{SOURCE19} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-%{bug_version}.swidtag
 
 %post -p <lua>
 %include %{SOURCE4}
@@ -535,6 +540,8 @@ uninstall_edition("xfce")
 %{_prefix}/lib/systemd/system-preset/85-display-manager.preset
 %{_prefix}/lib/systemd/system-preset/90-default.preset
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
+%dir %{_swidtagdir}
+%{_swidtagdir}/org.fedoraproject.Fedora-%{bug_version}.swidtag
 
 
 %files atomichost
@@ -585,6 +592,9 @@ uninstall_edition("xfce")
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-xfce
 
 %changelog
+* Thu Nov 01 2018 Jan Pazdziora <jpazdziora@redhat.com> - 29-3
+- Produce distro-level SWID tag in /usr/lib/swidtag/fedoraproject.org.
+
 * Sat Oct 27 2018 Stephen Gallagher <sgallagh@redhat.com> - 29-2
 - Add ostree-finalize-staged.path preset
 
