@@ -379,6 +379,8 @@ install -Dm0644 %{SOURCE17} -t %{buildroot}%{_datadir}/polkit-1/rules.d/
 # Create distro-level SWID tag file
 install -d %{buildroot}%{_swidtagdir}
 sed -e "s#\$version#%{bug_version}#g" -e 's/<!--.*-->//;/^$/d' %{SOURCE19} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-%{bug_version}.swidtag
+install -d %{buildroot}/etc/swid/swidtags.d
+ln -s %{_swidtagdir} %{buildroot}/etc/swid/swidtags.d/fedoraproject.org
 
 %post -p <lua>
 %include %{SOURCE4}
@@ -542,6 +544,7 @@ uninstall_edition("xfce")
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
 %dir %{_swidtagdir}
 %{_swidtagdir}/org.fedoraproject.Fedora-%{bug_version}.swidtag
+/etc/swid/swidtags.d
 
 
 %files atomichost
