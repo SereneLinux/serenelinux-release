@@ -100,6 +100,14 @@ local function set_release(release)
   symlink("./os.release.d/os-release-" .. release, "/usr/lib/os-release")
 end
 
+local function set_edition_swidtag(release)
+  symlink("/usr/lib/os.release.d/Fedora-" .. release .. ".swidtag", "%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag")
+end
+
+local function unset_edition_swidtag()
+  os.remove("%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag")
+end
+
 -- release: the VARIANT_ID for os-release
 -- presets: whether this edition has extra presets beyond the
 --          defaults to enable or disable
@@ -152,6 +160,13 @@ local function convert_to_edition(edition, apply_presets)
     error("undefined edition: " .. edition)
   end
   set_release(variant.release)
+
+  -- Symlink the correct edition .swidtag for anything but nonproduct
+  if edition == "nonproduct" then
+    unset_edition_swidtag()
+  else
+    set_edition_swidtag(variant.release)
+  end
   clear_presets()
 
   set_presets(edition, apply_presets)
