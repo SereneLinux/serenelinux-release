@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.21
+Release:        0.22
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -636,6 +636,10 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Fri Feb 08 2019 David Rheinsberg <david.rheinsberg@gmail.com> - 30-0.22
+- Enable dbus-broker over dbus-daemon, to make new installs use the broker as
+  new system- and user-bus implementation.
+
 * Sun Feb 03 2019 Neal Gompa <ngompa13@gmail.com> - 30-0.21
 - Add snappy variant
 
