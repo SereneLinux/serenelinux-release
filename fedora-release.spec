@@ -33,6 +33,7 @@ Source16:       org.gnome.shell.gschema.override
 Source17:       org.projectatomic.rpmostree1.rules
 Source18:       80-iot.preset
 Source19:       distro-template.swidtag
+Source20:       distro-edition-template.swidtag
 
 Obsoletes:      redhat-release
 Obsoletes:      convert-to-edition < 29-0.15
@@ -252,6 +253,7 @@ cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=\"Atomic Host\"" >> %{buildroot}/usr/lib/os.release.d/os-release-atomichost
 echo "VARIANT_ID=atomic.host" >> %{buildroot}/usr/lib/os.release.d/os-release-atomichost
 sed -i -e "s|(%{release_name})|(Atomic Host)|g" %{buildroot}/usr/lib/os.release.d/os-release-atomichost
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Atomic/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}/usr/lib/os.release.d/Fedora-atomichost.swidtag
 
 # Cinnamon
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -259,6 +261,7 @@ cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=\"Cinnamon\"" >> %{buildroot}/usr/lib/os.release.d/os-release-cinnamon
 echo "VARIANT_ID=cinnamon" >> %{buildroot}/usr/lib/os.release.d/os-release-cinnamon
 sed -i -e "s|(%{release_name})|(Cinnamon)|g" %{buildroot}/usr/lib/os.release.d/os-release-cinnamon
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Cinnamon/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}/usr/lib/os.release.d/Fedora-cinnamon.swidtag
 
 # Cloud
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -266,6 +269,7 @@ cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=\"Cloud Edition\"" >> %{buildroot}/usr/lib/os.release.d/os-release-cloud
 echo "VARIANT_ID=cloud" >> %{buildroot}/usr/lib/os.release.d/os-release-cloud
 sed -i -e "s|(%{release_name})|(Cloud Edition)|g" %{buildroot}/usr/lib/os.release.d/os-release-cloud
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Cloud/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}/usr/lib/os.release.d/Fedora-cloud.swidtag
 
 # Container
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -273,6 +277,7 @@ cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=\"Container Image\"" >> %{buildroot}/usr/lib/os.release.d/os-release-container
 echo "VARIANT_ID=container" >> %{buildroot}/usr/lib/os.release.d/os-release-container
 sed -i -e "s|(%{release_name})|(Container Image)|g" %{buildroot}/usr/lib/os.release.d/os-release-container
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Container/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}/usr/lib/os.release.d/Fedora-container.swidtag
 
 # CoreOS
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -280,6 +285,7 @@ cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=\"CoreOS\"" >> %{buildroot}/usr/lib/os.release.d/os-release-coreos
 echo "VARIANT_ID=coreos" >> %{buildroot}/usr/lib/os.release.d/os-release-coreos
 sed -i -e "s|(%{release_name})|(CoreOS)|g" %{buildroot}/usr/lib/os.release.d/os-release-coreos
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/CoreOS/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}/usr/lib/os.release.d/Fedora-coreos.swidtag
 
 # IoT
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -287,6 +293,7 @@ cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=\"IoT Edition\"" >> %{buildroot}/usr/lib/os.release.d/os-release-iot
 echo "VARIANT_ID=iot" >> %{buildroot}/usr/lib/os.release.d/os-release-iot
 sed -i -e "s|(%{release_name})|(IoT Edition)|g" %{buildroot}/usr/lib/os.release.d/os-release-iot
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/IoT/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}/usr/lib/os.release.d/Fedora-iot.swidtag
 
 # KDE Plasma
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -294,6 +301,7 @@ cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=\"KDE Plasma\"" >> %{buildroot}/usr/lib/os.release.d/os-release-kde
 echo "VARIANT_ID=kde" >> %{buildroot}/usr/lib/os.release.d/os-release-kde
 sed -i -e "s|(%{release_name})|(KDE Plasma)|g" %{buildroot}/usr/lib/os.release.d/os-release-kde
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/KDE/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}/usr/lib/os.release.d/Fedora-kde.swidtag
 
 # MATE-Compiz
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -301,6 +309,7 @@ cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=\"MATE-Compiz\"" >> %{buildroot}/usr/lib/os.release.d/os-release-matecompiz
 echo "VARIANT_ID=matecompiz" >> %{buildroot}/usr/lib/os.release.d/os-release-matecompiz
 sed -i -e "s|(%{release_name})|(MATE-Compiz)|g" %{buildroot}/usr/lib/os.release.d/os-release-matecompiz
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/MATE-Compiz/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}/usr/lib/os.release.d/Fedora-matecompiz.swidtag
 
 # Server
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -308,6 +317,7 @@ cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=\"Server Edition\"" >> %{buildroot}/usr/lib/os.release.d/os-release-server
 echo "VARIANT_ID=server" >> %{buildroot}/usr/lib/os.release.d/os-release-server
 sed -i -e "s|(%{release_name})|(Server Edition)|g" %{buildroot}/usr/lib/os.release.d/os-release-server
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Server/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}/usr/lib/os.release.d/Fedora-server.swidtag
 
 # Silverblue
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -316,6 +326,7 @@ echo "VARIANT=\"Silverblue\"" >> %{buildroot}/usr/lib/os.release.d/os-release-si
 echo "VARIANT_ID=silverblue" >> %{buildroot}/usr/lib/os.release.d/os-release-silverblue
 sed -i -e "s|(%{release_name})|(Silverblue)|g" %{buildroot}/usr/lib/os.release.d/os-release-silverblue
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-silverblue/"|' %{buildroot}/usr/lib/os.release.d/os-release-silverblue
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Silverblue/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}/usr/lib/os.release.d/Fedora-silverblue.swidtag
 
 # Sugar on a Stick
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -323,6 +334,7 @@ cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=\"Sugar on a Stick\"" >> %{buildroot}/usr/lib/os.release.d/os-release-soas
 echo "VARIANT_ID=soas" >> %{buildroot}/usr/lib/os.release.d/os-release-soas
 sed -i -e "s|(%{release_name})|(Sugar on a Stick)|g" %{buildroot}/usr/lib/os.release.d/os-release-soas
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Sugar/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}/usr/lib/os.release.d/Fedora-soas.swidtag
 
 # Workstation
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -330,6 +342,7 @@ cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=\"Workstation Edition\"" >> %{buildroot}/usr/lib/os.release.d/os-release-workstation
 echo "VARIANT_ID=workstation" >> %{buildroot}/usr/lib/os.release.d/os-release-workstation
 sed -i -e "s|(%{release_name})|(Workstation Edition)|g" %{buildroot}/usr/lib/os.release.d/os-release-workstation
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Workstation/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}/usr/lib/os.release.d/Fedora-workstation.swidtag
 
 # Xfce
 cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
@@ -337,6 +350,7 @@ cp -p %{buildroot}/usr/lib/os.release.d/os-release-fedora \
 echo "VARIANT=\"Xfce\"" >> %{buildroot}/usr/lib/os.release.d/os-release-xfce
 echo "VARIANT_ID=xfce" >> %{buildroot}/usr/lib/os.release.d/os-release-xfce
 sed -i -e "s|(%{release_name})|(Xfce)|g" %{buildroot}/usr/lib/os.release.d/os-release-xfce
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Xfce/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}/usr/lib/os.release.d/Fedora-xfce.swidtag
 
 # Create the symlink for /etc/os-release
 # We don't create the /usr/lib/os-release symlink until %%post
@@ -544,48 +558,61 @@ uninstall_edition("xfce")
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
 %dir %{_swidtagdir}
 %{_swidtagdir}/org.fedoraproject.Fedora-%{bug_version}.swidtag
+%ghost %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag
 /etc/swid/swidtags.d
 
 
 %files atomichost
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-atomichost
+%attr(0644,root,root) /usr/lib/os.release.d/Fedora-atomichost.swidtag
 
 %files cinnamon
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-cinnamon
+%attr(0644,root,root) /usr/lib/os.release.d/Fedora-cinnamon.swidtag
 
 %files cloud
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-cloud
+%attr(0644,root,root) /usr/lib/os.release.d/Fedora-cloud.swidtag
 
 %files container
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-container
+%attr(0644,root,root) /usr/lib/os.release.d/Fedora-container.swidtag
 
 %files coreos
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-coreos
+%attr(0644,root,root) /usr/lib/os.release.d/Fedora-coreos.swidtag
 
 %files iot
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-iot
+%attr(0644,root,root) /usr/lib/os.release.d/Fedora-iot.swidtag
 %ghost %{_prefix}/lib/systemd/system-preset/80-iot.preset
 %attr(0644,root,root) /usr/lib/os.release.d/presets/80-iot.preset
 
 %files kde
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-kde
+%attr(0644,root,root) /usr/lib/os.release.d/Fedora-kde.swidtag
 
 %files matecompiz
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-matecompiz
+%attr(0644,root,root) /usr/lib/os.release.d/Fedora-matecompiz.swidtag
 
 %files server
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-server
+%attr(0644,root,root) /usr/lib/os.release.d/Fedora-server.swidtag
 %ghost %{_prefix}/lib/systemd/system-preset/80-server.preset
 %attr(0644,root,root) /usr/lib/os.release.d/presets/80-server.preset
 
 %files silverblue
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-silverblue
+%attr(0644,root,root) /usr/lib/os.release.d/Fedora-silverblue.swidtag
 
 %files soas
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-soas
+%attr(0644,root,root) /usr/lib/os.release.d/Fedora-soas.swidtag
 
 %files workstation
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-workstation
+%attr(0644,root,root) /usr/lib/os.release.d/Fedora-workstation.swidtag
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %ghost %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 %attr(0644,root,root) /usr/lib/os.release.d/presets/80-workstation.preset
@@ -593,10 +620,13 @@ uninstall_edition("xfce")
 
 %files xfce
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-xfce
+%attr(0644,root,root) /usr/lib/os.release.d/Fedora-xfce.swidtag
 
 %changelog
 * Thu Nov 01 2018 Jan Pazdziora <jpazdziora@redhat.com> - 29-3
 - Produce distro-level SWID tag in /usr/lib/swidtag/fedoraproject.org.
+- Add edition supplemental .swidtag files, and amend convert-to-edition.lua
+  to keep symlink to the correct one in sync with os-release.
 
 * Sat Oct 27 2018 Stephen Gallagher <sgallagh@redhat.com> - 29-2
 - Add ostree-finalize-staged.path preset
