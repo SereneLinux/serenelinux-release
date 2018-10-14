@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        0.17
+Release:        1
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -38,7 +38,7 @@ Provides:       redhat-release
 Provides:       system-release
 Provides:       system-release(%{version})
 
-Requires:       fedora-repos(%{version})
+Requires:       fedora-repos(%{version}) >= 1
 BuildArch:      noarch
 
 %description
@@ -585,6 +585,10 @@ uninstall_edition("xfce")
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-xfce
 
 %changelog
+* Sun Oct 14 2018 Mohan Boddu <mboddu@bhujji.com> 29-1
+- Setup for F29 Final
+- Add DOCUMENTATION_URL to os-release
+
 * Fri Sep 14 2018 Mohan Boddu <mboddu@bhujji.com> 29-0.17
 - Enable the stratis daemon for managing stratis storage
 
