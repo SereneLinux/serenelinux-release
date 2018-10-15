@@ -274,3 +274,8 @@ enable device_cio_free.service
 # Enable the stratis daemon for managing stratis storage
 # https://bugzilla.redhat.com/show_bug.cgi?id=1630514
 enable stratisd.service
+
+# Enable a service to finalize staged OSTree changes at shutdown
+# https://bugzilla.redhat.com/show_bug.cgi?id=1639372
+enable ostree-finalize-staged.path
+

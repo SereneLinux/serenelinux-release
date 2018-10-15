@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        1
+Release:        2
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -585,6 +585,9 @@ uninstall_edition("xfce")
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-xfce
 
 %changelog
+* Sat Oct 27 2018 Stephen Gallagher <sgallagh@redhat.com> - 29-2
+- Add ostree-finalize-staged.path preset
+
 * Sun Oct 14 2018 Mohan Boddu <mboddu@bhujji.com> 29-1
 - Setup for F29 Final
 - Add DOCUMENTATION_URL to os-release
