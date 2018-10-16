@@ -1,7 +1,6 @@
 %define release_name Rawhide
 %define dist_version 30
 %define bug_version rawhide
-%{!?_swidtagdir: %define _swidtagdir %{_prefix}/lib/swidtag/fedoraproject.org}
 
 # Change this when branching to fNN
 %define doc_version rawhide
@@ -42,6 +41,7 @@ Provides:       system-release(%{version})
 
 Requires:       fedora-repos(%{version})
 BuildArch:      noarch
+BuildRequires:  redhat-rpm-config > 121-1
 
 %description
 Fedora release files such as various /etc/ files that define the release
