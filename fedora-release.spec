@@ -627,12 +627,11 @@ uninstall_edition("xfce")
 %attr(0644,root,root) /usr/lib/os.release.d/Fedora-xfce.swidtag
 
 %changelog
-* Thu Oct 11 2018 Jan Pazdziora <jpazdziora@redhat.com> 30-0.11
+* Thu Oct 11 2018 Jan Pazdziora <jpazdziora@redhat.com> 30-0.10
 - Add edition supplemental .swidtag files, and amend convert-to-edition.lua
   to keep symlink to the correct one in sync with os-release.
-
-* Thu Oct 11 2018 Jan Pazdziora <jpazdziora@redhat.com> 30-0.10
 - Produce distro-level SWID tag in /usr/lib/swidtag/fedoraproject.org.
+- Enable ostree-finalize-staged.path
 
 * Mon Sep 24 2018 Mohan Boddu <mboddu@bhujji.com> 30-0.9
 - Enable the stratis daemon for managing stratis storage
