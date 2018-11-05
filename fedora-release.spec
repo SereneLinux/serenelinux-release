@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.13
+Release:        0.14
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -595,6 +595,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Mon Nov 05 2018 Jan Pazdziora <jpazdziora@redhat.com> 30-0.14
+- Fix the supplemental edition SWID tag, add the supplemental attribute.
+
 * Sun Nov 11 2018 Stephen Gallagher <sgallagh@redhat.com> - 30-0.13
 - Drop unneeded Requires(post) and Requires(postun) dependencies causing
   loops. The glib-compile-schemas dependency is now handled by file triggers

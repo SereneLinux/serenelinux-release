@@ -9,7 +9,8 @@
   tagVersion="1"
   name="Fedora"
   version="$version"
-  versionScheme="unknown">
+  versionScheme="unknown"
+  supplemental="true">
   <Entity
     name="Fedora Project"
     regid="fedoraproject.org"
