@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.12
+Release:        0.13
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -217,15 +217,6 @@ Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Requires:       fedora-release-common = %{version}-%{release}
-Requires:       systemd
-Requires:       cockpit-bridge
-Requires:       cockpit-networkmanager
-Requires:       cockpit-shell
-Requires:       cockpit-storaged
-Requires:       cockpit-ws
-Requires:       openssh-server
-
-Requires(post):	systemd
 
 
 %description server
@@ -278,10 +269,6 @@ Provides:       system-release
 Provides:       system-release(%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 Provides:       system-release-product
-# needed for captive portal support
-Requires:       NetworkManager-config-connectivity-fedora
-Requires(post): /usr/bin/glib-compile-schemas
-Requires(postun): /usr/bin/glib-compile-schemas
 
 
 %description workstation
@@ -507,15 +494,6 @@ sed -e "s#\$version#%{bug_version}#g" -e 's/<!--.*-->//;/^$/d' %{SOURCE19} > %{b
 install -d %{buildroot}%{_sysconfdir}/swid/swidtags.d
 ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.org
 
-%postun workstation
-if [ $1 -eq 0 ] ; then
-    glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
-fi
-
-
-%posttrans workstation
-glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
-
 
 %files common
 %license licenses/LICENSE licenses/Fedora-Legal-README.txt
@@ -617,6 +595,13 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
 %changelog
+* Sun Nov 11 2018 Stephen Gallagher <sgallagh@redhat.com> - 30-0.13
+- Drop unneeded Requires(post) and Requires(postun) dependencies causing
+  loops. The glib-compile-schemas dependency is now handled by file triggers
+  and the systemd requirement was just completely erroneous.
+- Also drop strict dependencies on edition packages. They are causing
+  un-breakable dependency loops.
+
 * Tue Oct 23 2018 Stephen Gallagher <sgallagh@redhat.com> - 30-0.12
 - Convert to more maintainable implementation of variant-handling
 
