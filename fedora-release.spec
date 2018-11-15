@@ -595,7 +595,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
-* Mon Nov 05 2018 Jan Pazdziora <jpazdziora@redhat.com> - 30-0.14
+* Thu Nov 15 2018 Jan Pazdziora <jpazdziora@redhat.com> - 30-0.14
 - Fix the supplemental edition SWID tag, add the supplemental attribute.
 
 * Sun Nov 11 2018 Stephen Gallagher <sgallagh@redhat.com> - 30-0.13
