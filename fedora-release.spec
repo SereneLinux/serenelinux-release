@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.14
+Release:        0.15
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -32,6 +32,7 @@ Source17:       org.projectatomic.rpmostree1.rules
 Source18:       80-iot.preset
 Source19:       distro-template.swidtag
 Source20:       distro-edition-template.swidtag
+Source21:       iot-clevis.conf
 
 BuildArch:      noarch
 
@@ -477,6 +478,8 @@ install -Dm0644 %{SOURCE13} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 
 # Fedora IoT
 install -Dm0644 %{SOURCE18} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+mkdir -p %{buildroot}/%{_sysconfdir}/dracut.conf.d
+install -Dm0644 %{SOURCE21} -t %{buildroot}/%{_sysconfdir}/dracut.conf.d/
 
 # Fedora Server
 install -Dm0644 %{SOURCE14} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
@@ -553,6 +556,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %{_prefix}/lib/os-release.iot
 %{_prefix}/lib/systemd/system-preset/80-iot.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
+%{_sysconfdir}/dracut.conf.d/iot-clevis.conf
 
 
 %files kde
@@ -595,6 +599,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Nov 27 2018 Peter Robinson <pbrobinson@fedoraproject.org> 30-0.15
+- Add IoT config to fix policy around TPM2 requirements
+
 * Thu Nov 15 2018 Jan Pazdziora <jpazdziora@redhat.com> - 30-0.14
 - Fix the supplemental edition SWID tag, add the supplemental attribute.
 
