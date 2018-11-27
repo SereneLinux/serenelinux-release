@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        3
+Release:        4
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -34,6 +34,7 @@ Source17:       org.projectatomic.rpmostree1.rules
 Source18:       80-iot.preset
 Source19:       distro-template.swidtag
 Source20:       distro-edition-template.swidtag
+Source21:       iot-clevis.conf
 
 Obsoletes:      redhat-release
 Obsoletes:      convert-to-edition < 29-0.15
@@ -380,6 +381,8 @@ install -Dm0644 %{SOURCE13} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 
 # Fedora IoT
 install -Dm0644 %{SOURCE18} -t %{buildroot}%{_prefix}/lib/os.release.d/presets/
+mkdir -p %{buildroot}/%{_sysconfdir}/dracut.conf.d
+install -Dm0644 %{SOURCE21} -t %{buildroot}/%{_sysconfdir}/dracut.conf.d/
 
 # Fedora Server
 install -Dm0644 %{SOURCE14} -t %{buildroot}%{_prefix}/lib/os.release.d/presets/
@@ -587,6 +590,7 @@ uninstall_edition("xfce")
 %attr(0644,root,root) /usr/lib/os.release.d/Fedora-iot.swidtag
 %ghost %{_prefix}/lib/systemd/system-preset/80-iot.preset
 %attr(0644,root,root) /usr/lib/os.release.d/presets/80-iot.preset
+%{_sysconfdir}/dracut.conf.d/iot-clevis.conf
 
 %files kde
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-kde
@@ -623,6 +627,9 @@ uninstall_edition("xfce")
 %attr(0644,root,root) /usr/lib/os.release.d/Fedora-xfce.swidtag
 
 %changelog
+* Tue Nov 27 2018 Peter Robinson <pbrobinson@fedoraproject.org> 29-4
+- Add IoT config to fix policy around TPM2 requirements
+
 * Thu Nov 01 2018 Jan Pazdziora <jpazdziora@redhat.com> - 29-3
 - Produce distro-level SWID tag in /usr/lib/swidtag/fedoraproject.org.
 - Add edition supplemental .swidtag files, and amend convert-to-edition.lua
