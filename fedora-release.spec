@@ -223,6 +223,7 @@ VERSION_ID=%{dist_version}
 PLATFORM_ID="platform:f%{dist_version}"
 PRETTY_NAME="Fedora %{dist_version} (%{release_name})"
 ANSI_COLOR="0;34"
+LOGO=fedora-logo
 CPE_NAME="cpe:/o:fedoraproject:fedora:%{dist_version}"
 HOME_URL="https://fedoraproject.org/"
 DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora/%{doc_version}/system-administrators-guide/"
