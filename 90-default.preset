@@ -279,3 +279,6 @@ enable stratisd.service
 # https://bugzilla.redhat.com/show_bug.cgi?id=1639372
 enable ostree-finalize-staged.path
 
+# Enable the Docker daemon socket
+# https://bugzilla.redhat.com/show_bug.cgi?id=1655602
+enable docker.socket
