@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        28
-Release:        3
+Release:        4
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -352,6 +352,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Mon Dec 03 2018 Mohan Boddu <mboddu@bhujji.com> - 28-4
+- Add 'LOGO' to os-release(5) for Fedora
+
 * Mon Sep 24 2018 Mohan Boddu <mboddu@bhujji.com> - 28-3
 - Enable the stratis daemon for managing stratis storage
 
