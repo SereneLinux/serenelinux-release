@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.15
+Release:        0.16
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -600,6 +600,10 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Mon Dec 03 2018 Mohan Boddu <mboddu@bhujji.com> 30-0.16
+- Add 'LOGO' to os-release(5) for Fedora
+- Enable the Docker daemon socket
+
 * Tue Nov 27 2018 Peter Robinson <pbrobinson@fedoraproject.org> 30-0.15
 - Add IoT config to fix policy around TPM2 requirements
 
