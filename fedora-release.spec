@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        4
+Release:        5
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -628,6 +628,9 @@ uninstall_edition("xfce")
 %attr(0644,root,root) /usr/lib/os.release.d/Fedora-xfce.swidtag
 
 %changelog
+* Mon Dec 03 2018 Mohan Boddu <mboddu@bhujji.com> 29-5
+- Add 'LOGO' to os-release(5) for Fedora
+
 * Tue Nov 27 2018 Peter Robinson <pbrobinson@fedoraproject.org> 29-4
 - Add IoT config to fix policy around TPM2 requirements
 
