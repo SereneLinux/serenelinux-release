@@ -317,6 +317,7 @@ NAME=Fedora
 VERSION="%{dist_version} (%{release_name})"
 ID=fedora
 VERSION_ID=%{dist_version}
+VERSION_CODENAME=""
 PLATFORM_ID="platform:f%{dist_version}"
 PRETTY_NAME="Fedora %{dist_version} (%{release_name})"
 ANSI_COLOR="0;34"
