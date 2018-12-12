@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        28
-Release:        5
+Release:        6
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -353,6 +353,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Wed Dec 12 2018 Stephen Gallagher <sgallagh@redhat.com> - 28-6
+- Include empty VERSION_CODENAME= field in os-release
+
 * Tue Dec 11 2018 Mohan Boddu <mboddu@bhujji.com> - 28-5
 - Use the icon logo for `LOGO` in os-release(5)
 
