@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        6
+Release:        7
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -629,6 +629,9 @@ uninstall_edition("xfce")
 %attr(0644,root,root) /usr/lib/os.release.d/Fedora-xfce.swidtag
 
 %changelog
+* Wed Dec 12 2018 Stephen Gallagher <sgallagh@redhat.com> - 29-7
+- Include empty VERSION_CODENAME= field in os-release
+
 * Tue Dec 11 2018 Mohan Boddu <mboddu@bhujji.com> 29-6
 - Use the icon logo for `LOGO` in os-release(5) 
 
