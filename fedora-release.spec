@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.17
+Release:        0.18
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -601,6 +601,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Wed Dec 12 2018 Stephen Gallagher <sgallagh@redhat.com> - 30-0.18
+- Include empty VERSION_CODENAME= field in os-release
+
 * Tue Dec 11 2018 Mohan Boddu <mboddu@bhujji.com> 30-0.17
 - Use the icon logo for `LOGO`
 
