@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.18
+Release:        0.19
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -522,6 +522,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %{_prefix}/lib/systemd/system-preset/99-default-disable.preset
 %dir %{_swidtagdir}
 %{_swidtagdir}/org.fedoraproject.Fedora-%{bug_version}.swidtag
+%dir %{_sysconfdir}/swid
 %{_sysconfdir}/swid/swidtags.d
 
 
@@ -601,6 +602,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Fri Dec 28 2018 Kevin Fenzi <kevin@scrye.com> - 30-0.19
+- Own /etc/swid directory.
+
 * Wed Dec 12 2018 Stephen Gallagher <sgallagh@redhat.com> - 30-0.18
 - Include empty VERSION_CODENAME= field in os-release
 
