@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        7
+Release:        8
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -564,6 +564,7 @@ uninstall_edition("xfce")
 %dir %{_swidtagdir}
 %{_swidtagdir}/org.fedoraproject.Fedora-%{bug_version}.swidtag
 %ghost %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag
+%dir %{_sysconfdir}/swid
 /etc/swid/swidtags.d
 
 
@@ -627,6 +628,9 @@ uninstall_edition("xfce")
 %files xfce
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-xfce
 %attr(0644,root,root) /usr/lib/os.release.d/Fedora-xfce.swidtag
+* Sat Jan 05 2019 Kevin Fenzi <kevin@scrye.com> - 29-8
+- own the /etc/swid dir
+
 
 %changelog
 * Wed Dec 12 2018 Stephen Gallagher <sgallagh@redhat.com> - 29-7
