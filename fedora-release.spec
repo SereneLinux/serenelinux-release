@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.19
+Release:        0.20
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -345,6 +345,9 @@ echo "\S" > %{buildroot}%{_prefix}/lib/issue.net
 echo "Kernel \r on an \m (\l)" >> %{buildroot}%{_prefix}/lib/issue.net
 ln -s ../usr/lib/issue.net %{buildroot}%{_sysconfdir}/issue.net
 
+# Create /etc/issue.d
+mkdir -p %{buildroot}%{_sysconfdir}/issue.d
+
 mkdir -p %{buildroot}%{_swidtagdir}
 
 # Create os-release files for the different editions
@@ -513,6 +516,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %config(noreplace) %{_sysconfdir}/issue
 %attr(0644,root,root) %{_prefix}/lib/issue.net
 %config(noreplace) %{_sysconfdir}/issue.net
+%dir %{_sysconfdir}/issue.d
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
 %dir %{_prefix}/lib/systemd/user-preset/
 %{_prefix}/lib/systemd/user-preset/90-default-user.preset
@@ -602,6 +606,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Fri Jan 18 2019 Robert Fairley <rfairley@redhat.com> - 30-0.20
+- Own /etc/issue.d directory.
+
 * Fri Dec 28 2018 Kevin Fenzi <kevin@scrye.com> - 30-0.19
 - Own /etc/swid directory.
 
