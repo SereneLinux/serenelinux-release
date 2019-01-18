@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        8
+Release:        9
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -247,6 +247,9 @@ ln -s ../usr/lib/issue %{buildroot}/etc/issue
 echo "\S" > %{buildroot}/usr/lib/issue.net
 echo "Kernel \r on an \m (\l)" >> %{buildroot}/usr/lib/issue.net
 ln -s ../usr/lib/issue.net %{buildroot}/etc/issue.net
+
+# Create /etc/issue.d
+mkdir -p %{buildroot}%{_sysconfdir}/issue.d 
 
 # Create os-release files for the different editions
 
@@ -554,6 +557,7 @@ uninstall_edition("xfce")
 %config(noreplace) /etc/issue
 %attr(0644,root,root) /usr/lib/issue.net
 %config(noreplace) /etc/issue.net
+%dir %{_sysconfdir}/issue.d
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
 %dir /usr/lib/systemd/user-preset/
 %{_prefix}/lib/systemd/user-preset/90-default-user.preset
@@ -628,11 +632,15 @@ uninstall_edition("xfce")
 %files xfce
 %attr(0644,root,root) /usr/lib/os.release.d/os-release-xfce
 %attr(0644,root,root) /usr/lib/os.release.d/Fedora-xfce.swidtag
-* Sat Jan 05 2019 Kevin Fenzi <kevin@scrye.com> - 29-8
-- own the /etc/swid dir
 
 
 %changelog
+* Fri Jan 18 2019 Robert Fairley <rfairley@redhat.com> - 29-9
+- Own /etc/issue.d directory.
+
+* Sat Jan 05 2019 Kevin Fenzi <kevin@scrye.com> - 29-8
+- own the /etc/swid dir
+
 * Wed Dec 12 2018 Stephen Gallagher <sgallagh@redhat.com> - 29-7
 - Include empty VERSION_CODENAME= field in os-release
 
