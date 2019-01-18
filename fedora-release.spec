@@ -9,7 +9,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        28
-Release:        6
+Release:        7
 License:        MIT
 Group:          System Environment/Base
 URL:            https://pagure.io/fedora-release
@@ -146,6 +146,9 @@ echo >> $RPM_BUILD_ROOT/usr/lib/os.release.d/issue-fedora
 echo "\S" > $RPM_BUILD_ROOT/usr/lib/issue.net
 echo "Kernel \r on an \m (\l)" >> $RPM_BUILD_ROOT/usr/lib/issue.net
 ln -s ../usr/lib/issue.net $RPM_BUILD_ROOT/etc/issue.net
+
+# Create /etc/issue.d
+mkdir -p %{buildroot}%{_sysconfdir}/issue.d 
 
 # Create os-release and issue files for the different editions
 
@@ -312,6 +315,7 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config(noreplace) /etc/issue
 %attr(0644,root,root) /usr/lib/issue.net
 %config(noreplace) /etc/issue.net
+%dir %{_sysconfdir}/issue.d
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
 %dir /usr/lib/systemd/user-preset/
 %dir %{_prefix}/lib/systemd/system-preset/
@@ -353,6 +357,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 /usr/sbin/convert-to-edition
 
 %changelog
+* Fri Jan 18 2019 Robert Fairley <rfairley@redhat.com> - 28-7
+- Own /etc/issue.d directory.
+
 * Wed Dec 12 2018 Stephen Gallagher <sgallagh@redhat.com> - 28-6
 - Include empty VERSION_CODENAME= field in os-release
 
