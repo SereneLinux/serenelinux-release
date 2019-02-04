@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.20
+Release:        0.21
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -242,6 +242,23 @@ Provides a base package for Fedora Silverblue-specific configuration files to
 depend on as well as Silverblue system defaults.
 
 
+%package snappy
+Summary:        Base package for Fedora snap specific default configurations
+
+RemovePathPostfixes: .snappy
+Conflicts:      system-release
+Provides:       fedora-release = %{version}-%{release}
+Provides:       fedora-release-variant = %{version}-%{release}
+Provides:       system-release
+Provides:       system-release(%{version})
+Requires:       fedora-release-common = %{version}-%{release}
+
+
+%description snappy
+Provides a base package for Fedora snap specific configuration files to
+depend on as well as Snappy system defaults.
+
+
 %package soas
 Summary:        Base package for Fedora Sugar on a Stick-specific default configurations
 
@@ -433,6 +450,14 @@ sed -i -e "s|(%{release_name})|(Silverblue)|g" %{buildroot}%{_prefix}/lib/os-rel
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-silverblue/"|' %{buildroot}%{_prefix}/lib/os-release.silverblue
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Silverblue/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.silverblue
 
+# Snappy
+cp -p %{buildroot}%{_prefix}/lib/os-release \
+      %{buildroot}%{_prefix}/lib/os-release.snappy
+echo "VARIANT=\"Snappy\"" >> %{buildroot}%{_prefix}/lib/os-release.snappy
+echo "VARIANT_ID=snappy" >> %{buildroot}%{_prefix}/lib/os-release.snappy
+sed -i -e "s|(%{release_name})|(Snappy)|g" %{buildroot}%{_prefix}/lib/os-release.snappy
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Snappy/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.snappy
+
 # Sugar on a Stick
 cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.soas
@@ -587,6 +612,11 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.silverblue
 
 
+%files snappy
+%{_prefix}/lib/os-release.snappy
+%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.snappy
+
+
 %files soas
 %{_prefix}/lib/os-release.soas
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.soas
@@ -606,6 +636,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Sun Feb 03 2019 Neal Gompa <ngompa13@gmail.com> - 30-0.21
+- Add snappy variant
+
 * Fri Jan 18 2019 Robert Fairley <rfairley@redhat.com> - 30-0.20
 - Own /etc/issue.d directory.
 
