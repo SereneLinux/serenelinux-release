@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.22
+Release:        0.23
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -70,24 +70,6 @@ Requires:   fedora-repos(%{version})
 
 %description common
 Release files common to all Editions and Spins of Fedora
-
-
-%package atomichost
-Summary:        Base package for Fedora Atomic-specific default configurations
-
-RemovePathPostfixes: .atomichost
-Conflicts:      system-release
-Provides:       system-release
-Provides:       fedora-release = %{version}-%{release}
-Provides:       fedora-release-variant = %{version}-%{release}
-Provides:       system-release(%{version})
-Requires:       fedora-release-common = %{version}-%{release}
-
-
-%description atomichost
-Provides a base package for Fedora Atomic Host-specific configuration files to
-depend on.
-
 
 %package cinnamon
 Summary:        Base package for Fedora Cinnamon-specific default configurations
@@ -369,14 +351,6 @@ mkdir -p %{buildroot}%{_swidtagdir}
 
 # Create os-release files for the different editions
 
-# Atomic Host - https://bugzilla.redhat.com/show_bug.cgi?id=1200122
-cp -p %{buildroot}%{_prefix}/lib/os-release \
-      %{buildroot}%{_prefix}/lib/os-release.atomichost
-echo "VARIANT=\"Atomic Host\"" >> %{buildroot}%{_prefix}/lib/os-release.atomichost
-echo "VARIANT_ID=atomic.host" >> %{buildroot}%{_prefix}/lib/os-release.atomichost
-sed -i -e "s|(%{release_name})|(Atomic Host)|g" %{buildroot}%{_prefix}/lib/os-release.atomichost
-sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Atomic/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.atomichost
-
 # Cinnamon
 cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.cinnamon
@@ -559,11 +533,6 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %{_prefix}/lib/os-release
 
 
-%files atomichost
-%{_prefix}/lib/os-release.atomichost
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.atomichost
-
-
 %files cloud
 %{_prefix}/lib/os-release.cloud
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cloud
@@ -636,6 +605,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Fri Feb 15 2019 Sinny Kumari <skumari@redhat.com> - 30-0.23
+- Don't build AtomicHost from F30 and onward releases in favor of coreos
+
 * Fri Feb 08 2019 David Rheinsberg <david.rheinsberg@gmail.com> - 30-0.22
 - Enable dbus-broker over dbus-daemon, to make new installs use the broker as
   new system- and user-bus implementation.
