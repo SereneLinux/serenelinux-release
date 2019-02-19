@@ -1,5 +1,5 @@
 %define release_name Rawhide
-%define dist_version 30
+%define dist_version 31
 %define bug_version rawhide
 
 # Change this when branching to fNN
@@ -13,8 +13,8 @@
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        30
-Release:        0.23
+Version:        31
+Release:        0.1
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -605,6 +605,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Feb 19 2019 Tomas Hrcka <thrcka@redhat.com> - 31-0.1
+- Setup for rawhide being f30
+
 * Fri Feb 15 2019 Sinny Kumari <skumari@redhat.com> - 30-0.23
 - Don't build AtomicHost from F30 and onward releases in favor of coreos
 
