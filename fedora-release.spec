@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        31
-Release:        0.1
+Release:        0.2
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -465,7 +465,8 @@ cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 # dist macros.
 
 %%fedora                %{dist_version}
-%%dist                %%{?distprefix}.fc%{dist_version}%%{?with_bootstrap:~bootstrap}
+%%__bootstrap         ~bootstrap
+%%dist                %%{?distprefix}.fc%{dist_version}%%{?with_bootstrap:%{__bootstrap}}
 %%fc%{dist_version}                1
 EOF
 
@@ -605,6 +606,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Wed Mar 20 2019 Jason L Tibbitts III <tibbs@math.uh.edu> - 31-0.2
+- Allow bootstrap suffix to be overridden.
+
 * Tue Feb 19 2019 Tomas Hrcka <thrcka@redhat.com> - 31-0.1
 - Setup for rawhide being f30
 
