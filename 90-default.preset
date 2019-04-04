@@ -282,3 +282,7 @@ enable ostree-finalize-staged.path
 # Enable the Docker daemon socket
 # https://bugzilla.redhat.com/show_bug.cgi?id=1655602
 enable docker.socket
+
+# Enable the service for adding Fedora OCI repos to flatpak
+# https://bugzilla.redhat.com/show_bug.cgi?id=1696225
+enable flatpak-add-fedora-repos.service

@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.24
+Release:        0.25
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -605,6 +605,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Thu Apr 04 2019 Kalev Lember <klember@redhat.com> - 30-0.25
+- Enable the Fedora flatpak repos service (#1696225)
+
 * Tue Feb 19 2019 Tomas Hrcka <thrcka@redhat.com> - 30-0.24
 - Branching F30 from rawhide
 
