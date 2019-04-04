@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        31
-Release:        0.2
+Release:        0.3
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -606,6 +606,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Thu Apr 04 2019 Kalev Lember <klember@redhat.com> - 31-0.3
+- Enable the Fedora flatpak repos service (#1696225)
+
 * Wed Mar 20 2019 Jason L Tibbitts III <tibbs@math.uh.edu> - 31-0.2
 - Allow bootstrap suffix to be overridden.
 
