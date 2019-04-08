@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        31
-Release:        0.3
+Release:        0.4
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -33,6 +33,7 @@ Source18:       80-iot.preset
 Source19:       distro-template.swidtag
 Source20:       distro-edition-template.swidtag
 Source21:       iot-clevis.conf
+Source22:       80-coreos.preset
 
 BuildArch:      noarch
 
@@ -481,6 +482,9 @@ install -Dm0644 %{SOURCE11} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %{SOURCE12} -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 install -Dm0644 %{SOURCE13} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 
+# Fedora CoreOS
+install -Dm0644 %{SOURCE22} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+
 # Fedora IoT
 install -Dm0644 %{SOURCE18} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 mkdir -p %{buildroot}/%{_sysconfdir}/dracut.conf.d
@@ -550,6 +554,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %files coreos
+%{_prefix}/lib/systemd/system-preset/80-coreos.preset
 %{_prefix}/lib/os-release.coreos
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.coreos
 
@@ -606,6 +611,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Mon Apr 8 2019 Michael Nguyen <mnguyen@redhat.com> - 31-0.4
+- Add presets for CoreOS
+
 * Thu Apr 04 2019 Kalev Lember <klember@redhat.com> - 31-0.3
 - Enable the Fedora flatpak repos service (#1696225)
 
