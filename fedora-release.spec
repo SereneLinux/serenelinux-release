@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        1
+Release:        2
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -33,6 +33,7 @@ Source18:       80-iot.preset
 Source19:       distro-template.swidtag
 Source20:       distro-edition-template.swidtag
 Source21:       iot-clevis.conf
+Source22:       80-coreos.preset
 
 BuildArch:      noarch
 
@@ -494,6 +495,9 @@ install -Dm0644 %{SOURCE11} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %{SOURCE12} -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 install -Dm0644 %{SOURCE13} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 
+# Fedora CoreOS
+install -Dm0644 %{SOURCE22} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+
 # Fedora IoT
 install -Dm0644 %{SOURCE18} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 mkdir -p %{buildroot}/%{_sysconfdir}/dracut.conf.d
@@ -563,6 +567,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %files coreos
+%{_prefix}/lib/systemd/system-preset/80-coreos.preset
 %{_prefix}/lib/os-release.coreos
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.coreos
 
@@ -619,6 +624,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Apr 23 2019 Robert Fairley <rfairley@redhat.com> - 30-2
+- Add presets for CoreOS (rhbz:1702375)
+
 * Thu Apr 18 2019 Mohan Boddu <mboddu@bhujji.com> - 30-1
 - Setup for F30 Final
 
