@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        9
+Release:        10
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -41,6 +41,7 @@ Obsoletes:      convert-to-edition < 29-0.15
 Provides:       redhat-release
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 
 Requires:       fedora-repos(%{version}) >= 1
 BuildArch:      noarch
@@ -635,6 +636,9 @@ uninstall_edition("xfce")
 
 
 %changelog
+* Wed Apr 10 2019 Stephen Gallagher <sgallagh@redhat.com> - 29-10
+- Add Provides for the base module for Fedora (BZ #1688462)
+
 * Fri Jan 18 2019 Robert Fairley <rfairley@redhat.com> - 29-9
 - Own /etc/issue.d directory.
 
