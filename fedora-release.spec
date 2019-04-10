@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.25
+Release:        0.26
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -45,6 +45,7 @@ Provides:       fedora-release-variant = %{version}-%{release}
 Conflicts:      system-release
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
 BuildRequires:  redhat-rpm-config > 121-1
@@ -80,6 +81,7 @@ Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
 
@@ -97,6 +99,7 @@ Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
 
@@ -114,6 +117,7 @@ Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
 
@@ -131,6 +135,7 @@ Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
 
@@ -148,6 +153,7 @@ Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
 
@@ -165,6 +171,7 @@ Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
 
@@ -182,6 +189,7 @@ Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
 
@@ -199,6 +207,7 @@ Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
 
@@ -216,6 +225,7 @@ Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
 
@@ -233,6 +243,7 @@ Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
 
@@ -250,6 +261,7 @@ Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
 
@@ -267,6 +279,7 @@ Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 Provides:       system-release-product
 
@@ -285,6 +298,7 @@ Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
 
@@ -605,6 +619,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Wed Apr 10 2019 Stephen Gallagher <sgallagh@redhat.com> - 30-0.26
+- Add Provides for the base module for Fedora (BZ #1688462)
+
 * Thu Apr 04 2019 Kalev Lember <klember@redhat.com> - 30-0.25
 - Enable the Fedora flatpak repos service (#1696225)
 
