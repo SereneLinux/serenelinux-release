@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        0.26
+Release:        1
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -67,7 +67,7 @@ Provides:   redhat-release
 Obsoletes:  fedora-release < 30-0.12
 
 Obsoletes:  convert-to-edition < 30-0.7
-Requires:   fedora-repos(%{version})
+Requires:   fedora-repos(%{version}) >= 1
 
 %description common
 Release files common to all Editions and Spins of Fedora
@@ -619,6 +619,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Thu Apr 18 2019 Mohan Boddu <mboddu@bhujji.com> - 30-1
+- Setup for F30 Final
+
 * Wed Apr 10 2019 Stephen Gallagher <sgallagh@redhat.com> - 30-0.26
 - Add Provides for the base module for Fedora (BZ #1688462)
 
