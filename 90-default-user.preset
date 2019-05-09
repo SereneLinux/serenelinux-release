@@ -16,3 +16,4 @@ enable snapd.session-agent.socket
 
 # https://src.fedoraproject.org/rpms/fedora-release/pull-request/80
 enable obex.service
+enable grub-boot-success.timer
