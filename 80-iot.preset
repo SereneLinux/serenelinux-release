@@ -1,3 +1,13 @@
 #
 # Fedora IoT
 #
+
+# greenboot generic health checking framework
+enable greenboot-grub2-set-counter.service
+enable greenboot-grub2-set-success.service
+enable greenboot-healthcheck.service
+enable greenboot-rpm-ostree-grub2-check-fallback.service
+enable greenboot-status.service
+enable greenboot.service
+enable redboot-auto-reboot.service
+enable redboot.service
