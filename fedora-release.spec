@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        2
+Release:        3
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -624,6 +624,10 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+
+* Tue May 14 2019 Robert Fairley <rfairley@redhat.com> - 30-3
+- Remove presets from 80-coreos.preset and add note referring to FCOS overlay RPM
+
 * Tue Apr 23 2019 Robert Fairley <rfairley@redhat.com> - 30-2
 - Add presets for CoreOS (rhbz:1702375)
 

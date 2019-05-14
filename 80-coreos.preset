@@ -1,8 +1,6 @@
 #
 # Fedora CoreOS
 #
-enable coreos-growpart.service
-enable console-login-helper-messages-issuegen.service
-enable console-login-helper-messages-motdgen.service
-# This one is from https://github.com/coreos/ignition-dracut
-enable ignition-firstboot-complete.service
+# Presets for Fedora CoreOS currently live in the FCOS overlay RPM:
+# https://github.com/coreos/fedora-coreos-config/blob/master/overlay/usr/lib/systemd/system-preset/42-coreos.preset
+# Please update presets at the above location.
