@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        31
-Release:        0.5
+Release:        0.6
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -625,6 +625,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue May 14 2019 Robert Fairley <rfairley@redhat.com> - 31-0.6
+- Remove presets from 80-coreos.preset and add note referring to FCOS overlay RPM
+
 * Wed Apr 10 2019 Stephen Gallagher <sgallagh@redhat.com> - 31-0.5
 - Add Provides for the base module for Fedora (BZ #1688462)
 
