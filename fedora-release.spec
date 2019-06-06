@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        3
+Release:        4
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -637,6 +637,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Thu Jun 06 2019 Stephen Gallagher <sgallagh@redhat.com> - 30-4
+- Work around upgrade bug
+- Resolves: rhbz#1710543
 
 * Tue May 14 2019 Robert Fairley <rfairley@redhat.com> - 30-3
 - Remove presets from 80-coreos.preset and add note referring to FCOS overlay RPM
