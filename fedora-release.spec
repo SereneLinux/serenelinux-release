@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        31
-Release:        0.6
+Release:        0.7
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -638,6 +638,10 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Thu Jun 06 2019 Stephen Gallagher <sgallagh@redhat.com> - 31-0.7
+- Work around upgrade bug
+- Resolves: rhbz#1710543
+
 * Tue May 14 2019 Robert Fairley <rfairley@redhat.com> - 31-0.6
 - Remove presets from 80-coreos.preset and add note referring to FCOS overlay RPM
 
