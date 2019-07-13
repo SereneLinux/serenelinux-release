@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        31
-Release:        0.7
+Release:        0.8
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -612,7 +612,10 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 %files silverblue
 %{_prefix}/lib/os-release.silverblue
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.silverblue
-
+# Keep this in sync with workstation below
+%{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
+%{_prefix}/lib/systemd/system-preset/80-workstation.preset
+%attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
 
 %files snappy
 %{_prefix}/lib/os-release.snappy
@@ -627,6 +630,7 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 %files workstation
 %{_prefix}/lib/os-release.workstation
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.workstation
+# Keep this in sync with silverblue above
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 %attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
@@ -638,6 +642,11 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Sat Jul 13 2019 Colin Walters <walters@verbum.org> - 31-0.8
+- Sync Silverblue with Workstation
+  In particular, it should have the same "ssh disabled by default" etc.
+  https://discussion.fedoraproject.org/t/strange-etc-os-release-contents-on-silverblue/2024/2
+
 * Thu Jun 06 2019 Stephen Gallagher <sgallagh@redhat.com> - 31-0.7
 - Work around upgrade bug
 - Resolves: rhbz#1710543
