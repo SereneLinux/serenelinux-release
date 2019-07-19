@@ -13,3 +13,6 @@ disable sshd.service
 enable cups.socket
 enable cups.path
 disable cups.service
+
+# enable zram swap by default on workstation
+enable zram-swap.service
