@@ -15,4 +15,5 @@ enable cups.path
 disable cups.service
 
 # enable zram swap by default on workstation
+# https://bugzilla.redhat.com/show_bug.cgi?id=1731598
 enable zram-swap.service
