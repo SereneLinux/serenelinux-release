@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        29
-Release:        10
+Release:        11
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -636,6 +636,9 @@ uninstall_edition("xfce")
 
 
 %changelog
+* Wed Jul 31 2019 Mohan Boddu <mboddu@bhujji.com> - 29-11
+- Enable the session agent for snaps
+
 * Wed Apr 10 2019 Stephen Gallagher <sgallagh@redhat.com> - 29-10
 - Add Provides for the base module for Fedora (BZ #1688462)
 
