@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        30
-Release:        4
+Release:        5
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -637,6 +637,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Wed Jul 31 2019 Mohan Boddu <mboddu@bhujji.com> - 30-5
+- Enable the session agent for snaps
+
 * Thu Jun 06 2019 Stephen Gallagher <sgallagh@redhat.com> - 30-4
 - Work around upgrade bug
 - Resolves: rhbz#1710543
