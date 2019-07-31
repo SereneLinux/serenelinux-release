@@ -646,6 +646,8 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 - Sync Silverblue with Workstation
   In particular, it should have the same "ssh disabled by default" etc.
   https://discussion.fedoraproject.org/t/strange-etc-os-release-contents-on-silverblue/2024/2
+- Enable zram-swap on workstation installations
+- Enable the session agent for snaps
 
 * Thu Jun 06 2019 Stephen Gallagher <sgallagh@redhat.com> - 31-0.7
 - Work around upgrade bug
