@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        31
-Release:        0.8
+Release:        0.9
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -642,6 +642,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Sat Aug 10 2019 Tom Callaway <spot@fedoraproject.org> - 31-0.9
+- update legal text (reflect current release, refer to Fedora OS instead of Fedora)
+
 * Sat Jul 13 2019 Colin Walters <walters@verbum.org> - 31-0.8
 - Sync Silverblue with Workstation
   In particular, it should have the same "ssh disabled by default" etc.

@@ -1,15 +1,16 @@
 = License =
 
-Fedora is a compilation of software packages, each under its own
-license.  The compilation itself is released under the MIT license
-(see the file LICENSE). However, this compilation license does not
-supersede the licenses of code and content contained in Fedora, which
-conform to the legal guidelines described at
+The Fedora Operating System is a compilation of software packages, 
+each under its own license. The compilation itself is released 
+under the MIT license (see the file LICENSE). However, this 
+compilation license does not supersede the licenses of code and 
+content contained in the Fedora Operating System, which conform 
+to the legal guidelines described at
 https://fedoraproject.org/wiki/Licensing:Main?rd=Licensing.
 
 = Source Availability =
 
-The accompanying Fedora 29 release includes copyrighted
+The accompanying Fedora 31 release includes copyrighted
 software that is licensed under the GNU General Public License and
 other licenses. You may obtain the complete machine-readable source
 code corresponding to portions of this release by sending a check or
@@ -17,10 +18,10 @@ money order in the amount of US $5.00 to:
 
 VP, Legal - Products & Technologies | Red Hat, Inc. | 100 East Davie Street | Raleigh, NC 27601 USA
 
-Please write "source for Fedora 29" in the memo line of your payment.
+Please write "source for Fedora 31" in the memo line of your payment.
 
 You may also access a copy of this source code at:
-http://dl.fedoraproject.org/pub/fedora/linux/releases/29/Everything/source/
+http://dl.fedoraproject.org/pub/fedora/linux/releases/31/Everything/source/
 
 This offer is valid to anyone in receipt of this information and shall
 expire three years following the date of the final distribution of
