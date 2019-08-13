@@ -1,9 +1,9 @@
-%define release_name Rawhide
-%define dist_version 32
-%define bug_version rawhide
+%define release_name Thirty one
+%define dist_version 31
+%define bug_version 31
 
 # Change this when branching to fNN
-%define doc_version rawhide
+%define doc_version f31
 
 # Changes should be submitted as pull requests under
 #     https://src.fedoraproject.org/rpms/fedora-release
@@ -13,8 +13,8 @@
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        32
-Release:        0.1
+Version:        31
+Release:        0.10
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -642,8 +642,8 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
-* Tue Aug 13 2019 Mohan Boddu <mboddu@bhujji.com> - 32-0.1
-- Setup for rawhide being F32
+* Tue Aug 13 2019 Tomas Hrcka <thrcka@redhat.com> - 31-0.10
+- Branch f31 from rawhide
 
 * Sat Aug 10 2019 Tom Callaway <spot@fedoraproject.org> - 31-0.9
 - update legal text (reflect current release, refer to Fedora OS instead of Fedora)
