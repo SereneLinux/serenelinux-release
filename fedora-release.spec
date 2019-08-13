@@ -644,6 +644,7 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 %changelog
 * Tue Aug 13 2019 Mohan Boddu <mboddu@bhujji.com> - 32-0.1
 - Setup for rawhide being F32
+- Disable zram-swap service (sgallagh)
 
 * Sat Aug 10 2019 Tom Callaway <spot@fedoraproject.org> - 31-0.9
 - update legal text (reflect current release, refer to Fedora OS instead of Fedora)
