@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        32
-Release:        0.1
+Release:        0.2
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -481,7 +481,7 @@ cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 
 %%fedora              %{dist_version}
 %%__bootstrap         ~bootstrap
-%%dist                %%{!?distprefix0:%%{?distprefix}}%%{expand:%%{lua:for i=0,9999 do print("%%{?distprefix" .. i .."}") end}}.fc%{dist_version}%%{?with_bootstrap:%{__bootstrap}}
+%%dist                %%{!?distprefix0:%%{?distprefix}}%%{expand:%%{lua:for i=0,9999 do print("%%{?distprefix" .. i .."}") end}}.fc%%{fedora}%%{?with_bootstrap:%{__bootstrap}}
 %%fc%{dist_version}                1
 EOF
 
@@ -642,6 +642,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Thu Aug 15 2019 Miro Hrončok <mhroncok@redhat.com> - 32-0.2
+- RPM macros: Redefining %%fedora now changes %%dist
+
 * Tue Aug 13 2019 Mohan Boddu <mboddu@bhujji.com> - 32-0.1
 - Setup for rawhide being F32
 - Disable zram-swap service (sgallagh)
