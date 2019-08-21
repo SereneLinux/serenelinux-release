@@ -1,4 +1,4 @@
-%define release_name Thirty one
+%define release_name Thirty One
 %define dist_version 31
 %define bug_version 31
 
@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        31
-Release:        0.10
+Release:        0.11
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -642,6 +642,10 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Wed Aug 21 2019 Stephen Gallagher <sgallagh@redhat.com> - 31-0.11
+- Fix typo in %%release_name
+- Resolves: rhbz#1744048
+
 * Tue Aug 13 2019 Tomas Hrcka <thrcka@redhat.com> - 31-0.10
 - Branch f31 from rawhide
 
