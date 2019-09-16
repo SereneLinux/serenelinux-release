@@ -187,11 +187,6 @@ enable mcelog.service
 # https://bugzilla.redhat.com/show_bug.cgi?id=1312018
 enable opal-prd.service
 
-# virtlog.service is sometimes used by VMs started by libvirt.service
-# Enable virtlog.socket to have it socket activated
-# https://bugzilla.redhat.com/show_bug.cgi?id=1290357
-enable virtlogd.socket
-
 # lircd is the Linux Infrared Control daemon
 # Starting with version 0.9.4, it requires no manual configuration
 # https://bugzilla.redhat.com/show_bug.cgi?id=1340061
