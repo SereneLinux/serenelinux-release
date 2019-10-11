@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        31
-Release:        0.11
+Release:        1
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -68,7 +68,7 @@ Provides:   redhat-release
 Obsoletes:  fedora-release < 30-0.12
 
 Obsoletes:  convert-to-edition < 30-0.7
-Requires:   fedora-repos(%{version})
+Requires:   fedora-repos(%{version}) >= 1
 
 %description common
 Release files common to all Editions and Spins of Fedora
@@ -642,6 +642,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Thu Oct 10 2019 Mohan Boddu <mboddu@bhujji.com> 31-1
+- Setup for F31 Final
+
 * Wed Aug 21 2019 Stephen Gallagher <sgallagh@redhat.com> - 31-0.11
 - Fix typo in %%release_name
 - Resolves: rhbz#1744048
