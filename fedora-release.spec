@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        31
-Release:        1
+Release:        2
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -396,6 +396,11 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
 echo "VARIANT=\"CoreOS\"" >> %{buildroot}%{_prefix}/lib/os-release.coreos
 echo "VARIANT_ID=coreos" >> %{buildroot}%{_prefix}/lib/os-release.coreos
 sed -i -e "s|(%{release_name})|(CoreOS)|g" %{buildroot}%{_prefix}/lib/os-release.coreos
+sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-coreos/"|' %{buildroot}%{_prefix}/lib/os-release.coreos
+sed -i -e 's|HOME_URL=.*|HOME_URL="https://getfedora.org/coreos/"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
+sed -i -e 's|SUPPORT_URL=.*|SUPPORT_URL="https://github.com/coreos/fedora-coreos-tracker/"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
+sed -i -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://github.com/coreos/fedora-coreos-tracker/"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
+sed -i -e 's|PRETTY_NAME=.*|PRETTY_NAME="Fedora CoreOS %{dist_version}"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/CoreOS/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.coreos
 
 # IoT
@@ -642,6 +647,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Mon Oct 21 2019 Michael Nguyen <mnguyen@redhat.com> - 31-2
+- Use CoreOS specific URLs and information in os-release
+
 * Thu Oct 10 2019 Mohan Boddu <mboddu@bhujji.com> 31-1
 - Setup for F31 Final
 
