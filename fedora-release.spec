@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        32
-Release:        0.3
+Release:        0.4
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -32,7 +32,6 @@ Source17:       org.projectatomic.rpmostree1.rules
 Source18:       80-iot.preset
 Source19:       distro-template.swidtag
 Source20:       distro-edition-template.swidtag
-Source21:       iot-clevis.conf
 Source22:       80-coreos.preset
 
 BuildArch:      noarch
@@ -595,7 +594,6 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 %{_prefix}/lib/os-release.iot
 %{_prefix}/lib/systemd/system-preset/80-iot.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
-%{_sysconfdir}/dracut.conf.d/iot-clevis.conf
 
 
 %files kde
@@ -647,6 +645,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Wed Oct 30 2019 Peter Robinson <pbrobinson@fedoraproject.org> 32-0.4
+- Drop clevis IoT defaults change
+
 * Mon Oct 21 2019 Michael Nguyen <mnguyen@redhat.com> - 32-0.3
 - Update os-release information for Fedora CoreOS
 
