@@ -505,8 +505,6 @@ install -Dm0644 %{SOURCE22} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 
 # Fedora IoT
 install -Dm0644 %{SOURCE18} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
-mkdir -p %{buildroot}/%{_sysconfdir}/dracut.conf.d
-install -Dm0644 %{SOURCE21} -t %{buildroot}/%{_sysconfdir}/dracut.conf.d/
 
 # Fedora Server
 install -Dm0644 %{SOURCE14} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
