@@ -13,3 +13,7 @@ disable sshd.service
 enable cups.socket
 enable cups.path
 disable cups.service
+
+# enable earlyoom by default on workstation
+# https://pagure.io/fedora-workstation/issue/119
+enable earlyoom.service
