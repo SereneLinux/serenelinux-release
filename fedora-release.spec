@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        32
-Release:        0.4
+Release:        0.5
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -498,7 +498,9 @@ install -pm 0644 %{SOURCE2} licenses/Fedora-Legal-README.txt
 install -Dm0644 %{SOURCE10} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %{SOURCE11} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %{SOURCE12} -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
+# The same file is installed in two places with identical contents
 install -Dm0644 %{SOURCE13} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %{SOURCE13} -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 
 # Fedora CoreOS
 install -Dm0644 %{SOURCE22} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
@@ -553,6 +555,7 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
 %dir %{_prefix}/lib/systemd/user-preset/
 %{_prefix}/lib/systemd/user-preset/90-default-user.preset
+%{_prefix}/lib/systemd/user-preset/99-default-disable.preset
 %dir %{_prefix}/lib/systemd/system-preset/
 %{_prefix}/lib/systemd/system-preset/85-display-manager.preset
 %{_prefix}/lib/systemd/system-preset/90-default.preset
@@ -643,6 +646,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Fri Feb  7 2020 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 32-0.5
+- Add 'disable *' default preset for user units (#1468501)
+
 * Wed Oct 30 2019 Peter Robinson <pbrobinson@fedoraproject.org> 32-0.4
 - Drop clevis IoT defaults change
 
