@@ -1,5 +1,5 @@
 %define release_name Rawhide
-%define dist_version 32
+%define dist_version 33
 %define bug_version rawhide
 
 # Change this when branching to fNN
@@ -13,8 +13,8 @@
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        32
-Release:        0.5
+Version:        33
+Release:        0.1
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -646,6 +646,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Tue Feb 11 2020 Mohan Boddu <mboddu@bhujji.com> - 33-0.1
+- Setup for rawhide being F33
+
 * Fri Feb  7 2020 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 32-0.5
 - Add 'disable *' default preset for user units (#1468501)
 
