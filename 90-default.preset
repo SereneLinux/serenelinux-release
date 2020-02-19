@@ -284,3 +284,7 @@ enable flatpak-add-fedora-repos.service
 
 # Run fstrim weekly on filesystems listed in fstab
 enable fstrim.timer
+
+# oneshot to generate kata VM appliance at host bootup
+# for the booted kernel
+enable kata-osbuilder-generate.service
