@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        31
-Release:        2
+Release:        3
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -538,6 +538,21 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
+%posttrans common -p <lua>
+-- Migrate users affected by rhbz#1780827 away from the eclipse module
+-- But only do it once
+original = "%{_sysconfdir}/dnf/modules.d/eclipse.module"
+moved = original .. ".rpmmoved"
+if not posix.stat(moved) then
+  if posix.stat(original) then
+    os.rename(original, moved)
+    print("Disabling eclipse module. See https://fedoraproject.org/wiki/Common_F31_bugs#eclipse-module-reset")
+  else
+    io.open(moved, "w"):close()
+  end
+end
+
+
 %files common
 %license licenses/LICENSE licenses/Fedora-Legal-README.txt
 %{_prefix}/lib/fedora-release
@@ -647,6 +662,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Wed Mar 18 2020 Stephen Gallagher <sgallagh@redhat.com> - 31-3
+- Reset eclipse module (rhbz#1780827)
+
 * Mon Oct 21 2019 Michael Nguyen <mnguyen@redhat.com> - 31-2
 - Use CoreOS specific URLs and information in os-release
 
