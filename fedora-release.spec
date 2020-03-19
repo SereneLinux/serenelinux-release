@@ -651,6 +651,8 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 %changelog
 * Wed Mar 18 2020 Peter Robinson <pbrobinson@fedoraproject.org> 33-0.2
 - Add IoT provisioning URL config
+- Enable fstrim.timer (crobinso)
+- Enable kata-osbuilder-generate.service (crobinso)
 
 * Tue Feb 11 2020 Mohan Boddu <mboddu@bhujji.com> - 33-0.1
 - Setup for rawhide being F33
