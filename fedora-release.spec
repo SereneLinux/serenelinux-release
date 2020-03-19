@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        32
-Release:        0.6
+Release:        0.7
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -33,6 +33,7 @@ Source18:       80-iot.preset
 Source19:       distro-template.swidtag
 Source20:       distro-edition-template.swidtag
 Source22:       80-coreos.preset
+Source23:       zezere-ignition-url
 
 BuildArch:      noarch
 
@@ -409,6 +410,7 @@ echo "VARIANT=\"IoT Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.iot
 echo "VARIANT_ID=iot" >> %{buildroot}%{_prefix}/lib/os-release.iot
 sed -i -e "s|(%{release_name})|(IoT Edition)|g" %{buildroot}%{_prefix}/lib/os-release.iot
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/IoT/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
+install -p %{SOURCE23} %{buildroot}/%{_prefix}/lib/
 
 # KDE Plasma
 cp -p %{buildroot}%{_prefix}/lib/os-release \
@@ -595,6 +597,7 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 %{_prefix}/lib/os-release.iot
 %{_prefix}/lib/systemd/system-preset/80-iot.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
+%{_prefix}/lib/zezere-ignition-url
 
 
 %files kde
@@ -646,6 +649,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Wed Mar 18 2020 Peter Robinson <pbrobinson@fedoraproject.org> 32-0.7
+- Add IoT provisioning URL config
+
 * Tue Feb 11 2020 Mohan Boddu <mboddu@bhujji.com> - 32-0.6
 - Branching F32 from rawhide
 
