@@ -288,3 +288,7 @@ enable fstrim.timer
 # oneshot to generate kata VM appliance at host bootup
 # for the booted kernel
 enable kata-osbuilder-generate.service
+
+# Enable rotation of system log files
+# https://bugzilla.redhat.com/show_bug.cgi?id=1655153#c4
+enable logrotate.timer
