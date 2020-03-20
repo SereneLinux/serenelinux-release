@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        32
-Release:        0.7
+Release:        0.8
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -649,6 +649,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Fri Mar 20 2020 Patrick Uiterwijk <puiterwijk@redhat.com> 32-0.8
+- Enable IoT provisioning service
+
 * Wed Mar 18 2020 Peter Robinson <pbrobinson@fedoraproject.org> 32-0.7
 - Add IoT provisioning URL config
 - Enable fstrim.timer (crobinso)
