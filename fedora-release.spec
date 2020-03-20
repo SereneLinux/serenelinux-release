@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        0.2
+Release:        0.3
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -649,6 +649,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Fri Mar 20 2020 Patrick Uiterwijk <puiterwijk@redhat.com> 33-0.3
+- Enable IoT provisioning service
+
 * Wed Mar 18 2020 Peter Robinson <pbrobinson@fedoraproject.org> 33-0.2
 - Add IoT provisioning URL config
 - Enable fstrim.timer (crobinso)

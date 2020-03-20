@@ -11,3 +11,6 @@ enable greenboot-status.service
 enable greenboot.service
 enable redboot-auto-reboot.service
 enable redboot.service
+
+# zezere_ignition provides first-boot provisioning and configuration
+enable zezere_ignition.timer
