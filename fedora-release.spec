@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        32
-Release:        0.8
+Release:        0.9
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -649,6 +649,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Mon Mar 23 2020 Stephen Gallagher <sgallagh@redhat.com> - 32-0.9
+- Enable log rotation (BZ#1655153)
+
 * Fri Mar 20 2020 Patrick Uiterwijk <puiterwijk@redhat.com> 32-0.8
 - Enable IoT provisioning service
 
