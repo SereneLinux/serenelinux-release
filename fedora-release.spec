@@ -654,6 +654,7 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 %changelog
 * Mon Apr 01 2020 Christian Glombek <cglombek@redhat.com> 33-0.4
 - Add IoT user preset to disable grub-boot-success.timer
+- Update links in 80-coreos.preset
 
 * Fri Mar 20 2020 Patrick Uiterwijk <puiterwijk@redhat.com> 33-0.3
 - Enable IoT provisioning service
