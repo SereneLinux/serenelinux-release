@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        32
-Release:        0.9
+Release:        0.10
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -34,6 +34,7 @@ Source19:       distro-template.swidtag
 Source20:       distro-edition-template.swidtag
 Source22:       80-coreos.preset
 Source23:       zezere-ignition-url
+Source24:       80-iot-user.preset
 
 BuildArch:      noarch
 
@@ -509,6 +510,7 @@ install -Dm0644 %{SOURCE22} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 
 # Fedora IoT
 install -Dm0644 %{SOURCE18} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %{SOURCE24} -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 
 # Fedora Server
 install -Dm0644 %{SOURCE14} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
@@ -596,6 +598,7 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 %files iot
 %{_prefix}/lib/os-release.iot
 %{_prefix}/lib/systemd/system-preset/80-iot.preset
+%{_prefix}/lib/systemd/user-preset/80-iot-user.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
 %{_prefix}/lib/zezere-ignition-url
 
@@ -649,6 +652,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Mon Apr 01 2020 Christian Glombek <cglombek@redhat.com> 32-0.10
+- Add IoT user preset to disable grub-boot-success.timer
+
 * Mon Mar 23 2020 Stephen Gallagher <sgallagh@redhat.com> - 32-0.9
 - Enable log rotation (BZ#1655153)
 
