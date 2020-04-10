@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        32
-Release:        0.10
+Release:        1
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -69,7 +69,7 @@ Provides:   redhat-release
 Obsoletes:  fedora-release < 30-0.12
 
 Obsoletes:  convert-to-edition < 30-0.7
-Requires:   fedora-repos(%{version})
+Requires:   fedora-repos(%{version}) >= 1
 
 %description common
 Release files common to all Editions and Spins of Fedora
@@ -652,6 +652,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Thu Apr 09 2020 Mohan Boddu <mboddu@bhujji.com> - 32-1
+- Setup for F32 Final
+
 * Mon Apr 01 2020 Christian Glombek <cglombek@redhat.com> 32-0.10
 - Add IoT user preset to disable grub-boot-success.timer
 
