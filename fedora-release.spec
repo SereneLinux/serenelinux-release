@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        0.4
+Release:        0.5
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -335,7 +335,7 @@ VERSION_ID=%{dist_version}
 VERSION_CODENAME=""
 PLATFORM_ID="platform:f%{dist_version}"
 PRETTY_NAME="Fedora %{dist_version} (%{release_name})"
-ANSI_COLOR="0;34"
+ANSI_COLOR="0;38;2;60;110;180"
 LOGO=fedora-logo-icon
 CPE_NAME="cpe:/o:fedoraproject:fedora:%{dist_version}"
 HOME_URL="https://fedoraproject.org/"
@@ -652,6 +652,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Sun Apr 12 2020 Kevin Fenzi <kevin@scrye.com> - 33-0.5
+- Update color to Fedora blue. Fixes bug #1823099
+
 * Mon Apr 01 2020 Christian Glombek <cglombek@redhat.com> 33-0.4
 - Add IoT user preset to disable grub-boot-success.timer
 - Update links in 80-coreos.preset
