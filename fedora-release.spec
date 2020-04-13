@@ -66,9 +66,6 @@ Suggests:   fedora-release
 
 Obsoletes:  redhat-release
 Provides:   redhat-release
-Obsoletes:  fedora-release < 30-0.12
-
-Obsoletes:  convert-to-edition < 30-0.7
 Requires:   fedora-repos(%{version})
 
 %description common
@@ -528,18 +525,6 @@ sed -e "s#\$version#%{bug_version}#g" -e 's/<!--.*-->//;/^$/d' %{SOURCE19} > %{b
 install -d %{buildroot}%{_sysconfdir}/swid/swidtags.d
 ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.org
 
-# Work around upgrade bug
-# See https://bugzilla.redhat.com/show_bug.cgi?id=1710543
-# If we are upgrading from a system with two fedora-release-$EDITION packages
-# on it, if DNF upgrade decides to keep the drop that doesn't match
-# /usr/lib/variant, it will forcibly create a /usr/lib/os-release symlink
-# after the new upgraded package is installed, resulting in an unbootable
-# system. As a hack, we'll assume ownership of /usr/lib/variant and set it to
-# a nonexistent edition name, to ensure that no symlink gets created.
-# This hack and this file can be dropped in Fedora 32, since we don't support
-# upgrades from Fedora N-3.
-echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
-
 
 %files common
 %license licenses/LICENSE licenses/Fedora-Legal-README.txt
@@ -555,7 +540,6 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 %attr(0644,root,root) %{_prefix}/lib/issue.net
 %config(noreplace) %{_sysconfdir}/issue.net
 %dir %{_sysconfdir}/issue.d
-%attr(0644,root,root) %{_prefix}/lib/variant
 %attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
 %dir %{_prefix}/lib/systemd/user-preset/
 %{_prefix}/lib/systemd/user-preset/90-default-user.preset
