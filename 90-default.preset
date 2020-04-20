@@ -292,3 +292,7 @@ enable kata-osbuilder-generate.service
 # Enable rotation of system log files
 # https://bugzilla.redhat.com/show_bug.cgi?id=1655153#c4
 enable logrotate.timer
+
+# Enable regular update of SpamAssassin data files
+# https://bugzilla.redhat.com/show_bug.cgi?id=1651002
+enable sa-update.timer
