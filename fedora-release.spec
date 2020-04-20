@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        0.5
+Release:        0.6
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -324,14 +324,24 @@ ln -s fedora-release %{buildroot}%{_sysconfdir}/redhat-release
 ln -s fedora-release %{buildroot}%{_sysconfdir}/system-release
 
 # Create the common os-release file
+%{lua:
+  function starts_with(str, start)
+   return str:sub(1, #start) == start
+  end
+}
+%define starts_with(str,prefix) (%{expand:%%{lua:print(starts_with(%1, %2) and "1" or "0")}})
+%if %{starts_with "a%{release}" "a0"}
+  %global prerelease \ Prerelease
+%endif
+
 cat << EOF >>%{buildroot}%{_prefix}/lib/os-release
 NAME=Fedora
-VERSION="%{dist_version} (%{release_name})"
+VERSION="%{dist_version} (%{release_name}%{?prerelease})"
 ID=fedora
 VERSION_ID=%{dist_version}
 VERSION_CODENAME=""
 PLATFORM_ID="platform:f%{dist_version}"
-PRETTY_NAME="Fedora %{dist_version} (%{release_name})"
+PRETTY_NAME="Fedora %{dist_version} (%{release_name}%{?prerelease})"
 ANSI_COLOR="0;38;2;60;110;180"
 LOGO=fedora-logo-icon
 CPE_NAME="cpe:/o:fedoraproject:fedora:%{dist_version}"
@@ -636,6 +646,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Mon Apr 20 2020 Stephen Gallagher <sgallagh@redhat.com> - 33-0.6
+- Add "Prerelease" notation to PRETTY_NAME and VERSION in os-release
+
 * Sun Apr 12 2020 Kevin Fenzi <kevin@scrye.com> - 33-0.5
 - Update color to Fedora blue. Fixes bug #1823099
 
