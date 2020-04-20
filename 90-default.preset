@@ -281,3 +281,7 @@ enable docker.socket
 # Enable the service for adding Fedora OCI repos to flatpak
 # https://bugzilla.redhat.com/show_bug.cgi?id=1696225
 enable flatpak-add-fedora-repos.service
+
+# Enable regular update of SpamAssassin data files
+# https://bugzilla.redhat.com/show_bug.cgi?id=1651002
+enable sa-update.timer
