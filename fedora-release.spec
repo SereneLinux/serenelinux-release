@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        0.6
+Release:        0.7
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -41,14 +41,16 @@ BuildArch:      noarch
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 
-# We need to Provides: and Conflicts: system release here and in each
-# of the fedora-release-$VARIANT subpackages to ensure that only one
-# may be installed on the system at a time.
-Conflicts:      system-release
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-basic if nothing else is already doing so.
+Recommends:     fedora-release-identity-basic
+
 
 BuildRequires:  redhat-rpm-config > 121-1
 
@@ -67,21 +69,44 @@ Suggests:   fedora-release
 Obsoletes:  redhat-release
 Provides:   redhat-release
 Requires:   fedora-repos(%{version})
+Requires:   fedora-release-identity = %{version}-%{release}
+
+# Fedora ships a generic-release package to make the creation of Remixes
+# easier, but it cannot coexist with the fedora-release[-*] packages, so we
+# will explicitly conflict with it.
+Conflicts:  generic-release
 
 %description common
 Release files common to all Editions and Spins of Fedora
+
+
+%package identity-basic
+Summary:        Package providing the basic Fedora identity
+
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-basic
+Provides the necessary files for a Fedora installation that is not identifying
+itself as a particular Edition or Spin.
+
 
 %package cinnamon
 Summary:        Base package for Fedora Cinnamon-specific default configurations
 
 RemovePathPostfixes: .cinnamon
-Conflicts:      system-release
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-cinnamon if nothing else is already doing so.
+Recommends:     fedora-release-identity-cinnamon
 
 
 %description cinnamon
@@ -89,17 +114,34 @@ Provides a base package for Fedora Cinnamon-specific configuration files to
 depend on as well as Cinnamon system defaults.
 
 
+%package identity-cinnamon
+Summary:        Package providing the identity for Fedora Cinnamon Spin
+
+RemovePathPostfixes: .cinnamon
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-cinnamon
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora Cinnamon.
+
+
 %package cloud
 Summary:        Base package for Fedora Cloud-specific default configurations
 
 RemovePathPostfixes: .cloud
-Conflicts:      system-release
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-cloud if nothing else is already doing so.
+Recommends:     fedora-release-identity-cloud
 
 
 %description cloud
@@ -107,17 +149,34 @@ Provides a base package for Fedora Cloud-specific configuration files to
 depend on.
 
 
+%package identity-cloud
+Summary:        Package providing the identity for Fedora Cloud Edition
+
+RemovePathPostfixes: .cloud
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-cloud
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora Cloud Edition.
+
+
 %package container
 Summary:        Base package for Fedora container specific default configurations
 
 RemovePathPostfixes: .container
-Conflicts:      system-release
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-container if nothing else is already doing so.
+Recommends:     fedora-release-identity-container
 
 
 %description container
@@ -125,17 +184,34 @@ Provides a base package for Fedora container specific configuration files to
 depend on as well as container system defaults.
 
 
+%package identity-container
+Summary:        Package providing the identity for Fedora Container Base Image
+
+RemovePathPostfixes: .container
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-container
+Provides the necessary files for a Fedora installation that is identifying
+itself as the Fedora Container Base Image.
+
+
 %package coreos
 Summary:        Base package for Fedora CoreOS-specific default configurations
 
 RemovePathPostfixes: .coreos
-Conflicts:      system-release
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-coreos if nothing else is already doing so.
+Recommends:     fedora-release-identity-coreos
 
 
 %description coreos
@@ -143,17 +219,34 @@ Provides a base package for Fedora CoreOS Host-specific configuration files to
 depend.
 
 
+%package identity-coreos
+Summary:        Package providing the identity for Fedora CoreOS
+
+RemovePathPostfixes: .coreos
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-coreos
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora CoreOS.
+
+
 %package iot
 Summary:        Base package for Fedora IoT specific default configurations
 
 RemovePathPostfixes: .iot
-Conflicts:      system-release
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-iot if nothing else is already doing so.
+Recommends:     fedora-release-identity-iot
 
 
 %description iot
@@ -161,17 +254,34 @@ Provides a base package for Fedora IoT specific configuration files to
 depend on as well as IoT system defaults.
 
 
+%package identity-iot
+Summary:        Package providing the identity for Fedora IoT Edition
+
+RemovePathPostfixes: .iot
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-iot
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora IoT Edition.
+
+
 %package kde
 Summary:        Base package for Fedora KDE Plasma-specific default configurations
 
 RemovePathPostfixes: .kde
-Conflicts:      system-release
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-kde if nothing else is already doing so.
+Recommends:     fedora-release-identity-kde
 
 
 %description kde
@@ -179,17 +289,34 @@ Provides a base package for Fedora KDE Plasma-specific configuration files to
 depend on as well as KDE Plasma system defaults.
 
 
+%package identity-kde
+Summary:        Package providing the identity for Fedora KDE Plasma Spin
+
+RemovePathPostfixes: .kde
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-kde
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora KDE Plasma Spin.
+
+
 %package matecompiz
 Summary:        Base package for Fedora MATE-Compiz-specific default configurations
 
 RemovePathPostfixes: .matecompiz
-Conflicts:      system-release
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-matecompiz if nothing else is already doing so.
+Recommends:     fedora-release-identity-matecompiz
 
 
 %description matecompiz
@@ -197,17 +324,34 @@ Provides a base package for Fedora MATE-compiz-specific configuration files to
 depend on as well as MATE-Compiz system defaults.
 
 
+%package identity-matecompiz
+Summary:        Package providing the identity for Fedora MATE-Compiz Spin
+
+RemovePathPostfixes: .matecompiz
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-matecompiz
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora MATE-Compiz.
+
+
 %package server
 Summary:        Base package for Fedora Server-specific default configurations
 
 RemovePathPostfixes: .server
-Conflicts:      system-release
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-server if nothing else is already doing so.
+Recommends:     fedora-release-identity-server
 
 
 %description server
@@ -215,17 +359,34 @@ Provides a base package for Fedora Server-specific configuration files to
 depend on.
 
 
+%package identity-server
+Summary:        Package providing the identity for Fedora Server Edition
+
+RemovePathPostfixes: .server
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-server
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora Server Edition.
+
+
 %package silverblue
 Summary:        Base package for Fedora Silverblue-specific default configurations
 
 RemovePathPostfixes: .silverblue
-Conflicts:      system-release
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-silverblue if nothing else is already doing so.
+Recommends:     fedora-release-identity-silverblue
 
 
 %description silverblue
@@ -233,17 +394,34 @@ Provides a base package for Fedora Silverblue-specific configuration files to
 depend on as well as Silverblue system defaults.
 
 
+%package identity-silverblue
+Summary:        Package providing the identity for Fedora Silverblue
+
+RemovePathPostfixes: .silverblue
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-silverblue
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora Silverblue.
+
+
 %package snappy
 Summary:        Base package for Fedora snap specific default configurations
 
 RemovePathPostfixes: .snappy
-Conflicts:      system-release
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-snappy if nothing else is already doing so.
+Recommends:     fedora-release-identity-snappy
 
 
 %description snappy
@@ -251,11 +429,23 @@ Provides a base package for Fedora snap specific configuration files to
 depend on as well as Snappy system defaults.
 
 
+%package identity-snappy
+Summary:        Package providing the identity for Fedora Snappy environments
+
+RemovePathPostfixes: .snappy
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-snappy
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora's snappy environment.
+
+
 %package soas
 Summary:        Base package for Fedora Sugar on a Stick-specific default configurations
 
 RemovePathPostfixes: .soas
-Conflicts:      system-release
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
@@ -263,17 +453,34 @@ Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-soas if nothing else is already doing so.
+Recommends:     fedora-release-identity-soas
+
 
 %description soas
 Provides a base package for Fedora Sugar on a Stick-specific configuration files to
 depend on as well as SoaS system defaults.
 
 
+%package identity-soas
+Summary:        Package providing the identity for Fedora Sugar on a Stick
+
+RemovePathPostfixes: .soas
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-soas
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora Sugar on a Stick.
+
+
 %package workstation
 Summary:        Base package for Fedora Workstation-specific default configurations
 
 RemovePathPostfixes: .workstation
-Conflicts:      system-release
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
@@ -282,17 +489,34 @@ Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 Provides:       system-release-product
 
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-workstation if nothing else is already doing so.
+Recommends:     fedora-release-identity-workstation
+
 
 %description workstation
 Provides a base package for Fedora Workstation-specific configuration files to
 depend on.
 
 
+%package identity-workstation
+Summary:        Package providing the identity for Fedora Workstation Edition
+
+RemovePathPostfixes: .workstation
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-workstation
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora Workstation Edition.
+
+
 %package xfce
 Summary:        Base package for Fedora Xfce specific default configurations
 
 RemovePathPostfixes: .xfce
-Conflicts:      system-release
 Provides:       fedora-release = %{version}-%{release}
 Provides:       fedora-release-variant = %{version}-%{release}
 Provides:       system-release
@@ -300,10 +524,28 @@ Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-xfce if nothing else is already doing so.
+Recommends:     fedora-release-identity-xfce
+
 
 %description xfce
 Provides a base package for Fedora Xfce specific configuration files to
 depend on as well as Xfce system defaults.
+
+
+%package identity-xfce
+Summary:        Package providing the identity for Fedora Xfce Spin
+
+RemovePathPostfixes: .xfce
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-xfce
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora Xfce.
 
 
 %prep
@@ -565,31 +807,37 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %files
+%files identity-basic
 %{_prefix}/lib/os-release
 
 
-%files cloud
-%{_prefix}/lib/os-release.cloud
-%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cloud
-
-
 %files cinnamon
+%files identity-cinnamon
 %{_prefix}/lib/os-release.cinnamon
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cinnamon
 
 
+%files cloud
+%files identity-cloud
+%{_prefix}/lib/os-release.cloud
+%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cloud
+
+
 %files container
+%files identity-container
 %{_prefix}/lib/os-release.container
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.container
 
 
 %files coreos
+%files identity-coreos
 %{_prefix}/lib/systemd/system-preset/80-coreos.preset
 %{_prefix}/lib/os-release.coreos
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.coreos
 
 
 %files iot
+%files identity-iot
 %{_prefix}/lib/os-release.iot
 %{_prefix}/lib/systemd/system-preset/80-iot.preset
 %{_prefix}/lib/systemd/user-preset/80-iot-user.preset
@@ -598,22 +846,26 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %files kde
+%files identity-kde
 %{_prefix}/lib/os-release.kde
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
 
 
 %files matecompiz
+%files identity-matecompiz
 %{_prefix}/lib/os-release.matecompiz
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.matecompiz
 
 
 %files server
+%files identity-server
 %{_prefix}/lib/os-release.server
 %{_prefix}/lib/systemd/system-preset/80-server.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.server
 
 
 %files silverblue
+%files identity-silverblue
 %{_prefix}/lib/os-release.silverblue
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.silverblue
 # Keep this in sync with workstation below
@@ -622,16 +874,19 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
 
 %files snappy
+%files identity-snappy
 %{_prefix}/lib/os-release.snappy
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.snappy
 
 
 %files soas
+%files identity-soas
 %{_prefix}/lib/os-release.soas
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.soas
 
 
 %files workstation
+%files identity-workstation
 %{_prefix}/lib/os-release.workstation
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.workstation
 # Keep this in sync with silverblue above
@@ -641,11 +896,16 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %files xfce
+%files identity-xfce
 %{_prefix}/lib/os-release.xfce
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.xfce
 
 
 %changelog
+* Tue Apr 21 2020 Stephen Gallagher <sgallagh@redhat.com> - 33-0.7
+- Add new "identity" subpackages to allow Edition and Spin environment groups
+  to be installed together.
+
 * Mon Apr 20 2020 Stephen Gallagher <sgallagh@redhat.com> - 33-0.6
 - Add "Prerelease" notation to PRETTY_NAME and VERSION in os-release
 

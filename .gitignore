@@ -1,0 +1,7 @@
+.build*.log
+fedora-release-*/*
+*~
+*.swp
+*.src.rpm
+noarch/*
+licenses/*
