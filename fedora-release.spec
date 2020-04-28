@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        31
-Release:        3
+Release:        4
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -662,6 +662,9 @@ end
 
 
 %changelog
+* Tue Apr 28 2020 Stephen Gallagher <sgallagh@redhat.com> - 31-4
+- Enable sa-update.timer
+
 * Wed Mar 18 2020 Stephen Gallagher <sgallagh@redhat.com> - 31-3
 - Reset eclipse module (rhbz#1780827)
 
