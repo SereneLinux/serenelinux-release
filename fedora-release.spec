@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        32
-Release:        1
+Release:        2
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -652,6 +652,9 @@ echo _DISABLED_ > %{buildroot}%{_prefix}/lib/variant
 
 
 %changelog
+* Tue Apr 28 2020 Stephen Gallagher <sgallagh@redhat.com> - 32-2
+- Enable sa-update.timer
+
 * Thu Apr 09 2020 Mohan Boddu <mboddu@bhujji.com> - 32-1
 - Setup for F32 Final
 
