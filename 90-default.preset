@@ -296,3 +296,8 @@ enable logrotate.timer
 # Enable regular update of SpamAssassin data files
 # https://bugzilla.redhat.com/show_bug.cgi?id=1651002
 enable sa-update.timer
+
+# Enable service to automatically rebuild the RPM database
+# on startup when /var/lib/rpm/.rebuilddb exists
+# https://bugzilla.redhat.com/show_bug.cgi?id=1826658
+enable rpmdb-rebuild.service
