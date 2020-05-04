@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        0.7
+Release:        0.8
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -621,7 +621,7 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.cinnamon
 echo "VARIANT=\"Cinnamon\"" >> %{buildroot}%{_prefix}/lib/os-release.cinnamon
 echo "VARIANT_ID=cinnamon" >> %{buildroot}%{_prefix}/lib/os-release.cinnamon
-sed -i -e "s|(%{release_name})|(Cinnamon)|g" %{buildroot}%{_prefix}/lib/os-release.cinnamon
+sed -i -e "s|(%{release_name}%{?prerelease})|(Cinnamon%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.cinnamon
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Cinnamon/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cinnamon
 
 # Cloud
@@ -629,7 +629,7 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.cloud
 echo "VARIANT=\"Cloud Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.cloud
 echo "VARIANT_ID=cloud" >> %{buildroot}%{_prefix}/lib/os-release.cloud
-sed -i -e "s|(%{release_name})|(Cloud Edition)|g" %{buildroot}%{_prefix}/lib/os-release.cloud
+sed -i -e "s|(%{release_name}%{?prerelease})|(Cloud Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.cloud
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Cloud/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cloud
 
 # Container
@@ -637,7 +637,7 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.container
 echo "VARIANT=\"Container Image\"" >> %{buildroot}%{_prefix}/lib/os-release.container
 echo "VARIANT_ID=container" >> %{buildroot}%{_prefix}/lib/os-release.container
-sed -i -e "s|(%{release_name})|(Container Image)|g" %{buildroot}%{_prefix}/lib/os-release.container
+sed -i -e "s|(%{release_name}%{?prerelease})|(Container Image%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.container
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Container/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.container
 
 # CoreOS
@@ -645,7 +645,7 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.coreos
 echo "VARIANT=\"CoreOS\"" >> %{buildroot}%{_prefix}/lib/os-release.coreos
 echo "VARIANT_ID=coreos" >> %{buildroot}%{_prefix}/lib/os-release.coreos
-sed -i -e "s|(%{release_name})|(CoreOS)|g" %{buildroot}%{_prefix}/lib/os-release.coreos
+sed -i -e "s|(%{release_name}%{?prerelease})|(CoreOS%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.coreos
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-coreos/"|' %{buildroot}%{_prefix}/lib/os-release.coreos
 sed -i -e 's|HOME_URL=.*|HOME_URL="https://getfedora.org/coreos/"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
 sed -i -e 's|SUPPORT_URL=.*|SUPPORT_URL="https://github.com/coreos/fedora-coreos-tracker/"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
@@ -658,7 +658,7 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.iot
 echo "VARIANT=\"IoT Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.iot
 echo "VARIANT_ID=iot" >> %{buildroot}%{_prefix}/lib/os-release.iot
-sed -i -e "s|(%{release_name})|(IoT Edition)|g" %{buildroot}%{_prefix}/lib/os-release.iot
+sed -i -e "s|(%{release_name}%{?prerelease})|(IoT Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.iot
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/IoT/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
 install -p %{SOURCE23} %{buildroot}/%{_prefix}/lib/
 
@@ -667,7 +667,7 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.kde
 echo "VARIANT=\"KDE Plasma\"" >> %{buildroot}%{_prefix}/lib/os-release.kde
 echo "VARIANT_ID=kde" >> %{buildroot}%{_prefix}/lib/os-release.kde
-sed -i -e "s|(%{release_name})|(KDE Plasma)|g" %{buildroot}%{_prefix}/lib/os-release.kde
+sed -i -e "s|(%{release_name}%{?prerelease})|(KDE Plasma%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.kde
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/KDE/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
 
 # MATE-Compiz
@@ -675,7 +675,7 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.matecompiz
 echo "VARIANT=\"MATE-Compiz\"" >> %{buildroot}%{_prefix}/lib/os-release.matecompiz
 echo "VARIANT_ID=matecompiz" >> %{buildroot}%{_prefix}/lib/os-release.matecompiz
-sed -i -e "s|(%{release_name})|(MATE-Compiz)|g" %{buildroot}%{_prefix}/lib/os-release.matecompiz
+sed -i -e "s|(%{release_name}%{?prerelease})|(MATE-Compiz%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.matecompiz
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/MATE-Compiz/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.matecompiz
 
 # Server
@@ -683,7 +683,7 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.server
 echo "VARIANT=\"Server Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.server
 echo "VARIANT_ID=server" >> %{buildroot}%{_prefix}/lib/os-release.server
-sed -i -e "s|(%{release_name})|(Server Edition)|g" %{buildroot}%{_prefix}/lib/os-release.server
+sed -i -e "s|(%{release_name}%{?prerelease})|(Server Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.server
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Server/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.server
 
 # Silverblue
@@ -691,7 +691,7 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.silverblue
 echo "VARIANT=\"Silverblue\"" >> %{buildroot}%{_prefix}/lib/os-release.silverblue
 echo "VARIANT_ID=silverblue" >> %{buildroot}%{_prefix}/lib/os-release.silverblue
-sed -i -e "s|(%{release_name})|(Silverblue)|g" %{buildroot}%{_prefix}/lib/os-release.silverblue
+sed -i -e "s|(%{release_name}%{?prerelease})|(Silverblue%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.silverblue
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-silverblue/"|' %{buildroot}%{_prefix}/lib/os-release.silverblue
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Silverblue/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.silverblue
 
@@ -700,7 +700,7 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.snappy
 echo "VARIANT=\"Snappy\"" >> %{buildroot}%{_prefix}/lib/os-release.snappy
 echo "VARIANT_ID=snappy" >> %{buildroot}%{_prefix}/lib/os-release.snappy
-sed -i -e "s|(%{release_name})|(Snappy)|g" %{buildroot}%{_prefix}/lib/os-release.snappy
+sed -i -e "s|(%{release_name}%{?prerelease})|(Snappy%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.snappy
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Snappy/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.snappy
 
 # Sugar on a Stick
@@ -708,7 +708,7 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.soas
 echo "VARIANT=\"Sugar on a Stick\"" >> %{buildroot}%{_prefix}/lib/os-release.soas
 echo "VARIANT_ID=soas" >> %{buildroot}%{_prefix}/lib/os-release.soas
-sed -i -e "s|(%{release_name})|(Sugar on a Stick)|g" %{buildroot}%{_prefix}/lib/os-release.soas
+sed -i -e "s|(%{release_name}%{?prerelease})|(Sugar on a Stick%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.soas
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Sugar/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.soas
 
 # Workstation
@@ -716,7 +716,7 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.workstation
 echo "VARIANT=\"Workstation Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.workstation
 echo "VARIANT_ID=workstation" >> %{buildroot}%{_prefix}/lib/os-release.workstation
-sed -i -e "s|(%{release_name})|(Workstation Edition)|g" %{buildroot}%{_prefix}/lib/os-release.workstation
+sed -i -e "s|(%{release_name}%{?prerelease})|(Workstation Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.workstation
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Workstation/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.workstation
 
 # Xfce
@@ -724,7 +724,7 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.xfce
 echo "VARIANT=\"Xfce\"" >> %{buildroot}%{_prefix}/lib/os-release.xfce
 echo "VARIANT_ID=xfce" >> %{buildroot}%{_prefix}/lib/os-release.xfce
-sed -i -e "s|(%{release_name})|(Xfce)|g" %{buildroot}%{_prefix}/lib/os-release.xfce
+sed -i -e "s|(%{release_name}%{?prerelease})|(Xfce%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.xfce
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Xfce/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.xfce
 
 # Create the symlink for /etc/os-release
@@ -902,6 +902,10 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Mon May 04 2020 Stephen Gallagher <sgallagh@redhat.com> - 33-0.8
+- Fix incorrect prerelease labeling for Editions and Spins
+- Resolves: rhbz#1831102
+
 * Tue Apr 21 2020 Stephen Gallagher <sgallagh@redhat.com> - 33-0.7
 - Add new "identity" subpackages to allow Edition and Spin environment groups
   to be installed together.
