@@ -72,6 +72,11 @@ enable multipathd.service
 # Approved by FESCo - https://fedorahosted.org/fesco/ticket/876
 enable libstoragemgmt.service
 
+# Approved by FESCo - https://pagure.io/fesco/issue/2386
+enable iscsi.service
+enable iscsid.socket
+enable iscsiuio.socket
+
 # Locally-running services
 enable lvm2-monitor.*
 enable lvm2-lvmetad.*
