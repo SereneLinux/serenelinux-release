@@ -5,7 +5,6 @@
 disable systemd-timesyncd.service
 disable systemd-networkd.service
 disable systemd-networkd-wait-online.service
-disable systemd-resolved.service
 
 # These presets were last validated en-masse on 2015-09-09
 # https://fedorahosted.org/fesco/ticket/1472
