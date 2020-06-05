@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        0.8
+Release:        0.9
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -902,6 +902,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Feb 11 2020 Mohan Boddu <mboddu@bhujji.com> - 33-0.9
+- iot: Remove preset for greenboot.service (lorbus)
+
 * Mon May 04 2020 Stephen Gallagher <sgallagh@redhat.com> - 33-0.8
 - Fix incorrect prerelease labeling for Editions and Spins
 - Resolves: rhbz#1831102
