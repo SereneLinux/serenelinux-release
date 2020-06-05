@@ -902,7 +902,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
-* Tue Feb 11 2020 Mohan Boddu <mboddu@bhujji.com> - 33-0.9
+* Fri Jun 05 2020 Mohan Boddu <mboddu@bhujji.com> - 33-0.9
 - iot: Remove preset for greenboot.service (lorbus)
 
 * Mon May 04 2020 Stephen Gallagher <sgallagh@redhat.com> - 33-0.8
