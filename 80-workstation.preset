@@ -17,3 +17,7 @@ disable cups.service
 # enable earlyoom by default on workstation
 # https://pagure.io/fedora-workstation/issue/119
 enable earlyoom.service
+
+# enable thermald by default on workstation
+# https://pagure.io/fedora-workstation/issue/71
+enable thermald.service
