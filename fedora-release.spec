@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        0.9
+Release:        0.10
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -35,6 +35,7 @@ Source20:       distro-edition-template.swidtag
 Source22:       80-coreos.preset
 Source23:       zezere-ignition-url
 Source24:       80-iot-user.preset
+Source25:       80-kde.preset
 
 BuildArch:      noarch
 
@@ -761,6 +762,9 @@ install -Dm0644 %{SOURCE22} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %{SOURCE18} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %{SOURCE24} -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 
+# Fedora KDE
+install -Dm0644 %{SOURCE25} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+
 # Fedora Server
 install -Dm0644 %{SOURCE14} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 
@@ -848,6 +852,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files kde
 %files identity-kde
 %{_prefix}/lib/os-release.kde
+%{_prefix}/lib/systemd/system-preset/80-kde.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
 
 
@@ -902,6 +907,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Thu Aug 06 2020 Ben Cotton <bcotton@fedoraproject.org> - 33-0.10
+- KDE: Add EarlyOOM by default
+
 * Fri Jun 05 2020 Mohan Boddu <mboddu@bhujji.com> - 33-0.9
 - iot: Remove preset for greenboot.service (lorbus)
 

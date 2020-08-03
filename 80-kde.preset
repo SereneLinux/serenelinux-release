@@ -1,0 +1,2 @@
+# enable earlyoom by default on KDE
+enable earlyoom.service
