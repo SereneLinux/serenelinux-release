@@ -14,7 +14,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        0.10
+Release:        0.11
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -736,10 +736,12 @@ install -d -m 755 %{buildroot}%{_rpmconfigdir}/macros.d
 cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 # dist macros.
 
+%if !0%{?eln}
 %%fedora              %{dist_version}
+%%fc%{dist_version}                1
+%endif
 %%__bootstrap         ~bootstrap
 %%dist                %%{!?distprefix0:%%{?distprefix}}%%{expand:%%{lua:for i=0,9999 do print("%%{?distprefix" .. i .."}") end}}.fc%%{fedora}%%{?with_bootstrap:%{__bootstrap}}
-%%fc%{dist_version}                1
 EOF
 
 # Install licenses
@@ -907,6 +909,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Thu Aug 06 2020 Ben Cotton <tdawson@redhat.com> - 33-0.11
+- No %fedora set for eln
+
 * Thu Aug 06 2020 Ben Cotton <bcotton@fedoraproject.org> - 33-0.10
 - KDE: Add EarlyOOM by default
 
@@ -927,7 +932,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 * Sun Apr 12 2020 Kevin Fenzi <kevin@scrye.com> - 33-0.5
 - Update color to Fedora blue. Fixes bug #1823099
 
-* Mon Apr 01 2020 Christian Glombek <cglombek@redhat.com> 33-0.4
+* Wed Apr 01 2020 Christian Glombek <cglombek@redhat.com> 33-0.4
 - Add IoT user preset to disable grub-boot-success.timer
 - Update links in 80-coreos.preset
 
