@@ -1,5 +1,5 @@
 %define release_name Rawhide
-%define dist_version 33
+%define dist_version 34
 %define bug_version rawhide
 
 # Change this when branching to fNN
@@ -13,8 +13,8 @@
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        33
-Release:        0.11
+Version:        34
+Release:        0.1
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -909,6 +909,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Mon Aug 10 2020 Tomas Hrcka <thrcka@redhat.com> - 34-0.1
+- Setup for rawhide being F34
+
 * Thu Aug 06 2020 Ben Cotton <tdawson@redhat.com> - 33-0.11
 - No %fedora set for eln
 
