@@ -1,5 +1,6 @@
 %define release_name Rawhide
 %define dist_version 34
+%define rhel_dist_version 9
 %define bug_version rawhide
 
 # Change this when branching to fNN
@@ -14,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.1
+Release:        0.2
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -736,12 +737,18 @@ install -d -m 755 %{buildroot}%{_rpmconfigdir}/macros.d
 cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 # dist macros.
 
-%if !0%{?eln}
+%%__bootstrap         ~bootstrap
+%if 0%{?eln}
+%%rhel              %{rhel_dist_version}
+%%el%{rhel_dist_version}                1
+# Although eln is set in koji tags, we put it in the macros.dist file for local and mock builds.
+%%eln              %{eln}
+%%dist                %%{!?distprefix0:%%{?distprefix}}%%{expand:%%{lua:for i=0,9999 do print("%%{?distprefix" .. i .."}") end}}.el%%{eln}%%{?with_bootstrap:%{__bootstrap}}
+%else
 %%fedora              %{dist_version}
 %%fc%{dist_version}                1
-%endif
-%%__bootstrap         ~bootstrap
 %%dist                %%{!?distprefix0:%%{?distprefix}}%%{expand:%%{lua:for i=0,9999 do print("%%{?distprefix" .. i .."}") end}}.fc%%{fedora}%%{?with_bootstrap:%{__bootstrap}}
+%endif
 EOF
 
 # Install licenses
@@ -909,10 +916,13 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Aug 11 2020 Troy Dawson <tdawson@redhat.com> - 34-0.2
+- Set %rhel and %eln when appropriate
+
 * Mon Aug 10 2020 Tomas Hrcka <thrcka@redhat.com> - 34-0.1
 - Setup for rawhide being F34
 
-* Thu Aug 06 2020 Ben Cotton <tdawson@redhat.com> - 33-0.11
+* Mon Aug 10 2020 Troy Dawson <tdawson@redhat.com> - 33-0.11
 - No %fedora set for eln
 
 * Thu Aug 06 2020 Ben Cotton <bcotton@fedoraproject.org> - 33-0.10
