@@ -163,6 +163,41 @@ Conflicts:      fedora-release-identity
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora Cloud Edition.
 
+%package compneuro
+Summary:        Base package for Fedora Comp-Neuro specific default configurations
+
+RemovePathPostfixes: .compneuro
+Provides:       fedora-release = %{version}-%{release}
+Provides:       fedora-release-variant = %{version}-%{release}
+Provides:       system-release
+Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
+Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-compneuro if nothing else is already doing so.
+Recommends:     fedora-release-identity-compneuro
+
+
+%description compneuro
+Provides a base package for Fedora Comp-Neuro specific configuration files to
+depend on as well as Comp-Neuro system defaults.
+
+
+%package identity-compneuro
+Summary:        Package providing the identity for Fedora Comp-Neuro Lab
+
+RemovePathPostfixes: .compneuro
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-compneuro
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora Comp-Neuro Lab.
+
+
 
 %package container
 Summary:        Base package for Fedora container specific default configurations
@@ -634,6 +669,16 @@ echo "VARIANT_ID=cloud" >> %{buildroot}%{_prefix}/lib/os-release.cloud
 sed -i -e "s|(%{release_name}%{?prerelease})|(Cloud Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.cloud
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Cloud/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cloud
 
+# Comp-Neuro
+cp -p %{buildroot}%{_prefix}/lib/os-release \
+      %{buildroot}%{_prefix}/lib/os-release.compneuro
+echo "VARIANT=\"CompNeuro\"" >> %{buildroot}%{_prefix}/lib/os-release.compneuro
+echo "VARIANT_ID=compneuro" >> %{buildroot}%{_prefix}/lib/os-release.compneuro
+sed -i -e "s|(%{release_name}%{?prerelease})|(CompNeuro%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.compneuro
+sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://neuro.fedoraproject.org"|' %{buildroot}%{_prefix}/lib/os-release.compneuro
+sed -i -e 's|HOME_URL=.*|HOME_URL="https://labs.fedoraproject.org"|' %{buildroot}/%{_prefix}/lib/os-release.compneuro
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/CompNeuro/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.compneuro
+
 # Container
 cp -p %{buildroot}%{_prefix}/lib/os-release \
       %{buildroot}%{_prefix}/lib/os-release.container
@@ -834,6 +879,11 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files identity-cloud
 %{_prefix}/lib/os-release.cloud
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cloud
+
+%files compneuro
+%files identity-compneuro
+%{_prefix}/lib/os-release.compneuro
+%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.compneuro
 
 
 %files container
