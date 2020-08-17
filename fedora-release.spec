@@ -1,8 +1,7 @@
 %define release_name Thirty Three
 %define dist_version 33
-%define bug_version 33
 %define rhel_dist_version 9
-%define bug_version rawhide
+%define bug_version 33
 
 # Change this when branching to fNN
 %define doc_version f33
@@ -16,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        0.12
+Release:        0.13
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -917,6 +916,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Mon Aug 17 2020 Mohan Boddu <mboddu@bhujji.com> - 33-0.13
+- Fix the bug_version to 33
+
 * Mon Aug 10 2020 Tomas Hrcka <thrcka@redhat.com> - 33-0.12
 - Branching F33 from rawhide
 
