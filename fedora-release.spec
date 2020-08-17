@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.2
+Release:        0.3%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -916,6 +916,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Mon Aug 17 2020 Troy Dawson <tdawson@redhat.com> - 34-0.3
+- Change release if building for eln
+
 * Tue Aug 11 2020 Troy Dawson <tdawson@redhat.com> - 34-0.2
 - Set %rhel and %eln when appropriate
 
