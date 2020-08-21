@@ -283,12 +283,12 @@ Provides:       system-release-product
 
 # fedora-release-common Requires: fedora-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
-# fedora-release-identity-workstation if nothing else is already doing so.
+# fedora-release-identity-designsuite if nothing else is already doing so.
 Recommends:     fedora-release-identity-designsuite
 
 
 %description designsuite
-Provides a base package for Fedora Workstation-specific configuration files to
+Provides a base package for Fedora Design Suite specific configuration files to
 depend on.
 
 
