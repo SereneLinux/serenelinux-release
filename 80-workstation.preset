@@ -21,3 +21,7 @@ enable earlyoom.service
 # enable thermald by default on workstation
 # https://pagure.io/fedora-workstation/issue/71
 enable thermald.service
+
+# enable uresourced by default on workstation
+# https://pagure.io/fesco/issue/2457
+enable uresourced.service
