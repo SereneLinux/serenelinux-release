@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        0.13
+Release:        0.14
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -33,6 +33,7 @@ Source17:       org.projectatomic.rpmostree1.rules
 Source18:       80-iot.preset
 Source19:       distro-template.swidtag
 Source20:       distro-edition-template.swidtag
+Source21:       gnome-shell.conf
 Source22:       80-coreos.preset
 Source23:       zezere-ignition-url
 Source24:       80-iot-user.preset
@@ -782,7 +783,10 @@ install -Dm0644 %{SOURCE15} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 
 # Override the list of enabled gnome-shell extensions for Workstation
 install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
+# Install rpm-ostree polkit rules
 install -Dm0644 %{SOURCE17} -t %{buildroot}%{_datadir}/polkit-1/rules.d/
+# Add gnome-shell to dnf protected packages list for Workstation
+install -Dm0644 %{SOURCE21} -t %{buildroot}%{_sysconfdir}/dnf/protected.d/
 
 # Create distro-level SWID tag file
 install -d %{buildroot}%{_swidtagdir}
@@ -903,6 +907,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files identity-workstation
 %{_prefix}/lib/os-release.workstation
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.workstation
+%{_sysconfdir}/dnf/protected.d/gnome-shell.conf
 # Keep this in sync with silverblue above
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
@@ -916,6 +921,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Aug 25 2020 Kalev Lember <klember@redhat.com> - 33-0.14
+- Add gnome-shell to dnf protected packages list for Workstation
+
 * Mon Aug 17 2020 Mohan Boddu <mboddu@bhujji.com> - 33-0.13
 - Fix the bug_version to 33
 
