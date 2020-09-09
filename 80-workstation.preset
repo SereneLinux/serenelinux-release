@@ -25,3 +25,6 @@ enable thermald.service
 # enable uresourced by default on workstation
 # https://pagure.io/fesco/issue/2457
 enable uresourced.service
+
+# enable low-memory-monitor for GMemoryMonitor API
+enable low-memory-monitor.service
