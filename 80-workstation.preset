@@ -28,3 +28,7 @@ enable uresourced.service
 
 # enable low-memory-monitor for GMemoryMonitor API
 enable low-memory-monitor.service
+
+# enable power-profiles-daemon
+# https://pagure.io/fedora-workstation/issue/191
+enable power-profiles-daemon.service
