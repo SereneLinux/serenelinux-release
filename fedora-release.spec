@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.4%{?eln:.eln%{eln}}
+Release:        0.5%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1020,6 +1020,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Thu Sep 17 2020 Peter Robinson <pbrobinson@fedoraproject.org> - 34-0.5
+- IoT: Enable parsec and dbus-parsec services
+
 * Tue Aug 25 2020 Kalev Lember <klember@redhat.com> - 34-0.4
 - Add gnome-shell to dnf protected packages list for Workstation
 

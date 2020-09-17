@@ -12,5 +12,9 @@ enable greenboot-task-runner.service
 enable redboot-auto-reboot.service
 enable redboot-task-runner.service
 
+# PARSEC services
+enable parsec.service
+enable dbus-parsec.service
+
 # zezere_ignition provides first-boot provisioning and configuration
 enable zezere_ignition.timer
