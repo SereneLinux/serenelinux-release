@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        0.14
+Release:        0.15
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -969,6 +969,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Thu Sep 17 2020 Peter Robinson <pbrobinson@fedoraproject.org> - 33-0.15
+- IoT: Enable parsec and dbus-parsec services
+
 * Tue Aug 25 2020 Kalev Lember <klember@redhat.com> - 33-0.14
 - Add gnome-shell to dnf protected packages list for Workstation
 
