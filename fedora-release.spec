@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.5%{?eln:.eln%{eln}}
+Release:        0.6%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -303,6 +303,44 @@ Conflicts:      fedora-release-identity
 %description identity-designsuite
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora Design Suite Lab.
+
+
+%package eln
+Summary:        Base package for Fedora ELN specific default configurations
+
+RemovePathPostfixes: .eln
+Provides:       fedora-release = %{version}-%{release}
+Provides:       fedora-release-variant = %{version}-%{release}
+Provides:       system-release
+Provides:       system-release(%{version})
+Provides:       base-module(platform:eln)
+Requires:       fedora-release-common = %{version}-%{release}
+Provides:       system-release-product
+Requires:       fedora-repos-eln
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-eln if nothing else is already doing so.
+Recommends:     fedora-release-identity-eln
+
+
+%description eln
+Provides a base package for Fedora ELN specific configuration files to
+depend on.
+
+
+%package identity-eln
+Summary:        Package providing the identity for Fedora ELN
+
+RemovePathPostfixes: .eln
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-eln
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora ELN.
+
 
 %package iot
 Summary:        Base package for Fedora IoT specific default configurations
@@ -741,9 +779,19 @@ cp -p %{buildroot}%{_prefix}/lib/os-release \
 echo "VARIANT=\"Design Suite\"" >> %{buildroot}%{_prefix}/lib/os-release.designsuite
 echo "VARIANT_ID=designsuite" >> %{buildroot}%{_prefix}/lib/os-release.designsuite
 sed -i -e "s|(%{release_name}%{?prerelease})|(Design Suite%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.designsuite
-sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://fedoraproject.org/wiki/Design_Suite"|' %{buildroot}%{_prefix}/lib/os-release.compneuro
+sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://fedoraproject.org/wiki/Design_Suite"|' %{buildroot}%{_prefix}/lib/os-release.designsuite
 sed -i -e 's|HOME_URL=.*|HOME_URL="https://labs.fedoraproject.org"|' %{buildroot}/%{_prefix}/lib/os-release.designsuite
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/DesignSuite/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.designsuite
+
+# ELN
+cp -p %{buildroot}%{_prefix}/lib/os-release \
+      %{buildroot}%{_prefix}/lib/os-release.eln
+echo "VARIANT=\"ELN\"" >> %{buildroot}%{_prefix}/lib/os-release.eln
+echo "VARIANT_ID=eln" >> %{buildroot}%{_prefix}/lib/os-release.eln
+sed -i -e 's|PLATFORM_ID=.*|PLATFORM_ID="platform:eln"|' %{buildroot}/%{_prefix}/lib/os-release.eln
+sed -i -e 's|PRETTY_NAME=.*|PRETTY_NAME="Fedora ELN"|' %{buildroot}/%{_prefix}/lib/os-release.eln
+sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/eln/"|' %{buildroot}%{_prefix}/lib/os-release.eln
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/ELN/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.eln
 
 # IoT
 cp -p %{buildroot}%{_prefix}/lib/os-release \
@@ -951,6 +999,13 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files identity-designsuite
 %{_prefix}/lib/os-release.designsuite
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.designsuite
+
+
+%files eln
+%files identity-eln
+%{_prefix}/lib/os-release.eln
+%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.eln
+
 
 %files iot
 %files identity-iot
