@@ -12,7 +12,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.6%{?eln:.eln%{eln}}
+Release:        0.7%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1072,6 +1072,12 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Wed Oct 14 2020 Mohan Boddu <mboddu@bhujji.com> - 33-0.7
+- Enable low-memory-monitor for GMemoryMonitor API (hadess)
+
+* Fri Oct 09 2020 Mohan Boddu <mboddu@bhujji.com> - 33-0.6
+- Add ELN support to fedora-release (sgallagh)
+
 * Thu Sep 17 2020 Peter Robinson <pbrobinson@fedoraproject.org> - 34-0.5
 - IoT: Enable parsec and dbus-parsec services
 
