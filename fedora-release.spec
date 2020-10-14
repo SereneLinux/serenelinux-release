@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        0.15
+Release:        1
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -71,7 +71,7 @@ Suggests:   fedora-release
 
 Obsoletes:  redhat-release
 Provides:   redhat-release
-Requires:   fedora-repos(%{version})
+Requires:   fedora-repos(%{version}) >= 1
 Requires:   fedora-release-identity = %{version}-%{release}
 
 # Fedora ships a generic-release package to make the creation of Remixes
@@ -969,6 +969,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Wed Oct 14 2020 Mohan Boddu <mboddu@bhujji.com> - 33-1
+- Setup for F33 Final
+
 * Thu Sep 17 2020 Peter Robinson <pbrobinson@fedoraproject.org> - 33-0.15
 - IoT: Enable parsec and dbus-parsec services
 - Fix designsuite release (mohanboddu)
