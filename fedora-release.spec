@@ -8,9 +8,6 @@
 
 # Changes should be submitted as pull requests under
 #     https://src.fedoraproject.org/rpms/fedora-release
-#
-# The package can only be built by a very small number of people
-# if you are not sure you can build it do not attempt to
 
 Summary:        Fedora release files
 Name:           fedora-release
@@ -60,7 +57,7 @@ BuildRequires:  redhat-rpm-config > 121-1
 %description
 Fedora release files such as various /etc/ files that define the release
 and systemd preset files that determine which services are enabled by default.
-# See https://fedoraproject.org/wiki/Packaging:DefaultServices for details.
+# See https://docs.fedoraproject.org/en-US/packaging-guidelines/DefaultServices/ for details.
 
 
 %package common
