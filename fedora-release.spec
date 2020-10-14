@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        1
+Release:        2
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -969,6 +969,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Wed Oct 14 2020 Mohan Boddu <mboddu@bhujji.com> - 33-2
+- Enable low-memory-monitor for GMemoryMonitor API (hadess)
+
 * Wed Oct 14 2020 Mohan Boddu <mboddu@bhujji.com> - 33-1
 - Setup for F33 Final
 
