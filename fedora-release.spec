@@ -12,7 +12,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.7%{?eln:.eln%{eln}}
+Release:        0.8%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1072,6 +1072,10 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Fri Oct 23 2020 Stephen Gallagher <sgallagh@redhat.com> - 34-0.8
+- Enable power-profiles-daemon by default
+- https://pagure.io/fedora-workstation/issue/191
+
 * Wed Oct 14 2020 Mohan Boddu <mboddu@bhujji.com> - 33-0.7
 - Enable low-memory-monitor for GMemoryMonitor API (hadess)
 
