@@ -50,7 +50,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.8%{?eln:.eln%{eln}}
+Release:        0.9%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1216,6 +1216,12 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Wed Oct 28 2020 Stephen Gallagher <sgallagh@redhat.com> - 34-0.9
+- Spec file and ELN improvements
+- Conditionalize the creation of the identity subpackages
+- Allow ELN to skip building all of the other Fedora identities
+- Have ELN be the provider of the `redhat-release` virtual provides
+
 * Fri Oct 23 2020 Stephen Gallagher <sgallagh@redhat.com> - 34-0.8
 - Enable power-profiles-daemon by default
 - https://pagure.io/fedora-workstation/issue/191
