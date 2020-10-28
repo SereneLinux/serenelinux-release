@@ -104,8 +104,6 @@ Summary: Fedora release files
 Requires:   fedora-release-variant = %{version}-%{release}
 Suggests:   fedora-release
 
-Obsoletes:  redhat-release
-Provides:   redhat-release
 Requires:   fedora-repos(%{version})
 Requires:   fedora-release-identity = %{version}-%{release}
 
@@ -369,6 +367,9 @@ Provides:       base-module(platform:eln)
 Requires:       fedora-release-common = %{version}-%{release}
 Provides:       system-release-product
 Requires:       fedora-repos-eln
+
+Obsoletes:      redhat-release
+Provides:       redhat-release
 
 # fedora-release-common Requires: fedora-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
