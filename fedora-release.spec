@@ -6,6 +6,44 @@
 # Change this when branching to fNN
 %define doc_version rawhide
 
+%if 0%{?eln}
+%bcond_with basic
+%bcond_with cinnamon
+%bcond_with cloud
+%bcond_with compneuro
+%bcond_with container
+%bcond_with coreos
+%bcond_with designsuite
+%bcond_without eln
+%bcond_with iot
+%bcond_with kde
+%bcond_with matecompiz
+%bcond_with server
+%bcond_with silverblue
+%bcond_with snappy
+%bcond_with soas
+%bcond_with workstation
+%bcond_with xfce
+%else
+%bcond_without basic
+%bcond_without cinnamon
+%bcond_without cloud
+%bcond_without compneuro
+%bcond_without container
+%bcond_without coreos
+%bcond_without designsuite
+%bcond_with eln
+%bcond_without iot
+%bcond_without kde
+%bcond_without matecompiz
+%bcond_without server
+%bcond_without silverblue
+%bcond_without snappy
+%bcond_without soas
+%bcond_without workstation
+%bcond_without xfce
+%endif
+
 # Changes should be submitted as pull requests under
 #     https://src.fedoraproject.org/rpms/fedora-release
 
@@ -80,9 +118,11 @@ Conflicts:  generic-release
 Release files common to all Editions and Spins of Fedora
 
 
+%if %{with basic}
 %package identity-basic
 Summary:        Package providing the basic Fedora identity
 
+RemovePathPostfixes: .basic
 Provides:       fedora-release-identity = %{version}-%{release}
 Conflicts:      fedora-release-identity
 
@@ -90,8 +130,10 @@ Conflicts:      fedora-release-identity
 %description identity-basic
 Provides the necessary files for a Fedora installation that is not identifying
 itself as a particular Edition or Spin.
+%endif
 
 
+%if %{with cinnamon}
 %package cinnamon
 Summary:        Base package for Fedora Cinnamon-specific default configurations
 
@@ -125,8 +167,10 @@ Conflicts:      fedora-release-identity
 %description identity-cinnamon
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora Cinnamon.
+%endif
 
 
+%if %{with cloud}
 %package cloud
 Summary:        Base package for Fedora Cloud-specific default configurations
 
@@ -160,7 +204,10 @@ Conflicts:      fedora-release-identity
 %description identity-cloud
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora Cloud Edition.
+%endif
 
+
+%if %{with compneuro}
 %package compneuro
 Summary:        Base package for Fedora Comp Neuro specific default configurations
 
@@ -194,9 +241,10 @@ Conflicts:      fedora-release-identity
 %description identity-compneuro
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora Comp Neuro Lab.
+%endif
 
 
-
+%if %{with container}
 %package container
 Summary:        Base package for Fedora container specific default configurations
 
@@ -230,8 +278,10 @@ Conflicts:      fedora-release-identity
 %description identity-container
 Provides the necessary files for a Fedora installation that is identifying
 itself as the Fedora Container Base Image.
+%endif
 
 
+%if %{with coreos}
 %package coreos
 Summary:        Base package for Fedora CoreOS-specific default configurations
 
@@ -265,7 +315,10 @@ Conflicts:      fedora-release-identity
 %description identity-coreos
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora CoreOS.
+%endif
 
+
+%if %{with designsuite}
 %package designsuite
 Summary:        Base package for Fedora Design Suite specific default configurations
 
@@ -300,8 +353,10 @@ Conflicts:      fedora-release-identity
 %description identity-designsuite
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora Design Suite Lab.
+%endif
 
 
+%if %{with eln}
 %package eln
 Summary:        Base package for Fedora ELN specific default configurations
 
@@ -337,8 +392,10 @@ Conflicts:      fedora-release-identity
 %description identity-eln
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora ELN.
+%endif
 
 
+%if %{with iot}
 %package iot
 Summary:        Base package for Fedora IoT specific default configurations
 
@@ -372,8 +429,10 @@ Conflicts:      fedora-release-identity
 %description identity-iot
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora IoT Edition.
+%endif
 
 
+%if %{with kde}
 %package kde
 Summary:        Base package for Fedora KDE Plasma-specific default configurations
 
@@ -407,8 +466,10 @@ Conflicts:      fedora-release-identity
 %description identity-kde
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora KDE Plasma Spin.
+%endif
 
 
+%if %{with matecompiz}
 %package matecompiz
 Summary:        Base package for Fedora MATE-Compiz-specific default configurations
 
@@ -442,8 +503,10 @@ Conflicts:      fedora-release-identity
 %description identity-matecompiz
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora MATE-Compiz.
+%endif
 
 
+%if %{with server}
 %package server
 Summary:        Base package for Fedora Server-specific default configurations
 
@@ -477,8 +540,10 @@ Conflicts:      fedora-release-identity
 %description identity-server
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora Server Edition.
+%endif
 
 
+%if %{with silverblue}
 %package silverblue
 Summary:        Base package for Fedora Silverblue-specific default configurations
 
@@ -512,8 +577,10 @@ Conflicts:      fedora-release-identity
 %description identity-silverblue
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora Silverblue.
+%endif
 
 
+%if %{with snappy}
 %package snappy
 Summary:        Base package for Fedora snap specific default configurations
 
@@ -547,8 +614,10 @@ Conflicts:      fedora-release-identity
 %description identity-snappy
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora's snappy environment.
+%endif
 
 
+%if %{with soas}
 %package soas
 Summary:        Base package for Fedora Sugar on a Stick-specific default configurations
 
@@ -582,8 +651,10 @@ Conflicts:      fedora-release-identity
 %description identity-soas
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora Sugar on a Stick.
+%endif
 
 
+%if %{with workstation}
 %package workstation
 Summary:        Base package for Fedora Workstation-specific default configurations
 
@@ -618,8 +689,10 @@ Conflicts:      fedora-release-identity
 %description identity-workstation
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora Workstation Edition.
+%endif
 
 
+%if %{with xfce}
 %package xfce
 Summary:        Base package for Fedora Xfce specific default configurations
 
@@ -653,6 +726,7 @@ Conflicts:      fedora-release-identity
 %description identity-xfce
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora Xfce.
+%endif
 
 
 %prep
@@ -683,7 +757,7 @@ ln -s fedora-release %{buildroot}%{_sysconfdir}/system-release
   %global prerelease \ Prerelease
 %endif
 
-cat << EOF >>%{buildroot}%{_prefix}/lib/os-release
+cat << EOF >> os-release
 NAME=Fedora
 VERSION="%{dist_version} (%{release_name}%{?prerelease})"
 ID=fedora
@@ -723,24 +797,35 @@ mkdir -p %{buildroot}%{_swidtagdir}
 
 # Create os-release files for the different editions
 
+%if %{with basic}
+# Basic
+cp -p os-release \
+      %{buildroot}%{_prefix}/lib/os-release.basic
+%endif
+
+%if %{with cinnamon}
 # Cinnamon
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.cinnamon
 echo "VARIANT=\"Cinnamon\"" >> %{buildroot}%{_prefix}/lib/os-release.cinnamon
 echo "VARIANT_ID=cinnamon" >> %{buildroot}%{_prefix}/lib/os-release.cinnamon
 sed -i -e "s|(%{release_name}%{?prerelease})|(Cinnamon%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.cinnamon
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Cinnamon/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cinnamon
+%endif
 
+%if %{with cloud}
 # Cloud
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.cloud
 echo "VARIANT=\"Cloud Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.cloud
 echo "VARIANT_ID=cloud" >> %{buildroot}%{_prefix}/lib/os-release.cloud
 sed -i -e "s|(%{release_name}%{?prerelease})|(Cloud Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.cloud
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Cloud/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cloud
+%endif
 
+%if %{with compneuro}
 # Comp Neuro
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.compneuro
 echo "VARIANT=\"Comp Neuro\"" >> %{buildroot}%{_prefix}/lib/os-release.compneuro
 echo "VARIANT_ID=compneuro" >> %{buildroot}%{_prefix}/lib/os-release.compneuro
@@ -748,17 +833,21 @@ sed -i -e "s|(%{release_name}%{?prerelease})|(CompNeuro%{?prerelease})|g" %{buil
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://neuro.fedoraproject.org"|' %{buildroot}%{_prefix}/lib/os-release.compneuro
 sed -i -e 's|HOME_URL=.*|HOME_URL="https://labs.fedoraproject.org"|' %{buildroot}/%{_prefix}/lib/os-release.compneuro
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/CompNeuro/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.compneuro
+%endif
 
+%if %{with container}
 # Container
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.container
 echo "VARIANT=\"Container Image\"" >> %{buildroot}%{_prefix}/lib/os-release.container
 echo "VARIANT_ID=container" >> %{buildroot}%{_prefix}/lib/os-release.container
 sed -i -e "s|(%{release_name}%{?prerelease})|(Container Image%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.container
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Container/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.container
+%endif
 
+%if %{with coreos}
 # CoreOS
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.coreos
 echo "VARIANT=\"CoreOS\"" >> %{buildroot}%{_prefix}/lib/os-release.coreos
 echo "VARIANT_ID=coreos" >> %{buildroot}%{_prefix}/lib/os-release.coreos
@@ -769,9 +858,13 @@ sed -i -e 's|SUPPORT_URL=.*|SUPPORT_URL="https://github.com/coreos/fedora-coreos
 sed -i -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://github.com/coreos/fedora-coreos-tracker/"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
 sed -i -e 's|PRETTY_NAME=.*|PRETTY_NAME="Fedora CoreOS %{dist_version}"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/CoreOS/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.coreos
+install -Dm0644 %{SOURCE22} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+%endif
 
+
+%if %{with designsuite}
 # Design Suite
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.designsuite
 echo "VARIANT=\"Design Suite\"" >> %{buildroot}%{_prefix}/lib/os-release.designsuite
 echo "VARIANT_ID=designsuite" >> %{buildroot}%{_prefix}/lib/os-release.designsuite
@@ -779,9 +872,11 @@ sed -i -e "s|(%{release_name}%{?prerelease})|(Design Suite%{?prerelease})|g" %{b
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://fedoraproject.org/wiki/Design_Suite"|' %{buildroot}%{_prefix}/lib/os-release.designsuite
 sed -i -e 's|HOME_URL=.*|HOME_URL="https://labs.fedoraproject.org"|' %{buildroot}/%{_prefix}/lib/os-release.designsuite
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/DesignSuite/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.designsuite
+%endif
 
+%if %{with eln}
 # ELN
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.eln
 echo "VARIANT=\"ELN\"" >> %{buildroot}%{_prefix}/lib/os-release.eln
 echo "VARIANT_ID=eln" >> %{buildroot}%{_prefix}/lib/os-release.eln
@@ -789,83 +884,118 @@ sed -i -e 's|PLATFORM_ID=.*|PLATFORM_ID="platform:eln"|' %{buildroot}/%{_prefix}
 sed -i -e 's|PRETTY_NAME=.*|PRETTY_NAME="Fedora ELN"|' %{buildroot}/%{_prefix}/lib/os-release.eln
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/eln/"|' %{buildroot}%{_prefix}/lib/os-release.eln
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/ELN/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.eln
+%endif
 
+%if %{with iot}
 # IoT
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.iot
 echo "VARIANT=\"IoT Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.iot
 echo "VARIANT_ID=iot" >> %{buildroot}%{_prefix}/lib/os-release.iot
 sed -i -e "s|(%{release_name}%{?prerelease})|(IoT Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.iot
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/IoT/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
 install -p %{SOURCE23} %{buildroot}/%{_prefix}/lib/
+install -Dm0644 %{SOURCE18} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %{SOURCE24} -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
+%endif
 
+%if %{with kde}
 # KDE Plasma
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.kde
 echo "VARIANT=\"KDE Plasma\"" >> %{buildroot}%{_prefix}/lib/os-release.kde
 echo "VARIANT_ID=kde" >> %{buildroot}%{_prefix}/lib/os-release.kde
 sed -i -e "s|(%{release_name}%{?prerelease})|(KDE Plasma%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.kde
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/KDE/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
+install -Dm0644 %{SOURCE25} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+%endif
 
+%if %{with matecompiz}
 # MATE-Compiz
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.matecompiz
 echo "VARIANT=\"MATE-Compiz\"" >> %{buildroot}%{_prefix}/lib/os-release.matecompiz
 echo "VARIANT_ID=matecompiz" >> %{buildroot}%{_prefix}/lib/os-release.matecompiz
 sed -i -e "s|(%{release_name}%{?prerelease})|(MATE-Compiz%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.matecompiz
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/MATE-Compiz/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.matecompiz
+%endif
 
+%if %{with server}
 # Server
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.server
 echo "VARIANT=\"Server Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.server
 echo "VARIANT_ID=server" >> %{buildroot}%{_prefix}/lib/os-release.server
 sed -i -e "s|(%{release_name}%{?prerelease})|(Server Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.server
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Server/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.server
+install -Dm0644 %{SOURCE14} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+%endif
 
+%if %{with silverblue}
 # Silverblue
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.silverblue
 echo "VARIANT=\"Silverblue\"" >> %{buildroot}%{_prefix}/lib/os-release.silverblue
 echo "VARIANT_ID=silverblue" >> %{buildroot}%{_prefix}/lib/os-release.silverblue
 sed -i -e "s|(%{release_name}%{?prerelease})|(Silverblue%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.silverblue
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-silverblue/"|' %{buildroot}%{_prefix}/lib/os-release.silverblue
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Silverblue/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.silverblue
+%endif
 
+%if %{with snappy}
 # Snappy
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.snappy
 echo "VARIANT=\"Snappy\"" >> %{buildroot}%{_prefix}/lib/os-release.snappy
 echo "VARIANT_ID=snappy" >> %{buildroot}%{_prefix}/lib/os-release.snappy
 sed -i -e "s|(%{release_name}%{?prerelease})|(Snappy%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.snappy
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Snappy/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.snappy
+%endif
 
+%if %{with soas}
 # Sugar on a Stick
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.soas
 echo "VARIANT=\"Sugar on a Stick\"" >> %{buildroot}%{_prefix}/lib/os-release.soas
 echo "VARIANT_ID=soas" >> %{buildroot}%{_prefix}/lib/os-release.soas
 sed -i -e "s|(%{release_name}%{?prerelease})|(Sugar on a Stick%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.soas
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Sugar/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.soas
+%endif
 
+%if %{with workstation}
 # Workstation
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.workstation
 echo "VARIANT=\"Workstation Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.workstation
 echo "VARIANT_ID=workstation" >> %{buildroot}%{_prefix}/lib/os-release.workstation
 sed -i -e "s|(%{release_name}%{?prerelease})|(Workstation Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.workstation
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Workstation/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.workstation
+# Add gnome-shell to dnf protected packages list for Workstation
+install -Dm0644 %{SOURCE21} -t %{buildroot}%{_sysconfdir}/dnf/protected.d/
+%endif
 
+%if %{with silverblue} || %{with workstation}
+# Silverblue and Workstation
+install -Dm0644 %{SOURCE15} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+# Override the list of enabled gnome-shell extensions for Workstation
+install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
+# Install rpm-ostree polkit rules
+install -Dm0644 %{SOURCE17} -t %{buildroot}%{_datadir}/polkit-1/rules.d/
+%endif
+
+%if %{with xfce}
 # Xfce
-cp -p %{buildroot}%{_prefix}/lib/os-release \
+cp -p os-release \
       %{buildroot}%{_prefix}/lib/os-release.xfce
 echo "VARIANT=\"Xfce\"" >> %{buildroot}%{_prefix}/lib/os-release.xfce
 echo "VARIANT_ID=xfce" >> %{buildroot}%{_prefix}/lib/os-release.xfce
 sed -i -e "s|(%{release_name}%{?prerelease})|(Xfce%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.xfce
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Xfce/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.xfce
+%endif
 
 # Create the symlink for /etc/os-release
 ln -s ../usr/lib/os-release %{buildroot}%{_sysconfdir}/os-release
+
 
 # Set up the dist tag macros
 install -d -m 755 %{buildroot}%{_rpmconfigdir}/macros.d
@@ -898,29 +1028,6 @@ install -Dm0644 %{SOURCE12} -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
 # The same file is installed in two places with identical contents
 install -Dm0644 %{SOURCE13} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %{SOURCE13} -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
-
-# Fedora CoreOS
-install -Dm0644 %{SOURCE22} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
-
-# Fedora IoT
-install -Dm0644 %{SOURCE18} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
-install -Dm0644 %{SOURCE24} -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
-
-# Fedora KDE
-install -Dm0644 %{SOURCE25} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
-
-# Fedora Server
-install -Dm0644 %{SOURCE14} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
-
-# Fedora Workstation
-install -Dm0644 %{SOURCE15} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
-
-# Override the list of enabled gnome-shell extensions for Workstation
-install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
-# Install rpm-ostree polkit rules
-install -Dm0644 %{SOURCE17} -t %{buildroot}%{_datadir}/polkit-1/rules.d/
-# Add gnome-shell to dnf protected packages list for Workstation
-install -Dm0644 %{SOURCE21} -t %{buildroot}%{_sysconfdir}/dnf/protected.d/
 
 # Create distro-level SWID tag file
 install -d %{buildroot}%{_swidtagdir}
@@ -957,53 +1064,71 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %{_sysconfdir}/swid/swidtags.d
 
 
+%if %{with basic}
 %files
 %files identity-basic
-%{_prefix}/lib/os-release
+%{_prefix}/lib/os-release.basic
+%endif
 
 
+%if %{with cinnamon}
 %files cinnamon
 %files identity-cinnamon
 %{_prefix}/lib/os-release.cinnamon
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cinnamon
+%endif
 
 
+%if %{with cloud}
 %files cloud
 %files identity-cloud
 %{_prefix}/lib/os-release.cloud
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cloud
+%endif
 
+
+%if %{with compneuro}
 %files compneuro
 %files identity-compneuro
 %{_prefix}/lib/os-release.compneuro
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.compneuro
+%endif
 
 
+%if %{with container}
 %files container
 %files identity-container
 %{_prefix}/lib/os-release.container
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.container
+%endif
 
 
+%if %{with coreos}
 %files coreos
 %files identity-coreos
 %{_prefix}/lib/systemd/system-preset/80-coreos.preset
 %{_prefix}/lib/os-release.coreos
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.coreos
+%endif
 
 
+%if %{with designsuite}
 %files designsuite
 %files identity-designsuite
 %{_prefix}/lib/os-release.designsuite
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.designsuite
+%endif
 
 
+%if %{with eln}
 %files eln
 %files identity-eln
 %{_prefix}/lib/os-release.eln
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.eln
+%endif
 
 
+%if %{with iot}
 %files iot
 %files identity-iot
 %{_prefix}/lib/os-release.iot
@@ -1011,28 +1136,36 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %{_prefix}/lib/systemd/user-preset/80-iot-user.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
 %{_prefix}/lib/zezere-ignition-url
+%endif
 
 
+%if %{with kde}
 %files kde
 %files identity-kde
 %{_prefix}/lib/os-release.kde
 %{_prefix}/lib/systemd/system-preset/80-kde.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
+%endif
 
 
+%if %{with matecompiz}
 %files matecompiz
 %files identity-matecompiz
 %{_prefix}/lib/os-release.matecompiz
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.matecompiz
+%endif
 
 
+%if %{with server}
 %files server
 %files identity-server
 %{_prefix}/lib/os-release.server
 %{_prefix}/lib/systemd/system-preset/80-server.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.server
+%endif
 
 
+%if %{with silverblue}
 %files silverblue
 %files identity-silverblue
 %{_prefix}/lib/os-release.silverblue
@@ -1041,19 +1174,26 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 %attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
+%endif
 
+
+%if %{with snappy}
 %files snappy
 %files identity-snappy
 %{_prefix}/lib/os-release.snappy
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.snappy
+%endif
 
 
+%if %{with soas}
 %files soas
 %files identity-soas
 %{_prefix}/lib/os-release.soas
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.soas
+%endif
 
 
+%if %{with workstation}
 %files workstation
 %files identity-workstation
 %{_prefix}/lib/os-release.workstation
@@ -1063,12 +1203,15 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 %attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
+%endif
 
 
+%if %{with xfce}
 %files xfce
 %files identity-xfce
 %{_prefix}/lib/os-release.xfce
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.xfce
+%endif
 
 
 %changelog
