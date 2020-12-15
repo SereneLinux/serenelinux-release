@@ -50,7 +50,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.9%{?eln:.eln%{eln}}
+Release:        0.10%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1216,6 +1216,10 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Dec 15 2020 Mohan Boddu <mboddu@bhujji.com> - 34-0.10
+- Enable pipewire-pulse socket-activated user service (ngompa)
+- Fixing changelog
+
 * Wed Oct 28 2020 Stephen Gallagher <sgallagh@redhat.com> - 34-0.9
 - Spec file and ELN improvements
 - Conditionalize the creation of the identity subpackages
@@ -1226,10 +1230,10 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 - Enable power-profiles-daemon by default
 - https://pagure.io/fedora-workstation/issue/191
 
-* Wed Oct 14 2020 Mohan Boddu <mboddu@bhujji.com> - 33-0.7
+* Wed Oct 14 2020 Mohan Boddu <mboddu@bhujji.com> - 34-0.7
 - Enable low-memory-monitor for GMemoryMonitor API (hadess)
 
-* Fri Oct 09 2020 Mohan Boddu <mboddu@bhujji.com> - 33-0.6
+* Fri Oct 09 2020 Mohan Boddu <mboddu@bhujji.com> - 34-0.6
 - Add ELN support to fedora-release (sgallagh)
 
 * Thu Sep 17 2020 Peter Robinson <pbrobinson@fedoraproject.org> - 34-0.5
