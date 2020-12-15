@@ -13,7 +13,7 @@ enable pipewire.socket
 # Enable the PipeWire PulseAudio compatibility socket interface
 # https://bugzilla.redhat.com/show_bug.cgi?id=1907906
 # https://fedoraproject.org/wiki/Changes/DefaultPipeWire
-enable pipewire-pulseaudio.socket
+enable pipewire-pulse.socket
 
 # Enable the session agent for snaps
 # https://bugzilla.redhat.com/show_bug.cgi?id=1734371
