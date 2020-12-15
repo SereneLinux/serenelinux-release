@@ -15,7 +15,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        33
-Release:        2
+Release:        3
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -969,6 +969,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Dec 15 2020 Mohan Boddu <mboddu@bhujji.com> - 33-3
+- Enable pipewire-pulse socket-activated user service (ngompa)
+
 * Wed Oct 14 2020 Mohan Boddu <mboddu@bhujji.com> - 33-2
 - Enable low-memory-monitor for GMemoryMonitor API (hadess)
 
