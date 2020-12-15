@@ -10,6 +10,11 @@ enable dbus-broker.service
 # https://bugzilla.redhat.com/show_bug.cgi?id=1592434
 enable pipewire.socket
 
+# Enable the PipeWire PulseAudio compatibility socket interface
+# https://bugzilla.redhat.com/show_bug.cgi?id=1907906
+# https://fedoraproject.org/wiki/Changes/DefaultPipeWire
+enable pipewire-pulseaudio.socket
+
 # Enable the session agent for snaps
 # https://bugzilla.redhat.com/show_bug.cgi?id=1734371
 enable snapd.session-agent.socket
