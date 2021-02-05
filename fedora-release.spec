@@ -50,7 +50,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.10%{?eln:.eln%{eln}}
+Release:        0.11%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1216,6 +1216,10 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Jan 19 2021 Allison Karlitskaya <allison.karlitskaya@redhat.com> - 34-0.11
+- Enable rpm-ostree repo-refresh for all active local users
+- https://github.com/fedora-silverblue/issue-tracker/issues/55
+
 * Tue Dec 15 2020 Mohan Boddu <mboddu@bhujji.com> - 34-0.10
 - Enable pipewire-pulse socket-activated user service (ngompa)
 - Fixing changelog
