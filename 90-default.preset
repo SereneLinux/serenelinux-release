@@ -1,5 +1,5 @@
-# Also see:
-# https://fedoraproject.org/wiki/Starting_services_by_default
+# See https://docs.fedoraproject.org/en-US/packaging-guidelines/DefaultServices/
+# for the Fedora policy.
 
 # On Fedora we deviate from some upstream defaults
 disable systemd-timesyncd.service
