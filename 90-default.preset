@@ -9,6 +9,9 @@ disable systemd-networkd-wait-online.service
 # https://fedoraproject.org/wiki/Changes/systemd-resolved
 enable systemd-resolved.service
 
+# https://fedoraproject.org/wiki/Changes/EnableSystemdOomd
+enable systemd-oomd.service
+
 # These presets were last validated en-masse on 2015-09-09
 # https://fedorahosted.org/fesco/ticket/1472
 
