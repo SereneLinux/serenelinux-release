@@ -1,10 +1,10 @@
-%define release_name Rawhide
+%define release_name Thirty Four
 %define dist_version 34
 %define rhel_dist_version 9
-%define bug_version rawhide
+%define bug_version 34
 
 # Change this when branching to fNN
-%define doc_version rawhide
+%define doc_version 34
 
 %if 0%{?eln}
 %bcond_with basic
@@ -50,7 +50,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.11%{?eln:.eln%{eln}}
+Release:        0.12%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1216,6 +1216,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Feb 09 2021 Tomas Hrcka <thrcka@redhat.com> - 34-0.12
+- Branching F34 from rawhide
+
 * Tue Jan 19 2021 Allison Karlitskaya <allison.karlitskaya@redhat.com> - 34-0.11
 - Enable rpm-ostree repo-refresh for all active local users
 - https://github.com/fedora-silverblue/issue-tracker/issues/55
