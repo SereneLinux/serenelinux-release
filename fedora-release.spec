@@ -1,5 +1,5 @@
 %define release_name Rawhide
-%define dist_version 34
+%define dist_version 35
 %define rhel_dist_version 9
 %define bug_version rawhide
 
@@ -49,8 +49,8 @@
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        34
-Release:        0.11%{?eln:.eln%{eln}}
+Version:        35
+Release:        0.1%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1216,6 +1216,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Feb 09 2021 Tomas Hrcka <thrcka@redhat.com> - 35-0.1
+- Setup for rawhide being F35
+
 * Tue Jan 19 2021 Allison Karlitskaya <allison.karlitskaya@redhat.com> - 34-0.11
 - Enable rpm-ostree repo-refresh for all active local users
 - https://github.com/fedora-silverblue/issue-tracker/issues/55
