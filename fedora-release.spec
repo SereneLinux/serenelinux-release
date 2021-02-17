@@ -50,7 +50,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.12%{?eln:.eln%{eln}}
+Release:        0.13%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -72,7 +72,6 @@ Source21:       gnome-shell.conf
 Source22:       80-coreos.preset
 Source23:       zezere-ignition-url
 Source24:       80-iot-user.preset
-Source25:       80-kde.preset
 
 BuildArch:      noarch
 
@@ -908,7 +907,6 @@ echo "VARIANT=\"KDE Plasma\"" >> %{buildroot}%{_prefix}/lib/os-release.kde
 echo "VARIANT_ID=kde" >> %{buildroot}%{_prefix}/lib/os-release.kde
 sed -i -e "s|(%{release_name}%{?prerelease})|(KDE Plasma%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.kde
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/KDE/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
-install -Dm0644 %{SOURCE25} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 %endif
 
 %if %{with matecompiz}
@@ -1144,7 +1142,6 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files kde
 %files identity-kde
 %{_prefix}/lib/os-release.kde
-%{_prefix}/lib/systemd/system-preset/80-kde.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
 %endif
 
@@ -1216,6 +1213,10 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Feb 16 2021 Michel Alexandre Salim <salimma@fedoraproject.org> - 34-0.13
+- Remove earlyoom preset from workstation and kde identities
+  (replaced by systemd-oomd)
+
 * Tue Feb 09 2021 Tomas Hrcka <thrcka@redhat.com> - 34-0.12
 - Branching F34 from rawhide
 
