@@ -650,8 +650,8 @@ Recommends:     fedora-release-identity-soas
 
 
 %description soas
-Provides a base package for Fedora Sugar on a Stick-specific configuration files to
-depend on as well as SoaS system defaults.
+Provides a base package for Fedora Sugar on a Stick-specific configuration
+files to depend on as well as SoaS system defaults.
 
 
 %package identity-soas
