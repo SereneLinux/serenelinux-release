@@ -2,7 +2,7 @@
 %define is_rawhide 1
 
 %define dist_version 35
-%define rhel_dist_version 9
+%define rhel_dist_version 10
 
 %if %{is_rawhide}
 %define bug_version rawhide
@@ -58,7 +58,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        35
-Release:        0.2%{?eln:.eln%{eln}}
+Release:        0.3%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1227,6 +1227,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Sat Feb 20 2021 Stephen Gallagher <sgallagh@redhat.com> - 35-0.3
+- Update rhel_dist_version to track RHEL 10
+
 * Tue Feb 16 2021 Michel Alexandre Salim <salimma@fedoraproject.org> - 35-0.2
 - Remove earlyoom preset from workstation and kde identities
   (replaced by systemd-oomd)
