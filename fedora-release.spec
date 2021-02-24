@@ -28,6 +28,7 @@
 %bcond_with matecompiz
 %bcond_with server
 %bcond_with silverblue
+%bcond_with kinoite
 %bcond_with snappy
 %bcond_with soas
 %bcond_with workstation
@@ -46,6 +47,7 @@
 %bcond_without matecompiz
 %bcond_without server
 %bcond_without silverblue
+%bcond_without kinoite
 %bcond_without snappy
 %bcond_without soas
 %bcond_without workstation
@@ -58,7 +60,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        35
-Release:        0.4%{?eln:.eln%{eln}}
+Release:        0.5%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -595,6 +597,43 @@ itself as Fedora Silverblue.
 %endif
 
 
+%if %{with kinoite}
+%package kinoite
+Summary:        Base package for Fedora Kinoite-specific default configurations
+
+RemovePathPostfixes: .kinoite
+Provides:       fedora-release = %{version}-%{release}
+Provides:       fedora-release-variant = %{version}-%{release}
+Provides:       system-release
+Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
+Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-kinoite if nothing else is already doing so.
+Recommends:     fedora-release-identity-kinoite
+
+
+%description kinoite
+Provides a base package for Fedora Kinoite-specific configuration files to
+depend on as well as Kinoite system defaults.
+
+
+%package identity-kinoite
+Summary:        Package providing the identity for Fedora Kinoite
+
+RemovePathPostfixes: .kinoite
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-kinoite
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora Kinoite.
+%endif
+
+
 %if %{with snappy}
 %package snappy
 Summary:        Base package for Fedora snap specific default configurations
@@ -956,6 +995,17 @@ sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Silverblue/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.silverblue
 %endif
 
+%if %{with kinoite}
+# Kinoite
+cp -p os-release \
+      %{buildroot}%{_prefix}/lib/os-release.kinoite
+echo "VARIANT=\"Kinoite\"" >> %{buildroot}%{_prefix}/lib/os-release.kinoite
+echo "VARIANT_ID=kinoite" >> %{buildroot}%{_prefix}/lib/os-release.kinoite
+sed -i -e "s|(%{release_name}%{?prerelease})|(Kinoite%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.kinoite
+sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-kinoite/"|' %{buildroot}%{_prefix}/lib/os-release.kinoite
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Kinoite/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kinoite
+%endif
+
 %if %{with snappy}
 # Snappy
 cp -p os-release \
@@ -995,12 +1045,12 @@ install -Dm0644 %{SOURCE15} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 %endif
 
-%if %{with silverblue}
+%if %{with silverblue} || %{with kinoite}
 # Install rpm-ostree polkit rules
 install -Dm0644 %{SOURCE17} -t %{buildroot}%{_datadir}/polkit-1/rules.d/
 %endif
 
-%if %{with silverblue} || %{with iot}
+%if %{with silverblue} || %{with iot} || %{with kinoite}
 # Pull Count Me timer for rpm-ostreed
 install -dm0755 %{buildroot}%{_unitdir}/rpm-ostreed.service.wants/
 ln -snf %{_unitdir}/rpm-ostree-countme.timer %{buildroot}%{_unitdir}/rpm-ostreed.service.wants/
@@ -1201,6 +1251,16 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %endif
 
 
+%if %{with kinoite}
+%files kinoite
+%files identity-kinoite
+%{_prefix}/lib/os-release.kinoite
+%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kinoite
+%attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
+%{_unitdir}/rpm-ostreed.service.wants/rpm-ostree-countme.timer
+%endif
+
+
 %if %{with snappy}
 %files snappy
 %files identity-snappy
@@ -1238,6 +1298,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Wed Mar 17 2021 Timothée Ravier <travier@redhat.com> - 35-0.5
+- Add Fedora Kinoite variant sub package
+
 * Wed Mar 17 2021 Timothée Ravier <travier@redhat.com> - 35-0.4
 - Enable Count Me timer for Silverblue and IoT
 
