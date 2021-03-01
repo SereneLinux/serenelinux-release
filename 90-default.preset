@@ -314,3 +314,9 @@ enable sa-update.timer
 # on startup when /var/lib/rpm/.rebuilddb exists
 # https://bugzilla.redhat.com/show_bug.cgi?id=1826658
 enable rpmdb-rebuild.service
+
+# Support services for Google Cloud
+# Approved by FESCo: https://pagure.io/fesco/issue/2578
+enable google-guest-agent.service
+enable google-startup-scripts.service
+enable google-shutdown-scripts.service
