@@ -80,6 +80,10 @@ enable iscsi.service
 enable iscsid.socket
 enable iscsiuio.socket
 
+# iSCSI support for early-boot
+# https://bugzilla.redhat.com/show_bug.cgi?id=1930470
+enable iscsi-onboot.service
+
 # Locally-running services
 enable lvm2-monitor.*
 enable lvm2-lvmetad.*
