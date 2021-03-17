@@ -50,7 +50,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.13%{?eln:.eln%{eln}}
+Release:        0.14%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -90,6 +90,7 @@ Recommends:     fedora-release-identity-basic
 
 
 BuildRequires:  redhat-rpm-config > 121-1
+BuildRequires:  systemd-rpm-macros
 
 %description
 Fedora release files such as various /etc/ files that define the release
@@ -985,6 +986,12 @@ install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 install -Dm0644 %{SOURCE17} -t %{buildroot}%{_datadir}/polkit-1/rules.d/
 %endif
 
+%if %{with silverblue} || %{with iot}
+# Pull Count Me timer for rpm-ostreed
+install -dm0755 %{buildroot}%{_unitdir}/rpm-ostreed.service.wants/
+ln -snf %{_unitdir}/rpm-ostree-countme.timer %{buildroot}%{_unitdir}/rpm-ostreed.service.wants/
+%endif
+
 %if %{with xfce}
 # Xfce
 cp -p os-release \
@@ -1138,6 +1145,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %{_prefix}/lib/systemd/user-preset/80-iot-user.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
 %{_prefix}/lib/zezere-ignition-url
+%{_unitdir}/rpm-ostreed.service.wants/rpm-ostree-countme.timer
 %endif
 
 
@@ -1175,6 +1183,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
 %attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
+%{_unitdir}/rpm-ostreed.service.wants/rpm-ostree-countme.timer
 %endif
 
 
@@ -1215,6 +1224,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Wed Mar 17 2021 Timothée Ravier <travier@redhat.com> - 34-0.14
+- Enable Count Me timer for Silverblue and IoT
+
 * Tue Feb 16 2021 Michel Alexandre Salim <salimma@fedoraproject.org> - 34-0.13
 - Remove earlyoom preset from workstation and kde identities
   (replaced by systemd-oomd)
