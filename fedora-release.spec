@@ -58,7 +58,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        35
-Release:        0.3%{?eln:.eln%{eln}}
+Release:        0.4%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
