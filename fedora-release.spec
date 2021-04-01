@@ -60,7 +60,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        35
-Release:        0.5%{?eln:.eln%{eln}}
+Release:        0.6%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1298,6 +1298,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Thu Apr 01 2021 Stephen Gallagher <sgallagh@redhat.com> - 35-0.6
+- Enable certbot-renew.timer (bz1942011)
+
 * Wed Mar 17 2021 Timothée Ravier <travier@redhat.com> - 35-0.5
 - Add Fedora Kinoite variant sub package
 
