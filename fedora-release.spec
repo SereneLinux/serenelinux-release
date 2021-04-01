@@ -50,7 +50,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.14%{?eln:.eln%{eln}}
+Release:        0.15%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1224,6 +1224,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Thu Apr 01 2021 Stephen Gallagher <sgallagh@redhat.com> - 34-0.15
+- Enable certbot-renew.timer (bz1942011)
+
 * Wed Mar 17 2021 Timothée Ravier <travier@redhat.com> - 34-0.14
 - Enable Count Me timer for Silverblue and IoT
 
