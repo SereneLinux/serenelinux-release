@@ -324,3 +324,7 @@ enable rpmdb-rebuild.service
 enable google-guest-agent.service
 enable google-startup-scripts.service
 enable google-shutdown-scripts.service
+
+# Certbot (Let's Encrypt)
+# https://bugzilla.redhat.com/show_bug.cgi?id=1940211
+enable certbot-renew.timer
