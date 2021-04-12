@@ -50,7 +50,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        34
-Release:        0.15%{?eln:.eln%{eln}}
+Release:        1%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -104,7 +104,7 @@ Summary: Fedora release files
 Requires:   fedora-release-variant = %{version}-%{release}
 Suggests:   fedora-release
 
-Requires:   fedora-repos(%{version})
+Requires:   fedora-repos(%{version}) >= 1
 Requires:   fedora-release-identity = %{version}-%{release}
 
 # Fedora ships a generic-release package to make the creation of Remixes
@@ -1224,6 +1224,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Mon Apr 12 2021 Mohan Boddu <mboddu@bhujji.com> - 34-1
+- Setup for F34 Final
+
 * Thu Apr 01 2021 Stephen Gallagher <sgallagh@redhat.com> - 34-0.15
 - Enable certbot-renew.timer (bz1942011)
 
