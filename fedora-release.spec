@@ -60,7 +60,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        35
-Release:        0.6%{?eln:.eln%{eln}}
+Release:        0.7%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -423,6 +423,7 @@ Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+Requires:       fedora-release-ostree-counting = %{version}-%{release}
 
 # fedora-release-common Requires: fedora-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
@@ -571,6 +572,8 @@ Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+Requires:       fedora-release-ostree-counting = %{version}-%{release}
+Requires:       fedora-release-ostree-desktop = %{version}-%{release}
 
 # fedora-release-common Requires: fedora-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
@@ -608,6 +611,8 @@ Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
+Requires:       fedora-release-ostree-counting = %{version}-%{release}
+Requires:       fedora-release-ostree-desktop = %{version}-%{release}
 
 # fedora-release-common Requires: fedora-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
@@ -631,6 +636,24 @@ Conflicts:      fedora-release-identity
 %description identity-kinoite
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora Kinoite.
+%endif
+
+
+%if %{with silverblue} || %{with iot} || %{with kinoite}
+%package ostree-counting
+Summary:        Configuration package for rpm-ostree variants to enable counting
+
+%description ostree-counting
+Configuration package for rpm-ostree variants to enable counting
+%endif
+
+
+%if %{with silverblue} || %{with kinoite}
+%package ostree-desktop
+Summary:        Configuration package for rpm-ostree variants to add rpm-ostree polkit rules
+
+%description ostree-desktop
+Configuration package for rpm-ostree variants to add rpm-ostree polkit rules
 %endif
 
 
@@ -1209,7 +1232,6 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %{_prefix}/lib/systemd/user-preset/80-iot-user.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
 %{_prefix}/lib/zezere-ignition-url
-%{_unitdir}/rpm-ostreed.service.wants/rpm-ostree-countme.timer
 %endif
 
 
@@ -1246,8 +1268,6 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 # Keep this in sync with workstation below
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
-%attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
-%{_unitdir}/rpm-ostreed.service.wants/rpm-ostree-countme.timer
 %endif
 
 
@@ -1256,8 +1276,18 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files identity-kinoite
 %{_prefix}/lib/os-release.kinoite
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kinoite
-%attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
+%endif
+
+
+%if %{with silverblue} || %{with iot} || %{with kinoite}
+%files ostree-counting
 %{_unitdir}/rpm-ostreed.service.wants/rpm-ostree-countme.timer
+%endif
+
+
+%if %{with silverblue} || %{with kinoite}
+%files ostree-desktop
+%attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
 %endif
 
 
@@ -1298,6 +1328,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Apr 13 2021 Timothée Ravier <travier@redhat.com> - 35-0.7
+- Add ostree-counting & ostree-desktop subpackages
+
 * Thu Apr 01 2021 Stephen Gallagher <sgallagh@redhat.com> - 35-0.6
 - Enable certbot-renew.timer (bz1942011)
 
