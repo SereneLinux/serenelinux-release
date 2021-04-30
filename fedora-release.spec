@@ -60,7 +60,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        35
-Release:        0.7%{?eln:.eln%{eln}}
+Release:        0.8%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1328,6 +1328,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Fri Apr 30 2021 Ben Cotton <bcotton@fedoraproject.org> - 35-0.8
+- Automatically set the version in Fedora-Legal-README.txt
+
 * Tue Apr 13 2021 Timothée Ravier <travier@redhat.com> - 35-0.7
 - Add ostree-counting & ostree-desktop subpackages
 
