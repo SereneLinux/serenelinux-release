@@ -60,7 +60,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        35
-Release:        0.8%{?eln:.eln%{eln}}
+Release:        0.9%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -835,13 +835,13 @@ ln -s fedora-release %{buildroot}%{_sysconfdir}/system-release
 %endif
 
 cat << EOF >> os-release
-NAME=Fedora
+NAME="Fedora Linux"
 VERSION="%{dist_version} (%{release_name}%{?prerelease})"
 ID=fedora
 VERSION_ID=%{dist_version}
 VERSION_CODENAME=""
 PLATFORM_ID="platform:f%{dist_version}"
-PRETTY_NAME="Fedora %{dist_version} (%{release_name}%{?prerelease})"
+PRETTY_NAME="Fedora Linux %{dist_version} (%{release_name}%{?prerelease})"
 ANSI_COLOR="0;38;2;60;110;180"
 LOGO=fedora-logo-icon
 CPE_NAME="cpe:/o:fedoraproject:fedora:%{dist_version}"
@@ -1328,6 +1328,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Fri Apr 30 2021 Stephen Gallagher <sgallagh@redhat.com> - 35-0.9
+- Change PRETTY_NAME to "Fedora Linux"
+
 * Fri Apr 30 2021 Ben Cotton <bcotton@fedoraproject.org> - 35-0.8
 - Automatically set the version in Fedora-Legal-README.txt
 
