@@ -9,6 +9,10 @@ enable dbus-broker.service
 # https://bugzilla.redhat.com/show_bug.cgi?id=1592434
 enable pipewire.socket
 
+# Pulse-audio compatibility for pipewire
+# https://bugzilla.redhat.com/show_bug.cgi?id=1904239
+enable pipewire-pulse.socket
+
 # https://bugzilla.redhat.com/show_bug.cgi?id=1976006
 enable pipewire-media-session.service
 # https://bugzilla.redhat.com/show_bug.cgi?id=1979419
