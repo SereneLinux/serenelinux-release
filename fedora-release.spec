@@ -60,7 +60,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        35
-Release:        0.9%{?eln:.eln%{eln}}
+Release:        0.10%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1328,6 +1328,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Jul 13 2021 Stephen Gallagher <sgallagh@redhat.com> - 35-0.10
+- user session: enable pipewire-media-session.service
+
 * Fri Apr 30 2021 Stephen Gallagher <sgallagh@redhat.com> - 35-0.9
 - Change PRETTY_NAME to "Fedora Linux"
 
