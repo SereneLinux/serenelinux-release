@@ -328,3 +328,15 @@ enable google-shutdown-scripts.service
 # Certbot (Let's Encrypt)
 # https://bugzilla.redhat.com/show_bug.cgi?id=1940211
 enable certbot-renew.timer
+
+# enable thermald by default for desktops
+# https://pagure.io/fedora-workstation/issue/71
+enable thermald.service
+
+# enable uresourced by default for desktops
+# https://pagure.io/fesco/issue/2457
+enable uresourced.service
+
+# enable power-profiles-daemon
+# https://pagure.io/fedora-workstation/issue/191
+enable power-profiles-daemon.service

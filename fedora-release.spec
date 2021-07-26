@@ -60,7 +60,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        35
-Release:        0.12%{?eln:.eln%{eln}}
+Release:        0.13%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1328,6 +1328,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Mon Jul 26 2021 Neal Gompa <ngompa@fedoraproject.org> - 35-0.13
+- Shuffle some power/resource management presets so all variants can use them
+
 * Fri Jul 23 2021 Neal Gompa <ngompa@fedoraproject.org> - 35-0.12
 - user session: drop duplicate pipewire-pulse preset
 
