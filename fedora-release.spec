@@ -47,12 +47,12 @@
 # Changes should be submitted as pull requests under
 #     https://src.fedoraproject.org/rpms/fedora-release
 
-Summary:        Fedora release files
+Summary:        Serene release files
 Name:           fedora-release
 Version:        34
-Release:        1%{?eln:.eln%{eln}}
+Release:        10%{?eln:.eln%{eln}}
 License:        MIT
-URL:            https://fedoraproject.org/
+URL:            https://fascode.net/
 
 Source1:        LICENSE
 Source2:        Fedora-Legal-README.txt
@@ -759,20 +759,20 @@ ln -s fedora-release %{buildroot}%{_sysconfdir}/system-release
 %endif
 
 cat << EOF >> os-release
-NAME=Fedora
+NAME=Serene Linux
 VERSION="%{dist_version} (%{release_name}%{?prerelease})"
 ID=fedora
 VERSION_ID=%{dist_version}
 VERSION_CODENAME=""
 PLATFORM_ID="platform:f%{dist_version}"
-PRETTY_NAME="Fedora %{dist_version} (%{release_name}%{?prerelease})"
+PRETTY_NAME="SereneLinux %{dist_version} (%{release_name}%{?prerelease})"
 ANSI_COLOR="0;38;2;60;110;180"
-LOGO=fedora-logo-icon
+LOGO=SereneLinux
 CPE_NAME="cpe:/o:fedoraproject:fedora:%{dist_version}"
-HOME_URL="https://fedoraproject.org/"
-DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora/%{doc_version}/system-administrators-guide/"
-SUPPORT_URL="https://fedoraproject.org/wiki/Communicating_and_getting_help"
-BUG_REPORT_URL="https://bugzilla.redhat.com/"
+HOME_URL="https://fascode.net/"
+DOCUMENTATION_URL="https://fascode.net/"
+SUPPORT_URL="https://fascode.net/"
+BUG_REPORT_URL="https://fascode.net/"
 REDHAT_BUGZILLA_PRODUCT="Fedora"
 REDHAT_BUGZILLA_PRODUCT_VERSION=%{bug_version}
 REDHAT_SUPPORT_PRODUCT="Fedora"
