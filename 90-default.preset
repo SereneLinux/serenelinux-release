@@ -63,7 +63,23 @@ enable sysklogd.*
 enable firewalld.service
 
 # Approved by FESCo - https://fedorahosted.org/fesco/ticket/544
-enable libvirtd.service
+# Virtualization driver specific daemons. Start by defalt at boot for VM
+# autostart, but shutdown after 2 mins and socket activated thereafter
+enable virtqemud.service
+enable virtxend.service
+enable virtlxcd.service
+
+# Compatibility with libvirtd sockets for old clients and expose TCP sockets
+enable virtproxyd.socket
+
+# Secondary drivers providing supporting functionality to main virtualization
+# drivers, socket activated only when required
+enable virtinterfaced.socket
+enable virtnetworkd.socket
+enable virtnodedevd.socket
+enable virtnwfilterd.socket
+enable virtsecretd.socket
+enable virtstoraged.socket
 
 # https://fedoraproject.org/w/index.php?title=Starting_services_by_default&oldid=377748
 enable xinetd.service
