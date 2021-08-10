@@ -60,7 +60,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        35
-Release:        0.15%{?eln:.eln%{eln}}
+Release:        0.16%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1328,7 +1328,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
-* Tue Aug 10 2021 Tomas Hrcka <thrcka@redhat.com> - 35-0.15
+* Tue Aug 10 2021 Tomas Hrcka <thrcka@redhat.com> - 35-0.16
 - F35 branched form rawhide
 
 * Wed Aug 04 2021 Stephen Gallagher <sgallagh@redhat.com> - 35-0.14
