@@ -60,7 +60,7 @@
 Summary:        Fedora release files
 Name:           fedora-release
 Version:        36
-Release:        0.1%{?eln:.eln%{eln}}
+Release:        0.2%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1328,7 +1328,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
-* Tue Aug 10 2021 Tomas Hrcka <thrcka@redhat.com> - 36-0.1
+* Tue Aug 10 2021 Tomas Hrcka <thrcka@redhat.com> - 36-0.2
 - Setup for rawhide being F36
 
 * Wed Aug 04 2021 Stephen Gallagher <sgallagh@redhat.com> - 35-0.14
