@@ -1,7 +1,7 @@
 %define release_name Rawhide
 %define is_rawhide 1
 
-%define dist_version 35
+%define dist_version 36
 %define rhel_dist_version 10
 
 %if %{is_rawhide}
@@ -59,8 +59,8 @@
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        35
-Release:        0.14%{?eln:.eln%{eln}}
+Version:        36
+Release:        0.1%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fedoraproject.org/
 
@@ -1328,6 +1328,9 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 
 
 %changelog
+* Tue Aug 10 2021 Tomas Hrcka <thrcka@redhat.com> - 36-0.1
+- Setup for rawhide being F36
+
 * Wed Aug 04 2021 Stephen Gallagher <sgallagh@redhat.com> - 35-0.14
 - Switch libvirt presets to use the new modular daemons
   https://fedoraproject.org/wiki/Changes/LibvirtModularDaemons
