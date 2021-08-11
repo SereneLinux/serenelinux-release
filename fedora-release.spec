@@ -50,7 +50,7 @@
 Summary:        Serene release files
 Name:           fedora-release
 Version:        34
-Release:        10%{?eln:.eln%{eln}}
+Release:        11%{?eln:.eln%{eln}}
 License:        MIT
 URL:            https://fascode.net/
 
@@ -737,7 +737,7 @@ sed -i 's|@@VERSION@@|%{dist_version}|g' %{SOURCE2}
 
 %install
 install -d %{buildroot}%{_prefix}/lib
-echo "Fedora release %{version} (%{release_name})" > %{buildroot}%{_prefix}/lib/fedora-release
+echo "SereneLinux release %{version} (%{release_name})" > %{buildroot}%{_prefix}/lib/fedora-release
 echo "cpe:/o:fedoraproject:fedora:%{version}" > %{buildroot}%{_prefix}/lib/system-release-cpe
 
 # Symlink the -release files
