@@ -33,6 +33,7 @@
 %bcond_with soas
 %bcond_with workstation
 %bcond_with xfce
+%bcond_with i3
 %else
 %bcond_without basic
 %bcond_without cinnamon
@@ -52,6 +53,7 @@
 %bcond_without soas
 %bcond_without workstation
 %bcond_without xfce
+%bcond_without i3
 %endif
 
 %global dist %{?eln:.eln%{eln}}
@@ -811,6 +813,43 @@ itself as Fedora Xfce.
 %endif
 
 
+%if %{with i3}
+%package i3
+Summary:        Base package for Fedora i3 specific default configurations
+
+RemovePathPostfixes: .i3
+Provides:       fedora-release = %{version}-%{release}
+Provides:       fedora-release-variant = %{version}-%{release}
+Provides:       system-release
+Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
+Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-i3 if nothing else is already doing so.
+Recommends:     fedora-release-identity-i3
+
+
+%description i3
+Provides a base package for Fedora i3 specific configuration files to
+depend on.
+
+
+%package identity-i3
+Summary:        Package providing the identity for Fedora i3 Spin
+
+RemovePathPostfixes: .i3
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-i3
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora i3.
+%endif
+
+
 %prep
 sed -i 's|@@VERSION@@|%{dist_version}|g' %{SOURCE2}
 
@@ -1094,6 +1133,14 @@ sed -i -e "s|(%{release_name}%{?prerelease})|(Xfce%{?prerelease})|g" %{buildroot
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Xfce/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.xfce
 %endif
 
+%if %{with i3}
+cp -p os-release %{buildroot}%{_prefix}/lib/os-release.i3
+echo "VARIANT=\"i3\"" >> %{buildroot}%{_prefix}/lib/os-release.i3
+echo "VARIANT_ID=i3" >> %{buildroot}%{_prefix}/lib/os-release.i3
+sed -i -e "s|(%{release_name}%{?prerelease})|(i3%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.i3
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/i3/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.i3
+%endif
+
 # Create the symlink for /etc/os-release
 ln -s ../usr/lib/os-release %{buildroot}%{_sysconfdir}/os-release
 
@@ -1331,6 +1378,13 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.xfce
 %endif
 
+
+%if %{with i3}
+%files i3
+%files identity-i3
+%{_prefix}/lib/os-release.i3
+%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.i3
+%endif
 
 %changelog
 %autochangelog
