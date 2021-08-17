@@ -580,6 +580,12 @@ Requires:       fedora-release-common = %{version}-%{release}
 Requires:       fedora-release-ostree-counting = %{version}-%{release}
 Requires:       fedora-release-ostree-desktop = %{version}-%{release}
 
+# Third-party repositories, disabled by default unless the user opts in through fedora-third-party
+# Requires(meta) to avoid ordering loops - does not need to be installed before the release package
+# Keep this in sync with workstation below
+Requires(meta):	fedora-flathub-remote
+Requires(meta):	fedora-workstation-repositories
+
 # fedora-release-common Requires: fedora-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
 # fedora-release-identity-silverblue if nothing else is already doing so.
@@ -748,6 +754,12 @@ Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
 Provides:       system-release-product
+
+# Third-party repositories, disabled by default unless the user opts in through fedora-third-party
+# Requires(meta) to avoid ordering loops - does not need to be installed before the release package
+# Keep this in sync with silverblue above
+Requires(meta):	fedora-flathub-remote
+Requires(meta):	fedora-workstation-repositories
 
 # fedora-release-common Requires: fedora-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
