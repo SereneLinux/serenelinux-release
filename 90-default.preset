@@ -122,6 +122,9 @@ enable qemu-guest-agent.service
 # https://bugzilla.redhat.com/show_bug.cgi?id=928726
 enable dnf-makecache.timer
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=1995495
+enable rpm-ostree-countme.timer
+
 # https://bugzilla.redhat.com/show_bug.cgi?id=957135
 enable vmtoolsd.service
 

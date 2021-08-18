@@ -135,6 +135,9 @@ Provides:       system-release(releasever) = %{releasever}
 # will explicitly conflict with it.
 Conflicts:  generic-release
 
+# rpm-ostree count me is now enabled in 90-default.preset
+Obsoletes: fedora-release-ostree-counting <= 36-0.2
+
 %description common
 Release files common to all Editions and Spins of Fedora
 
@@ -430,7 +433,6 @@ Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
-Requires:       fedora-release-ostree-counting = %{version}-%{release}
 
 # fedora-release-common Requires: fedora-release-identity, so at least one
 # package must provide it. This Recommends: pulls in
@@ -579,7 +581,6 @@ Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
-Requires:       fedora-release-ostree-counting = %{version}-%{release}
 Requires:       fedora-release-ostree-desktop = %{version}-%{release}
 
 # Third-party repositories, disabled by default unless the user opts in through fedora-third-party
@@ -624,7 +625,6 @@ Provides:       system-release
 Provides:       system-release(%{version})
 Provides:       base-module(platform:f%{version})
 Requires:       fedora-release-common = %{version}-%{release}
-Requires:       fedora-release-ostree-counting = %{version}-%{release}
 Requires:       fedora-release-ostree-desktop = %{version}-%{release}
 
 # fedora-release-common Requires: fedora-release-identity, so at least one
@@ -649,15 +649,6 @@ Conflicts:      fedora-release-identity
 %description identity-kinoite
 Provides the necessary files for a Fedora installation that is identifying
 itself as Fedora Kinoite.
-%endif
-
-
-%if %{with silverblue} || %{with iot} || %{with kinoite}
-%package ostree-counting
-Summary:        Configuration package for rpm-ostree variants to enable counting
-
-%description ostree-counting
-Configuration package for rpm-ostree variants to enable counting
 %endif
 
 
@@ -1129,12 +1120,6 @@ install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 install -Dm0644 %{SOURCE17} -t %{buildroot}%{_datadir}/polkit-1/rules.d/
 %endif
 
-%if %{with silverblue} || %{with iot} || %{with kinoite}
-# Pull Count Me timer for rpm-ostreed
-install -dm0755 %{buildroot}%{_unitdir}/rpm-ostreed.service.wants/
-ln -snf %{_unitdir}/rpm-ostree-countme.timer %{buildroot}%{_unitdir}/rpm-ostreed.service.wants/
-%endif
-
 %if %{with xfce}
 # Xfce
 cp -p os-release \
@@ -1340,12 +1325,6 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files identity-kinoite
 %{_prefix}/lib/os-release.kinoite
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kinoite
-%endif
-
-
-%if %{with silverblue} || %{with iot} || %{with kinoite}
-%files ostree-counting
-%{_unitdir}/rpm-ostreed.service.wants/rpm-ostree-countme.timer
 %endif
 
 
