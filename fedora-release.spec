@@ -136,7 +136,7 @@ Provides:       system-release(releasever) = %{releasever}
 Conflicts:  generic-release
 
 # rpm-ostree count me is now enabled in 90-default.preset
-Obsoletes: fedora-release-ostree-counting <= 36-0.2
+Obsoletes: fedora-release-ostree-counting <= 36-0.7
 
 %description common
 Release files common to all Editions and Spins of Fedora
