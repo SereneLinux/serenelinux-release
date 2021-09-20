@@ -62,8 +62,24 @@ enable sysklogd.*
 # https://fedoraproject.org/w/index.php?title=Starting_services_by_default&oldid=377748
 enable firewalld.service
 
-# Approved by FESCo - https://fedorahosted.org/fesco/ticket/544
-enable libvirtd.service
+# Approved by FESCo - https://fedorahosted.org/fesco/ticket/2627
+# Virtualization driver specific daemons. Start by default at boot for VM
+# autostart, but shutdown after 2 mins and socket activated thereafter
+enable virtqemud.service
+enable virtxend.service
+enable virtlxcd.service
+
+# Compatibility with libvirtd sockets for old clients and expose TCP sockets
+enable virtproxyd.socket
+
+# Secondary drivers providing supporting functionality to main virtualization
+# drivers, socket activated only when required
+enable virtinterfaced.socket
+enable virtnetworkd.socket
+enable virtnodedevd.socket
+enable virtnwfilterd.socket
+enable virtsecretd.socket
+enable virtstoraged.socket
 
 # https://fedoraproject.org/w/index.php?title=Starting_services_by_default&oldid=377748
 enable xinetd.service
@@ -105,6 +121,9 @@ enable qemu-guest-agent.service
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=928726
 enable dnf-makecache.timer
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1995495
+enable rpm-ostree-countme.timer
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=957135
 enable vmtoolsd.service
@@ -328,3 +347,15 @@ enable google-shutdown-scripts.service
 # Certbot (Let's Encrypt)
 # https://bugzilla.redhat.com/show_bug.cgi?id=1940211
 enable certbot-renew.timer
+
+# enable thermald by default for desktops
+# https://pagure.io/fedora-workstation/issue/71
+enable thermald.service
+
+# enable uresourced by default for desktops
+# https://pagure.io/fesco/issue/2457
+enable uresourced.service
+
+# enable power-profiles-daemon
+# https://pagure.io/fedora-workstation/issue/191
+enable power-profiles-daemon.service
