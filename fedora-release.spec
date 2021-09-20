@@ -61,11 +61,11 @@
 
 Summary:        Serene release files
 Name:           fedora-release
-Version:        35.60
+Version:        35
 # The numbering is 0.<r> before a given Fedora Linux release is released,
 # with r starting at 1, and then just <r>, with r starting again at 1.
 # Use '%%autorelease -p' before final, and then drop the '-p'.
-Release:        12
+Release:        60.12
 License:        MIT
 URL:            https://fascode.net/
 

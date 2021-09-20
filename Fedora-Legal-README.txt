@@ -10,7 +10,7 @@ https://fedoraproject.org/wiki/Licensing:Main?rd=Licensing.
 
 = Source Availability =
 
-The accompanying Fedora Linux @@VERSION@@ release includes copyrighted
+The accompanying Fedora Linux 35 release includes copyrighted
 software that is licensed under the GNU General Public License and
 other licenses. You may obtain the complete machine-readable source
 code corresponding to portions of this release by sending a check or
@@ -18,10 +18,10 @@ money order in the amount of US $5.00 to:
 
 VP, Legal - Products & Technologies | Red Hat, Inc. | 100 East Davie Street | Raleigh, NC 27601 USA
 
-Please write "source for Fedora Linux @@VERSION@@" in the memo line of your payment.
+Please write "source for Fedora Linux 35" in the memo line of your payment.
 
 You may also access a copy of this source code at:
-https://dl.fedoraproject.org/pub/fedora/linux/releases/@@VERSION@@/Everything/source/
+https://dl.fedoraproject.org/pub/fedora/linux/releases/35/Everything/source/
 
 This offer is valid to anyone in receipt of this information and shall
 expire three years following the date of the final distribution of
