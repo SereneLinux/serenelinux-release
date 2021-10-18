@@ -1123,6 +1123,12 @@ install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 install -Dm0644 %{SOURCE17} -t %{buildroot}%{_datadir}/polkit-1/rules.d/
 %endif
 
+%if %{with iot} || %{with silverblue} || %{with kinoite}
+# Statically enable rpm-ostree-countme timer
+install -dm0755 %{buildroot}%{_unitdir}/timers.target.wants/
+ln -snf %{_unitdir}/rpm-ostree-countme.timer %{buildroot}%{_unitdir}/timers.target.wants/
+%endif
+
 %if %{with xfce}
 # Xfce
 cp -p os-release \
@@ -1284,6 +1290,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %{_prefix}/lib/systemd/user-preset/80-iot-user.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
 %{_prefix}/lib/zezere-ignition-url
+%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 %endif
 
 
@@ -1321,6 +1328,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 # Keep this in sync with workstation below
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
+%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 %endif
 
 
@@ -1329,6 +1337,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files identity-kinoite
 %{_prefix}/lib/os-release.kinoite
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kinoite
+%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 %endif
 
 
