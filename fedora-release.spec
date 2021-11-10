@@ -89,6 +89,7 @@ Source21:       gnome-shell.conf
 Source22:       80-coreos.preset
 Source23:       zezere-ignition-url
 Source24:       80-iot-user.preset
+Source25:       plasma-desktop.conf
 
 BuildArch:      noarch
 
@@ -1031,6 +1032,8 @@ echo "VARIANT=\"KDE Plasma\"" >> %{buildroot}%{_prefix}/lib/os-release.kde
 echo "VARIANT_ID=kde" >> %{buildroot}%{_prefix}/lib/os-release.kde
 sed -i -e "s|(%{release_name}%{?prerelease})|(KDE Plasma%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.kde
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/KDE/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
+# Add plasma-desktop to dnf protected packages list for KDE
+install -Dm0644 %{SOURCE25} -t %{buildroot}%{_sysconfdir}/dnf/protected.d/
 %endif
 
 %if %{with matecompiz}
@@ -1289,6 +1292,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files identity-kde
 %{_prefix}/lib/os-release.kde
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
+%{_sysconfdir}/dnf/protected.d/plasma-desktop.conf
 %endif
 
 
