@@ -90,6 +90,8 @@ Source22:       80-coreos.preset
 Source23:       zezere-ignition-url
 Source24:       80-iot-user.preset
 Source25:       plasma-desktop.conf
+Source26:       80-kde.preset
+Source27:       81-desktop.preset
 
 BuildArch:      noarch
 
@@ -1114,8 +1116,15 @@ install -Dm0644 %{SOURCE21} -t %{buildroot}%{_sysconfdir}/dnf/protected.d/
 %if %{with silverblue} || %{with workstation}
 # Silverblue and Workstation
 install -Dm0644 %{SOURCE15} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %{SOURCE27} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 # Override the list of enabled gnome-shell extensions for Workstation
 install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
+%endif
+
+%if %{with kde} || %{with kinoite}
+# Common desktop preset and spin specific preset
+install -Dm0644 %{SOURCE26} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %{SOURCE27} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 %endif
 
 %if %{with silverblue} || %{with kinoite}
@@ -1298,6 +1307,8 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files kde
 %files identity-kde
 %{_prefix}/lib/os-release.kde
+%{_prefix}/lib/systemd/system-preset/80-kde.preset
+%{_prefix}/lib/systemd/system-preset/81-desktop.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
 %{_sysconfdir}/dnf/protected.d/plasma-desktop.conf
 %endif
@@ -1328,6 +1339,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 # Keep this in sync with workstation below
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
+%{_prefix}/lib/systemd/system-preset/81-desktop.preset
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 %endif
 
@@ -1336,6 +1348,8 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files kinoite
 %files identity-kinoite
 %{_prefix}/lib/os-release.kinoite
+%{_prefix}/lib/systemd/system-preset/80-kde.preset
+%{_prefix}/lib/systemd/system-preset/81-desktop.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kinoite
 %{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 %endif
@@ -1372,6 +1386,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 # Keep this in sync with silverblue above
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
+%{_prefix}/lib/systemd/system-preset/81-desktop.preset
 %endif
 
 
