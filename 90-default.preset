@@ -341,6 +341,11 @@ enable sa-update.timer
 # https://bugzilla.redhat.com/show_bug.cgi?id=1826658
 enable rpmdb-rebuild.service
 
+# Enable service to automatically migrate the RPM database to /usr
+# on startup when /var/lib/rpm/.migratedb exists
+# https://bugzilla.redhat.com/show_bug.cgi?id=2044061
+enable rpmdb-migrate.service
+
 # Support services for Google Cloud
 # Approved by FESCo: https://pagure.io/fesco/issue/2578
 enable google-guest-agent.service
