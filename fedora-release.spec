@@ -85,7 +85,7 @@ Source17:       org.projectatomic.rpmostree1.rules
 Source18:       80-iot.preset
 Source19:       distro-template.swidtag
 Source20:       distro-edition-template.swidtag
-Source21:       gnome-shell.conf
+Source21:       fedora-workstation.conf
 Source22:       80-coreos.preset
 Source23:       zezere-ignition-url
 Source24:       80-iot-user.preset
@@ -1109,7 +1109,7 @@ echo "VARIANT=\"Workstation Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.
 echo "VARIANT_ID=workstation" >> %{buildroot}%{_prefix}/lib/os-release.workstation
 sed -i -e "s|(%{release_name}%{?prerelease})|(Workstation Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.workstation
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Workstation/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.workstation
-# Add gnome-shell to dnf protected packages list for Workstation
+# Add Fedora Workstation dnf protected packages list
 install -Dm0644 %{SOURCE21} -t %{buildroot}%{_sysconfdir}/dnf/protected.d/
 %endif
 
@@ -1382,7 +1382,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files identity-workstation
 %{_prefix}/lib/os-release.workstation
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.workstation
-%{_sysconfdir}/dnf/protected.d/gnome-shell.conf
+%{_sysconfdir}/dnf/protected.d/fedora-workstation.conf
 # Keep this in sync with silverblue above
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
