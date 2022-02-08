@@ -1,7 +1,7 @@
 %define release_name Rawhide
 %define is_rawhide 1
 
-%define dist_version 36
+%define dist_version 37
 %define rhel_dist_version 10
 
 %if %{is_rawhide}
@@ -63,7 +63,7 @@
 
 Summary:        Fedora release files
 Name:           fedora-release
-Version:        36
+Version:        37
 # The numbering is 0.<r> before a given Fedora Linux release is released,
 # with r starting at 1, and then just <r>, with r starting again at 1.
 # Use '%%autorelease -p' before final, and then drop the '-p'.
