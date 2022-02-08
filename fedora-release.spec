@@ -1,5 +1,5 @@
-%define release_name Rawhide
-%define is_rawhide 1
+%define release_name Thirty six
+%define is_rawhide 0
 
 %define dist_version 36
 %define rhel_dist_version 10
