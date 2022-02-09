@@ -1,4 +1,4 @@
-%define release_name Thirty six
+%define release_name Thirty Six
 %define is_rawhide 0
 
 %define dist_version 36
