@@ -1067,6 +1067,8 @@ echo "VARIANT=\"Silverblue\"" >> %{buildroot}%{_prefix}/lib/os-release.silverblu
 echo "VARIANT_ID=silverblue" >> %{buildroot}%{_prefix}/lib/os-release.silverblue
 sed -i -e "s|(%{release_name}%{?prerelease})|(Silverblue%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.silverblue
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-silverblue/"|' %{buildroot}%{_prefix}/lib/os-release.silverblue
+sed -i -e 's|HOME_URL=.*|HOME_URL="https://silverblue.fedoraproject.org"|' %{buildroot}/%{_prefix}/lib/os-release.silverblue
+sed -i -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://github.com/fedora-silverblue/issue-tracker/issues"|' %{buildroot}/%{_prefix}/lib/os-release.silverblue
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Silverblue/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.silverblue
 %endif
 
@@ -1078,6 +1080,8 @@ echo "VARIANT=\"Kinoite\"" >> %{buildroot}%{_prefix}/lib/os-release.kinoite
 echo "VARIANT_ID=kinoite" >> %{buildroot}%{_prefix}/lib/os-release.kinoite
 sed -i -e "s|(%{release_name}%{?prerelease})|(Kinoite%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.kinoite
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-kinoite/"|' %{buildroot}%{_prefix}/lib/os-release.kinoite
+sed -i -e 's|HOME_URL=.*|HOME_URL="https://kinoite.fedoraproject.org"|' %{buildroot}/%{_prefix}/lib/os-release.kinoite
+sed -i -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://pagure.io/fedora-kde/SIG/issues"|' %{buildroot}/%{_prefix}/lib/os-release.kinoite
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Kinoite/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kinoite
 %endif
 
