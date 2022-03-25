@@ -367,3 +367,8 @@ enable uresourced.service
 # enable power-profiles-daemon
 # https://pagure.io/fedora-workstation/issue/191
 enable power-profiles-daemon.service
+
+# Enable vendor firmware update
+# https://bugzilla.redhat.com/show_bug.cgi?id=2068555
+enable update-vendor-firmware.service
+
