@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - f35
+    tags:
+      - tag
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:36
+      options: --privileged=true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo dnf -y update
+          sudo dnf -y install \
+            rpmdevtools \
+            mock fedpkg
+      - name: Download Source
+        run: |
+          spectool -g *.spec
+      - name: Build RPMS
+        run: |
+          sudo fedpkg --release f35 mockbuild
+      - name: Archive generated rpms
+        uses: actions/upload-artifact@v2
+        with:
+          name: rpm-lightdm-qtquick-greeter
+          path: results_lightdm-qtquick-greeter
+      
+      
