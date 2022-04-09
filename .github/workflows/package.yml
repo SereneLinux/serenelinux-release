@@ -12,14 +12,15 @@ jobs:
       options: --privileged=true
     steps:
       - uses: actions/checkout@v2
-        with:
-          path: "fedora-release"
       - name: Install dependencies
         run: |
           sudo dnf -y update
           sudo dnf -y install \
             rpmdevtools \
             mock fedpkg
+      - name: Download Source
+        run: |
+          spectool -g *.spec
       - name: Build RPMS
         run: |
           sed -i "s/serenelinux-release/fedora-release/g" .git/config
