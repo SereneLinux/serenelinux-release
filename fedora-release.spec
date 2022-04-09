@@ -1,7 +1,7 @@
-%define release_name Thirty Five
+%define release_name Thirty Six
 %define is_rawhide 0
 
-%define dist_version 35
+%define dist_version 36
 %define rhel_dist_version 10
 
 %if %{is_rawhide}
@@ -33,6 +33,7 @@
 %bcond_with soas
 %bcond_with workstation
 %bcond_with xfce
+%bcond_with i3
 %else
 %bcond_without basic
 %bcond_without cinnamon
@@ -52,6 +53,7 @@
 %bcond_without soas
 %bcond_without workstation
 %bcond_without xfce
+%bcond_without i3
 %endif
 
 %global dist %{?eln:.eln%{eln}}
@@ -61,11 +63,11 @@
 
 Summary:        Serene release files
 Name:           fedora-release
-Version:        35
+Version:        36
 # The numbering is 0.<r> before a given Fedora Linux release is released,
 # with r starting at 1, and then just <r>, with r starting again at 1.
 # Use '%%autorelease -p' before final, and then drop the '-p'.
-Release:        60.12
+Release:        60.10
 License:        MIT
 URL:            https://fascode.net/
 
@@ -83,10 +85,13 @@ Source17:       org.projectatomic.rpmostree1.rules
 Source18:       80-iot.preset
 Source19:       distro-template.swidtag
 Source20:       distro-edition-template.swidtag
-Source21:       gnome-shell.conf
+Source21:       fedora-workstation.conf
 Source22:       80-coreos.preset
 Source23:       zezere-ignition-url
 Source24:       80-iot-user.preset
+Source25:       plasma-desktop.conf
+Source26:       80-kde.preset
+Source27:       81-desktop.preset
 
 BuildArch:      noarch
 
@@ -134,7 +139,7 @@ Provides:       system-release(releasever) = %{releasever}
 Conflicts:  generic-release
 
 # rpm-ostree count me is now enabled in 90-default.preset
-Obsoletes: fedora-release-ostree-counting < 35-0.32
+Obsoletes: fedora-release-ostree-counting <= 36-0.7
 
 %description common
 Release files common to all Editions and Spins of Fedora
@@ -814,6 +819,43 @@ itself as Fedora Xfce.
 %endif
 
 
+%if %{with i3}
+%package i3
+Summary:        Base package for Fedora i3 specific default configurations
+
+RemovePathPostfixes: .i3
+Provides:       fedora-release = %{version}-%{release}
+Provides:       fedora-release-variant = %{version}-%{release}
+Provides:       system-release
+Provides:       system-release(%{version})
+Provides:       base-module(platform:f%{version})
+Requires:       fedora-release-common = %{version}-%{release}
+
+# fedora-release-common Requires: fedora-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# fedora-release-identity-i3 if nothing else is already doing so.
+Recommends:     fedora-release-identity-i3
+
+
+%description i3
+Provides a base package for Fedora i3 specific configuration files to
+depend on.
+
+
+%package identity-i3
+Summary:        Package providing the identity for Fedora i3 Spin
+
+RemovePathPostfixes: .i3
+Provides:       fedora-release-identity = %{version}-%{release}
+Conflicts:      fedora-release-identity
+
+
+%description identity-i3
+Provides the necessary files for a Fedora installation that is identifying
+itself as Fedora i3.
+%endif
+
+
 %prep
 sed -i 's|@@VERSION@@|%{dist_version}|g' %{SOURCE2}
 
@@ -992,6 +1034,8 @@ echo "VARIANT=\"KDE Plasma\"" >> %{buildroot}%{_prefix}/lib/os-release.kde
 echo "VARIANT_ID=kde" >> %{buildroot}%{_prefix}/lib/os-release.kde
 sed -i -e "s|(%{release_name}%{?prerelease})|(KDE Plasma%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.kde
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/KDE/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
+# Add plasma-desktop to dnf protected packages list for KDE
+install -Dm0644 %{SOURCE25} -t %{buildroot}%{_sysconfdir}/dnf/protected.d/
 %endif
 
 %if %{with matecompiz}
@@ -1065,15 +1109,22 @@ echo "VARIANT=\"Workstation Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.
 echo "VARIANT_ID=workstation" >> %{buildroot}%{_prefix}/lib/os-release.workstation
 sed -i -e "s|(%{release_name}%{?prerelease})|(Workstation Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.workstation
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Workstation/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.workstation
-# Add gnome-shell to dnf protected packages list for Workstation
+# Add Fedora Workstation dnf protected packages list
 install -Dm0644 %{SOURCE21} -t %{buildroot}%{_sysconfdir}/dnf/protected.d/
 %endif
 
 %if %{with silverblue} || %{with workstation}
 # Silverblue and Workstation
 install -Dm0644 %{SOURCE15} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %{SOURCE27} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 # Override the list of enabled gnome-shell extensions for Workstation
 install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
+%endif
+
+%if %{with kde} || %{with kinoite}
+# Common desktop preset and spin specific preset
+install -Dm0644 %{SOURCE26} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
+install -Dm0644 %{SOURCE27} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 %endif
 
 %if %{with silverblue} || %{with kinoite}
@@ -1081,10 +1132,10 @@ install -Dm0644 %{SOURCE16} -t %{buildroot}%{_datadir}/glib-2.0/schemas/
 install -Dm0644 %{SOURCE17} -t %{buildroot}%{_datadir}/polkit-1/rules.d/
 %endif
 
-%if %{with silverblue} || %{with iot}
-# Pull Count Me timer for rpm-ostreed
-install -dm0755 %{buildroot}%{_unitdir}/rpm-ostreed.service.wants/
-ln -snf %{_unitdir}/rpm-ostree-countme.timer %{buildroot}%{_unitdir}/rpm-ostreed.service.wants/
+%if %{with iot} || %{with silverblue} || %{with kinoite}
+# Statically enable rpm-ostree-countme timer
+install -dm0755 %{buildroot}%{_unitdir}/timers.target.wants/
+ln -snf %{_unitdir}/rpm-ostree-countme.timer %{buildroot}%{_unitdir}/timers.target.wants/
 %endif
 
 %if %{with xfce}
@@ -1095,6 +1146,14 @@ echo "VARIANT=\"Xfce\"" >> %{buildroot}%{_prefix}/lib/os-release.xfce
 echo "VARIANT_ID=xfce" >> %{buildroot}%{_prefix}/lib/os-release.xfce
 sed -i -e "s|(%{release_name}%{?prerelease})|(Xfce%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.xfce
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Xfce/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.xfce
+%endif
+
+%if %{with i3}
+cp -p os-release %{buildroot}%{_prefix}/lib/os-release.i3
+echo "VARIANT=\"i3\"" >> %{buildroot}%{_prefix}/lib/os-release.i3
+echo "VARIANT_ID=i3" >> %{buildroot}%{_prefix}/lib/os-release.i3
+sed -i -e "s|(%{release_name}%{?prerelease})|(i3%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.i3
+sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/i3/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.i3
 %endif
 
 # Create the symlink for /etc/os-release
@@ -1240,7 +1299,7 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %{_prefix}/lib/systemd/user-preset/80-iot-user.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
 %{_prefix}/lib/zezere-ignition-url
-%{_unitdir}/rpm-ostreed.service.wants/rpm-ostree-countme.timer
+%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 %endif
 
 
@@ -1248,7 +1307,10 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files kde
 %files identity-kde
 %{_prefix}/lib/os-release.kde
+%{_prefix}/lib/systemd/system-preset/80-kde.preset
+%{_prefix}/lib/systemd/system-preset/81-desktop.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kde
+%{_sysconfdir}/dnf/protected.d/plasma-desktop.conf
 %endif
 
 
@@ -1277,6 +1339,8 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 # Keep this in sync with workstation below
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
+%{_prefix}/lib/systemd/system-preset/81-desktop.preset
+%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 %endif
 
 
@@ -1284,7 +1348,10 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files kinoite
 %files identity-kinoite
 %{_prefix}/lib/os-release.kinoite
+%{_prefix}/lib/systemd/system-preset/80-kde.preset
+%{_prefix}/lib/systemd/system-preset/81-desktop.preset
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kinoite
+%{_unitdir}/timers.target.wants/rpm-ostree-countme.timer
 %endif
 
 
@@ -1316,10 +1383,11 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %files identity-workstation
 %{_prefix}/lib/os-release.workstation
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.workstation
-%{_sysconfdir}/dnf/protected.d/gnome-shell.conf
+%{_sysconfdir}/dnf/protected.d/fedora-workstation.conf
 # Keep this in sync with silverblue above
 %{_datadir}/glib-2.0/schemas/org.gnome.shell.gschema.override
 %{_prefix}/lib/systemd/system-preset/80-workstation.preset
+%{_prefix}/lib/systemd/system-preset/81-desktop.preset
 %endif
 
 
@@ -1330,6 +1398,13 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.xfce
 %endif
 
+
+%if %{with i3}
+%files i3
+%files identity-i3
+%{_prefix}/lib/os-release.i3
+%attr(0644,root,root) %{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.i3
+%endif
 
 %changelog
 %autochangelog

@@ -1,5 +1,5 @@
-* Tue Aug 10 2021 Tomas Hrcka <thrcka@redhat.com> - 35-0.16
-- F35 branched form rawhide
+* Tue Aug 10 2021 Tomas Hrcka <thrcka@redhat.com> - 36-0.2
+- Setup for rawhide being F36
 
 * Wed Aug 04 2021 Stephen Gallagher <sgallagh@redhat.com> - 35-0.14
 - Switch libvirt presets to use the new modular daemons
