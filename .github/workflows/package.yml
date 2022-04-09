@@ -12,9 +12,6 @@ jobs:
       options: --privileged=true
     steps:
       - uses: actions/checkout@v2
-      - name: lskun
-        run: |
-          ls -la 
       - name: Install dependencies
         run: |
           sudo dnf -y update
@@ -26,7 +23,6 @@ jobs:
           spectool -g *.spec
       - name: Build RPMS
         run: |
-          sed -i "s/serenelinux-release/fedora-release/g" .git/config
           sudo fedpkg --release f35 mockbuild
       - name: Archive generated rpms
         uses: actions/upload-artifact@v2
