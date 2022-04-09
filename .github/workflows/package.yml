@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - f35
+      - f36
     tags:
       - tag
 jobs:
@@ -25,7 +25,7 @@ jobs:
         run: |
           git init
           git -c user.name='foobar' -c user.email='foobar@example.com' commit --allow-empty -m "first commit"
-          sudo fedpkg --release f35 mockbuild
+          sudo fedpkg --release f36 mockbuild
       - name: Archive generated rpms
         uses: actions/upload-artifact@v2
         with:
