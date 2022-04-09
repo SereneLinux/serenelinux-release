@@ -23,6 +23,8 @@ jobs:
           spectool -g *.spec
       - name: Build RPMS
         run: |
+          git init
+          git -c user.name='foobar' -c user.email='foobar@example.com' commit --allow-empty -m "first commit"
           sudo fedpkg --release f35 mockbuild
       - name: Archive generated rpms
         uses: actions/upload-artifact@v2
