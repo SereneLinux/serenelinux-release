@@ -12,6 +12,9 @@ jobs:
       options: --privileged=true
     steps:
       - uses: actions/checkout@v2
+      - name: lskun
+        run: |
+          ls -la 
       - name: Install dependencies
         run: |
           sudo dnf -y update
