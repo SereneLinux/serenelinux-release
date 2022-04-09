@@ -12,6 +12,8 @@ jobs:
       options: --privileged=true
     steps:
       - uses: actions/checkout@v2
+        with:
+          path: "fedora-release"
       - name: Install dependencies
         run: |
           sudo dnf -y update
@@ -23,11 +25,12 @@ jobs:
           spectool -g *.spec
       - name: Build RPMS
         run: |
+          rm -rf .git
           sudo fedpkg --release f35 mockbuild
       - name: Archive generated rpms
         uses: actions/upload-artifact@v2
         with:
-          name: rpm-lightdm-qtquick-greeter
-          path: results_lightdm-qtquick-greeter
+          name: rpm-fedora-release
+          path: results_fedora-release
       
       
