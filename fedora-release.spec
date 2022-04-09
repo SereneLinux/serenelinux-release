@@ -1355,10 +1355,10 @@ ln -s %{_swidtagdir} %{buildroot}%{_sysconfdir}/swid/swidtags.d/fedoraproject.or
 %endif
 
 
+
 %if %{with silverblue} || %{with kinoite}
 %files ostree-desktop
 %attr(0644,root,root) %{_prefix}/share/polkit-1/rules.d/org.projectatomic.rpmostree1.rules
-%{_unitdir}/rpm-ostreed.service.wants/rpm-ostree-countme.timer
 %endif
 
 
