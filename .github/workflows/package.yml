@@ -20,9 +20,6 @@ jobs:
           sudo dnf -y install \
             rpmdevtools \
             mock fedpkg
-      - name: Download Source
-        run: |
-          spectool -g *.spec
       - name: Build RPMS
         run: |
           sed -i "s/serenelinux-release/fedora-release/g" .git/config
