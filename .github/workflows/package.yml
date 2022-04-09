@@ -25,7 +25,7 @@ jobs:
           spectool -g *.spec
       - name: Build RPMS
         run: |
-          rm -rf .git
+          sed -i "s/serenelinux-release/fedora-release/g" .git/config
           sudo fedpkg --release f35 mockbuild
       - name: Archive generated rpms
         uses: actions/upload-artifact@v2
