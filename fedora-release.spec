@@ -67,7 +67,7 @@ Version:        36
 # The numbering is 0.<r> before a given Fedora Linux release is released,
 # with r starting at 1, and then just <r>, with r starting again at 1.
 # Use '%%autorelease -p' before final, and then drop the '-p'.
-Release:        60.10
+Release:        60.11
 License:        MIT
 URL:            https://fascode.net/
 
@@ -885,7 +885,7 @@ ln -s fedora-release %{buildroot}%{_sysconfdir}/system-release
 %endif
 
 cat << EOF >> os-release
-NAME=Serene Linux
+NAME="SereneLinux"
 VERSION="%{dist_version} (%{release_name}%{?prerelease})"
 ID=fedora
 VERSION_ID=%{dist_version}
