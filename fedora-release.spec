@@ -67,7 +67,7 @@ Version:        36
 # The numbering is 0.<r> before a given Fedora Linux release is released,
 # with r starting at 1, and then just <r>, with r starting again at 1.
 # Use '%%autorelease -p' before final, and then drop the '-p'.
-Release:        %autorelease -p
+Release:        %autorelease
 License:        MIT
 URL:            https://fedoraproject.org/
 
