@@ -21,6 +21,9 @@ jobs:
       - name: Download Source
         run: |
           spectool -g *.spec
+      - name: Safe Git
+        run: |
+          git config --global --add safe.directory /__w/serenelinux-release/serenelinux-release
       - name: Build RPMS
         run: |
           git init
