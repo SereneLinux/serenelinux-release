@@ -67,7 +67,7 @@ Version:        36
 # The numbering is 0.<r> before a given Fedora Linux release is released,
 # with r starting at 1, and then just <r>, with r starting again at 1.
 # Use '%%autorelease -p' before final, and then drop the '-p'.
-Release:        60.11
+Release:        %autorelease -b 69
 License:        MIT
 URL:            https://fascode.net/
 
