@@ -414,6 +414,11 @@ depend on.
 %package identity-eln
 Summary:        Package providing the identity for Fedora ELN
 
+# When running a compose for ELN, we want to make sure that we pull in the
+# correct templates when lorax is installed. This Suggests: will clue
+# libdnf to use this set of templates instead of lorax-templates-generic.
+Suggests: lorax-templates-rhel
+
 RemovePathPostfixes: .eln
 Provides:       fedora-release-identity = %{version}-%{release}
 Conflicts:      fedora-release-identity
