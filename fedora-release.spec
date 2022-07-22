@@ -889,8 +889,28 @@ ln -s fedora-release %{buildroot}%{_sysconfdir}/system-release
   %global prerelease \ Prerelease
 %endif
 
+# -------------------------------------------------------------------------
+# Definitions for /etc/os-release and for macros in macros.dist.  These
+# macros are useful for spec files where distribution-specific identifiers
+# are used to customize packages.
+
+# Name of vendor / name of distribution. Typically used to identify where
+# the binary comes from in --help or --version messages of programs.
+# Examples: gdb.spec, clang.spec
+%global dist_vendor Fedora
+%global dist_name   Fedora Linux
+
+# URL of the homepage of the distribution
+# Example: gstreamer1-plugins-base.spec
+%global dist_home_url https://fedoraproject.org/
+
+# Bugzilla / bug reporting URLs shown to users.
+# Examples: gcc.spec
+%global dist_bug_report_url https://bugzilla.redhat.com/
+# -------------------------------------------------------------------------
+
 cat << EOF >> os-release
-NAME="Fedora Linux"
+NAME="%{dist_name}"
 VERSION="%{dist_version} (%{release_name}%{?prerelease})"
 ID=fedora
 VERSION_ID=%{dist_version}
@@ -900,10 +920,10 @@ PRETTY_NAME="Fedora Linux %{dist_version} (%{release_name}%{?prerelease})"
 ANSI_COLOR="0;38;2;60;110;180"
 LOGO=fedora-logo-icon
 CPE_NAME="cpe:/o:fedoraproject:fedora:%{dist_version}"
-HOME_URL="https://fedoraproject.org/"
+HOME_URL="%{dist_home_url}"
 DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora/%{doc_version}/system-administrators-guide/"
 SUPPORT_URL="https://ask.fedoraproject.org/"
-BUG_REPORT_URL="https://bugzilla.redhat.com/"
+BUG_REPORT_URL="%{dist_bug_report_url}"
 REDHAT_BUGZILLA_PRODUCT="Fedora"
 REDHAT_BUGZILLA_PRODUCT_VERSION=%{bug_version}
 REDHAT_SUPPORT_PRODUCT="Fedora"
@@ -1185,6 +1205,10 @@ cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 %%fc%{dist_version}                1
 %%dist                %%{!?distprefix0:%%{?distprefix}}%%{expand:%%{lua:for i=0,9999 do print("%%{?distprefix" .. i .."}") end}}.fc%%{fedora}%%{?with_bootstrap:%{__bootstrap}}
 %endif
+%%dist_vendor         %{dist_vendor}
+%%dist_name           %{dist_name}
+%%dist_home_url       %{dist_home_url}
+%%dist_bug_report_url %{dist_bug_report_url}
 EOF
 
 # Install licenses
