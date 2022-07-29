@@ -907,6 +907,9 @@ ln -s fedora-release %{buildroot}%{_sysconfdir}/system-release
 # Bugzilla / bug reporting URLs shown to users.
 # Examples: gcc.spec
 %global dist_bug_report_url https://bugzilla.redhat.com/
+
+# debuginfod server, as used in elfutils.spec.
+%global dist_debuginfod_url https://debuginfod.fedoraproject.org/
 # -------------------------------------------------------------------------
 
 cat << EOF >> os-release
@@ -1209,6 +1212,7 @@ cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 %%dist_name           %{dist_name}
 %%dist_home_url       %{dist_home_url}
 %%dist_bug_report_url %{dist_bug_report_url}
+%%dist_debuginfod_url %{dist_debuginfod_url}
 EOF
 
 # Install licenses
