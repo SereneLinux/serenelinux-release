@@ -1,7 +1,7 @@
-%define release_name Thirty Six
+%define release_name Thirty Seven
 %define is_rawhide 0
 
-%define dist_version 36
+%define dist_version 37
 %define rhel_dist_version 10
 
 %if %{is_rawhide}
@@ -63,7 +63,7 @@
 
 Summary:        Serene release files
 Name:           fedora-release
-Version:        36
+Version:        37
 # The numbering is 0.<r> before a given Fedora Linux release is released,
 # with r starting at 1, and then just <r>, with r starting again at 1.
 # Use '%%autorelease -p' before final, and then drop the '-p'.
@@ -413,6 +413,11 @@ depend on.
 
 %package identity-eln
 Summary:        Package providing the identity for Fedora ELN
+
+# When running a compose for ELN, we want to make sure that we pull in the
+# correct templates when lorax is installed. This Suggests: will clue
+# libdnf to use this set of templates instead of lorax-templates-generic.
+Suggests: lorax-templates-rhel
 
 RemovePathPostfixes: .eln
 Provides:       fedora-release-identity = %{version}-%{release}
@@ -884,8 +889,31 @@ ln -s fedora-release %{buildroot}%{_sysconfdir}/system-release
   %global prerelease \ Prerelease
 %endif
 
+# -------------------------------------------------------------------------
+# Definitions for /etc/os-release and for macros in macros.dist.  These
+# macros are useful for spec files where distribution-specific identifiers
+# are used to customize packages.
+
+# Name of vendor / name of distribution. Typically used to identify where
+# the binary comes from in --help or --version messages of programs.
+# Examples: gdb.spec, clang.spec
+%global dist_vendor Fascode
+%global dist_name   SereneLinux
+
+# URL of the homepage of the distribution
+# Example: gstreamer1-plugins-base.spec
+%global dist_home_url https://fedoraproject.org/
+
+# Bugzilla / bug reporting URLs shown to users.
+# Examples: gcc.spec
+%global dist_bug_report_url https://bugzilla.redhat.com/
+
+# debuginfod server, as used in elfutils.spec.
+%global dist_debuginfod_url https://debuginfod.fedoraproject.org/
+# -------------------------------------------------------------------------
+
 cat << EOF >> os-release
-NAME="SereneLinux"
+NAME="%{dist_name}"
 VERSION="%{dist_version} (%{release_name}%{?prerelease})"
 ID=fedora
 VERSION_ID=%{dist_version}
@@ -903,7 +931,6 @@ REDHAT_BUGZILLA_PRODUCT="Fedora"
 REDHAT_BUGZILLA_PRODUCT_VERSION=%{bug_version}
 REDHAT_SUPPORT_PRODUCT="Fedora"
 REDHAT_SUPPORT_PRODUCT_VERSION=%{bug_version}
-PRIVACY_POLICY_URL="https://fedoraproject.org/wiki/Legal:PrivacyPolicy"
 EOF
 
 # Create the common /etc/issue
@@ -948,6 +975,7 @@ echo "VARIANT=\"Cloud Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.cloud
 echo "VARIANT_ID=cloud" >> %{buildroot}%{_prefix}/lib/os-release.cloud
 sed -i -e "s|(%{release_name}%{?prerelease})|(Cloud Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.cloud
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Cloud/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.cloud
+sed -i -e "/^DEFAULT_HOSTNAME=/d" %{buildroot}%{_prefix}/lib/os-release.cloud
 %endif
 
 %if %{with compneuro}
@@ -985,6 +1013,7 @@ sed -i -e 's|SUPPORT_URL=.*|SUPPORT_URL="https://github.com/coreos/fedora-coreos
 sed -i -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://github.com/coreos/fedora-coreos-tracker/"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
 sed -i -e 's|PRETTY_NAME=.*|PRETTY_NAME="Fedora CoreOS %{dist_version}"|' %{buildroot}/%{_prefix}/lib/os-release.coreos
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/CoreOS/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.coreos
+sed -i -e "/^DEFAULT_HOSTNAME=/d" %{buildroot}%{_prefix}/lib/os-release.coreos
 install -Dm0644 %{SOURCE22} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 %endif
 
@@ -1010,6 +1039,7 @@ echo "VARIANT_ID=eln" >> %{buildroot}%{_prefix}/lib/os-release.eln
 sed -i -e 's|PLATFORM_ID=.*|PLATFORM_ID="platform:eln"|' %{buildroot}/%{_prefix}/lib/os-release.eln
 sed -i -e 's|PRETTY_NAME=.*|PRETTY_NAME="Fedora ELN"|' %{buildroot}/%{_prefix}/lib/os-release.eln
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/eln/"|' %{buildroot}%{_prefix}/lib/os-release.eln
+sed -i -e "/^DEFAULT_HOSTNAME=/d" %{buildroot}%{_prefix}/lib/os-release.eln
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/ELN/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.eln
 %endif
 
@@ -1021,6 +1051,7 @@ echo "VARIANT=\"IoT Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.iot
 echo "VARIANT_ID=iot" >> %{buildroot}%{_prefix}/lib/os-release.iot
 sed -i -e "s|(%{release_name}%{?prerelease})|(IoT Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.iot
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/IoT/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.iot
+sed -i -e "/^DEFAULT_HOSTNAME=/d" %{buildroot}%{_prefix}/lib/os-release.iot
 install -p %{SOURCE23} %{buildroot}/%{_prefix}/lib/
 install -Dm0644 %{SOURCE18} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 install -Dm0644 %{SOURCE24} -t %{buildroot}%{_prefix}/lib/systemd/user-preset/
@@ -1056,6 +1087,7 @@ echo "VARIANT=\"Server Edition\"" >> %{buildroot}%{_prefix}/lib/os-release.serve
 echo "VARIANT_ID=server" >> %{buildroot}%{_prefix}/lib/os-release.server
 sed -i -e "s|(%{release_name}%{?prerelease})|(Server Edition%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.server
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Server/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.server
+sed -i -e "/^DEFAULT_HOSTNAME=/d" %{buildroot}%{_prefix}/lib/os-release.server
 install -Dm0644 %{SOURCE14} -t %{buildroot}%{_prefix}/lib/systemd/system-preset/
 %endif
 
@@ -1067,6 +1099,8 @@ echo "VARIANT=\"Silverblue\"" >> %{buildroot}%{_prefix}/lib/os-release.silverblu
 echo "VARIANT_ID=silverblue" >> %{buildroot}%{_prefix}/lib/os-release.silverblue
 sed -i -e "s|(%{release_name}%{?prerelease})|(Silverblue%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.silverblue
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-silverblue/"|' %{buildroot}%{_prefix}/lib/os-release.silverblue
+sed -i -e 's|HOME_URL=.*|HOME_URL="https://silverblue.fedoraproject.org"|' %{buildroot}/%{_prefix}/lib/os-release.silverblue
+sed -i -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://github.com/fedora-silverblue/issue-tracker/issues"|' %{buildroot}/%{_prefix}/lib/os-release.silverblue
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Silverblue/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.silverblue
 %endif
 
@@ -1078,6 +1112,8 @@ echo "VARIANT=\"Kinoite\"" >> %{buildroot}%{_prefix}/lib/os-release.kinoite
 echo "VARIANT_ID=kinoite" >> %{buildroot}%{_prefix}/lib/os-release.kinoite
 sed -i -e "s|(%{release_name}%{?prerelease})|(Kinoite%{?prerelease})|g" %{buildroot}%{_prefix}/lib/os-release.kinoite
 sed -i -e 's|DOCUMENTATION_URL=.*|DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora-kinoite/"|' %{buildroot}%{_prefix}/lib/os-release.kinoite
+sed -i -e 's|HOME_URL=.*|HOME_URL="https://kinoite.fedoraproject.org"|' %{buildroot}/%{_prefix}/lib/os-release.kinoite
+sed -i -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://pagure.io/fedora-kde/SIG/issues"|' %{buildroot}/%{_prefix}/lib/os-release.kinoite
 sed -e "s#\$version#%{bug_version}#g" -e 's/$edition/Kinoite/;s/<!--.*-->//;/^$/d' %{SOURCE20} > %{buildroot}%{_swidtagdir}/org.fedoraproject.Fedora-edition.swidtag.kinoite
 %endif
 
@@ -1177,6 +1213,11 @@ cat >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist << EOF
 %%fc%{dist_version}                1
 %%dist                %%{!?distprefix0:%%{?distprefix}}%%{expand:%%{lua:for i=0,9999 do print("%%{?distprefix" .. i .."}") end}}.fc%%{fedora}%%{?with_bootstrap:%{__bootstrap}}
 %endif
+%%dist_vendor         %{dist_vendor}
+%%dist_name           %{dist_name}
+%%dist_home_url       %{dist_home_url}
+%%dist_bug_report_url %{dist_bug_report_url}
+%%dist_debuginfod_url %{dist_debuginfod_url}
 EOF
 
 # Install licenses
